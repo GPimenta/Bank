@@ -23,6 +23,12 @@ public class Customer {
 //		this.password = password;
 //	}
 
+
+//Quando formos usar este método, o código há de ficar algo como customer.calculateAge();
+//Minha sugestão é que este método se chame 'getAge()' que retorna a idade do customer
+//o nome 'calculateAge' parece que eu quero calcular a idade dele em outra data
+//OBS: Não é porque existe um método chamado 'getAge();' que o objecto precisa ter um atributo age
+//YuriValle 11/11/2020
 	public Integer calculateAge() {
 		LocalDate today = LocalDate.now();
 		Period period = Period.between(this.birthday, today);
