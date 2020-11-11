@@ -29,7 +29,9 @@ public class Customer {
 //o nome 'calculateAge' parece que eu quero calcular a idade dele em outra data
 //OBS: Não é porque existe um método chamado 'getAge();' que o objecto precisa ter um atributo age
 //YuriValle 11/11/2020
-	public Integer calculateAge() {
+	
+//R: Obrigado pela dica Professor!!
+	public Integer getAge() {
 		LocalDate today = LocalDate.now();
 		Period period = Period.between(this.birthday, today);
 
