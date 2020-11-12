@@ -24,9 +24,11 @@ public class Application {
 				//Show costumer by name
 				break;
 			case 3:
+				showCustomerByTaxId();
 				//Show costumer by taxId
 				break;
 			case 4:
+				showAllCustomers();
 				//Show all costumers
 				break;
 			case 5:
@@ -43,6 +45,28 @@ public class Application {
 				break;
 			}
 		}while(option != 0);
+	}
+
+
+	private static void showAllCustomers() {
+		System.out.println("Printing all clients");
+		for(int i = 0; i< customers.length; i++) {
+			if(customers[i] != null) {
+				System.out.println(customers[i].toString());
+			}
+		}
+	}
+
+
+	private static void showCustomerByTaxId() {
+		System.out.println("What is costumer by taxID ?");
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].equals(null)) continue;
+			if(customers[i].getTaxId().equals(scanner.next())) {
+				System.out.println("The costumer is: " + customers[i].toString());
+				return;
+			}
+		}
 	}
 
 

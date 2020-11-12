@@ -40,7 +40,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
+		return "Customer [id=" + id + ", name=" + name + ", password=" + password + "\n, taxId=" + taxId + ", email="
 				+ email + ", birthday=" + birthday + ", balance=" + balance + "]";
 	}
 
