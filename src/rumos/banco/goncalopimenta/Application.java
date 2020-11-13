@@ -35,6 +35,7 @@ public class Application {
 				break;
 			case 5:
 				//Show customer
+				
 				break;
 			case 6:
 				System.out.println("Please write the ID of the customer, in order to edit it");
@@ -43,7 +44,7 @@ public class Application {
 					if(customers[i].getId() == id){
 						customers[i] = editCustomer(customers[i]);
 						//Edit Customer
-						return;
+						return; // ERRO! Ao executar o caso 6 e apos sair do metodo editCustomer, o programa sai por completo em vez de continuar no Menu
 					}
 
 				}
@@ -152,7 +153,7 @@ public class Application {
 			if(customers[i] == null) {
 				customers[i] = populateEmptyDatabase();
 				System.out.println("New customer created");
-				return; // PERGUNTAR AO PROF PQ NAO ERA POSSIVEL O BREAK! SERA PQ O BREAK SAI SO DO FOR E QUEREMOS SAIR DO SWITCH??
+				return;
 			}
 		}
 		System.err.println("The Clients vector is full");
