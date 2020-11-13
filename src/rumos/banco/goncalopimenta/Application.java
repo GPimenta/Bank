@@ -21,7 +21,9 @@ public class Application {
 				createNewCustomer();
 				break;
 			case 2:
+				showCustomersByName();
 				//Show costumer by name
+
 				break;
 			case 3:
 				showCustomerByTaxId();
@@ -35,16 +37,90 @@ public class Application {
 				//Show customer
 				break;
 			case 6:
+				System.out.println("Please write the ID of the customer, in order to edit it");
+				Integer id = scanner.nextInt();
+				for (int i = 0; i < customers.length; i++) {
+					if(customers[i].getId() == id){
+						customers[i] = editCustomer(customers[i]);
+						//Edit Customer
+						return;
+					}
+
+				}
+				System.err.println("There is no customer with that ID");
 				//Edit customer by ID
 				break;
 			case 7:
 				//Delete customer by ID
 				break;
 			default:
-				System.err.println("Invalid option");
+				System.err.println("Invalid option in DisplayMenu");
 				break;
 			}
 		}while(option != 0);
+	}
+
+	private static Customer editCustomer(Customer customer) {
+		Integer change;
+		do {
+			displayEditMenu();
+			change = scanner.nextInt();
+
+			switch (change) {
+			case 1:
+				System.out.println("What is the new name?");
+				customer.setName(scanner.next());
+				//Change Name
+				break;
+			case 2:
+				System.out.println("What is the new password?");
+				customer.setPassword(scanner.next());
+				//Change password
+				break;
+			case 3:
+				System.out.println("What is the new email?");
+				customer.setEmail(scanner.next());
+				//change email
+				break;
+
+			default:
+				System.err.println("Invalid option in EditMenu");
+				break;
+			}
+		}while(change != 0);
+		
+		return customer;
+	}
+
+
+	private static void displayEditMenu() {
+		System.out.println("What do you which to edit?");
+		System.out.println("0 - Exit");
+		System.out.println("1 - Name of the customer");
+		System.out.println("2 - Password of the customer");
+		System.out.println("3 - Email of the customer"); 
+	}
+
+
+	private static void showCustomersByName() {
+		System.out.println("What is the customer name?");
+		String name = scanner.next();
+
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].getName().toLowerCase().equals(name.toLowerCase())) {
+				for (int j = (i+1); j < customers.length; j++) {
+					if(customers[j].getName().toLowerCase().equals(name.toLowerCase())) {
+						System.err.println("There is another client with the same name. Its necessary to search by the taxId.");
+						System.out.printf("Presenting the both clients with the same name \nFirst %s \nSecond %s",customers[i],customers[j]);
+						showCustomerByTaxId();
+						return;
+					}
+				}
+				System.out.println(customers[i].toString());
+				return;
+			}
+		}
+		System.err.println("Name not found!");
 	}
 
 
@@ -60,9 +136,10 @@ public class Application {
 
 	private static void showCustomerByTaxId() {
 		System.out.println("What is costumer by taxID ?");
+		String taxId = scanner.next();
 		for (int i = 0; i < customers.length; i++) {
 			if(customers[i].equals(null)) continue;
-			if(customers[i].getTaxId().equals(scanner.next())) {
+			if(customers[i].getTaxId().equals(taxId)) {
 				System.out.println("The costumer is: " + customers[i].toString());
 				return;
 			}
