@@ -129,7 +129,7 @@ public class Application {
 				System.out.println("Returning to previous Menu");
 				break;
 			default:
-				System.err.println("Invalid option in EditMenu");
+				System.err.println(INVALID_OPTION +" in EditCustomer");
 				break;
 			}
 		}while(change != 0);
