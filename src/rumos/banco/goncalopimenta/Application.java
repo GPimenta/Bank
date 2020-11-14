@@ -12,10 +12,15 @@ public class Application {
 	private static final int FIND_CUSTOMER_BY_NAME = 2;
 	private static final int FIND_CUSTOMER_BY_TAXID = 3;
 	private static final int SHOW_ALL_CUSTOMERS = 4;
-	private static final int EDIT_CUSTOMER_BY_ID = 5;
+	private static final int EDIT_CUSTOMER = 5;
 	private static final int DELETE_CUSTOMER = 6;
 	
 
+	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
+	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
+	private static final int EDIT_CUSTOMER_BY_ID = 3;
+	
+	
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String GOODBYE = "Thanks for using Rumos Digital Bank";
@@ -26,6 +31,9 @@ public class Application {
 	private static final String DATABASE_IS_EMPTY = "Database is empty!";
 	private static final String TAXID_ALREADY_EXISTS = "Customer Tax Id already exists!";
 	private static final String INVALID_OPTION = "Invalid Option!";
+	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
+	private static final String INVALID_TAXID = "Incorrect TaxID";
+	private static final String INVALID_ID = "Incorrect ID";
 	
 	
 	
@@ -36,7 +44,7 @@ public class Application {
 
 
 	public static void main(String[] args) {
-		
+
 		do {
 			displayMenu();
 			option = scanner.nextInt();
@@ -58,10 +66,9 @@ public class Application {
 				showAllCustomers();
 				//Show all costumers
 				break;
-			case EDIT_CUSTOMER_BY_ID:
-				editCustomerByID();
+			case EDIT_CUSTOMER:
+				editCustomer();
 				//Edit customer by ID
-				
 				break;
 			case DELETE_CUSTOMER:
 				deleteCustomerById();
@@ -77,36 +84,79 @@ public class Application {
 		}while(option != 0);
 	}
 
-	private static void deleteCustomerById() {
-		System.out.println("Please write the ID of the customer, in order to delete it");
-		Integer id = scanner.nextInt();
+	/**
+	 * Edit customers methods
+	 */
+	
+	private static void editCustomer() {
+		displayEditCustomer();
+		
+		Integer option = scanner.nextInt();
+		
+		switch (option) {
+		case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
+			editCustomerByNameAndPassword();
+			break;
+		case EDIT_CUSTOMER_BY_TAXID:
+			editCustomerByTaxID();
+			break;
+		case EDIT_CUSTOMER_BY_ID:
+			editCustomerByID();
+			break;
+		case EXIT:
+			System.out.println("Returning to Menu");
+			break;
+
+		default:
+			System.err.println(INVALID_OPTION + " in EditCustomer");
+			break;
+		}
+	}
+
+	private static void editCustomerByNameAndPassword() {
+		System.out.println("Please write the name of the customer");
+		String name = scanner.next();
+		System.out.println("Please wirte the Password of the customer");
+		String password = scanner.next();
 		for (int i = 0; i < customers.length; i++) {
-			if(customers[i].getId() == id){
-				customers[i] = null;
-				System.out.println(CUSTOMER_DELETED);
+			if(customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
+				customers[i] = editCustomerDetails(customers[i]);
 				return;
 			}
 		}
-		System.out.println(CUSTOMER_NOT_FOUND);
+		System.err.println(INVALID_NAME_OR_PASSWORD);
+		
 	}
 
+	private static void editCustomerByTaxID() {
+		System.out.println("Please write the taxID of the customer, in order to edit it");
+		String taxId = scanner.next();
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].getTaxId() == taxId){
+				customers[i] = editCustomerDetails(customers[i]);
+				//Edit Customer
+				return; 
+				}
+		}
+		System.err.println(INVALID_TAXID);
+	}
 	private static void editCustomerByID() {
 		System.out.println("Please write the ID of the customer, in order to edit it");
 		Integer id = scanner.nextInt();
 		for (int i = 0; i < customers.length; i++) {
 			if(customers[i].getId() == id){
-				customers[i] = editCustomer(customers[i]);
+				customers[i] = editCustomerDetails(customers[i]);
 				//Edit Customer
 				return; 
 				}
 		}
-		System.err.println("There is no customer with that ID");
+		System.err.println(INVALID_ID);
 	}
 
-	private static Customer editCustomer(Customer customer) {
+	private static Customer editCustomerDetails(Customer customer) {
 		Integer change;
 		do {
-			displayEditMenu();
+			displayEditCustomerDetailsMenu();
 			change = scanner.nextInt();
 
 			switch (change) {
@@ -136,6 +186,10 @@ public class Application {
 		
 		return customer;
 	}
+	
+	/**
+	 * Show customers methods
+	 */
 
 	private static void showCustomersByName() {
 		System.out.println("What is the customer name?");
@@ -179,7 +233,9 @@ public class Application {
 			}
 		}
 	}
-
+/**
+ * Create customer on the array
+ */
 
 	private static void createNewCustomer() {
 		for(int i = 0; i < customers.length; i++  ) {
@@ -191,9 +247,27 @@ public class Application {
 		}
 		System.err.println("The Clients vector is full");
 	}
+	/**
+	 * Delete customer
+	 */
 
+	private static void deleteCustomerById() {
+		System.out.println("Please write the ID of the customer, in order to delete it");
+		Integer id = scanner.nextInt();
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].getId() == id){
+				customers[i] = null;
+				System.out.println(CUSTOMER_DELETED);
+				return;
+			}
+		}
+		System.out.println(CUSTOMER_NOT_FOUND);
+	}
 
-
+/**
+ * Populate the array Customers
+ * @return
+ */
 
 	private static Customer populateEmptyDatabase() {
 		System.out.println("Creating new client");
@@ -227,6 +301,12 @@ public class Application {
 
 		return newCustomer;
 	}
+	
+	
+	
+	/**
+	 * Display menus
+	 */
 	private static void displayMenu() {
 		System.out.println( MOTD +" please choose the action that u want take: ");
 		System.out.println("0 - Exit");
@@ -234,16 +314,21 @@ public class Application {
 		System.out.println("2 - Show customer by name");
 		System.out.println("3 - Show customer by taxId"); 
 		System.out.println("4 - Show all customers"); 
-		System.out.println("5 - Show customer");
-		System.out.println("6 - Edit customer by Id");
-		System.out.println("7 - Delete customer by Id");
+		System.out.println("5 - Edit customer"); 
+		System.out.println("6 - Delete customer by Id");
 	}
-	private static void displayEditMenu() {
+	private static void displayEditCustomerDetailsMenu() {
 		System.out.println("What do you which to edit?");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Name of the customer");
 		System.out.println("2 - Password of the customer");
 		System.out.println("3 - Email of the customer"); 
 	}
-
+	private static void displayEditCustomer() {
+		System.out.println("Please choose the several methods to change the credentials of the customer");
+		System.out.println("0 - Return to Original Menu");
+		System.out.println("1 - By name and password");
+		System.out.println("2 - By TaxID");
+		System.out.println("3 - By ID");
+	}
 }
