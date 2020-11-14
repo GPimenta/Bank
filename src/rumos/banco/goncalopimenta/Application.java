@@ -38,20 +38,11 @@ public class Application {
 				
 				break;
 			case 6:
-				System.out.println("Please write the ID of the customer, in order to edit it");
-				Integer id = scanner.nextInt();
-				for (int i = 0; i < customers.length; i++) {
-					if(customers[i].getId() == id){
-						customers[i] = editCustomer(customers[i]);
-						//Edit Customer
-						return; // ERRO! Ao executar o caso 6 e apos sair do metodo editCustomer, o programa sai por completo em vez de continuar no Menu
-					}
-
-				}
-				System.err.println("There is no customer with that ID");
+				editCustomerByID();
 				//Edit customer by ID
 				break;
 			case 7:
+				deleteCustomerById();
 				//Delete customer by ID
 				break;
 			default:
@@ -59,6 +50,31 @@ public class Application {
 				break;
 			}
 		}while(option != 0);
+	}
+
+	private static void deleteCustomerById() {
+		System.out.println("Please write the ID of the customer, in order to delete it");
+		Integer id = scanner.nextInt();
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].getId() == id){
+				customers[i] = null;
+				return;
+			}
+		}
+		System.out.println("Customer not found");
+	}
+
+	private static void editCustomerByID() {
+		System.out.println("Please write the ID of the customer, in order to edit it");
+		Integer id = scanner.nextInt();
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].getId() == id){
+				customers[i] = editCustomer(customers[i]);
+				//Edit Customer
+				return; 
+				}
+		}
+		System.err.println("There is no customer with that ID");
 	}
 
 	private static Customer editCustomer(Customer customer) {
@@ -93,16 +109,6 @@ public class Application {
 		return customer;
 	}
 
-
-	private static void displayEditMenu() {
-		System.out.println("What do you which to edit?");
-		System.out.println("0 - Exit");
-		System.out.println("1 - Name of the customer");
-		System.out.println("2 - Password of the customer");
-		System.out.println("3 - Email of the customer"); 
-	}
-
-
 	private static void showCustomersByName() {
 		System.out.println("What is the customer name?");
 		String name = scanner.next();
@@ -123,7 +129,6 @@ public class Application {
 		}
 		System.err.println("Name not found!");
 	}
-
 
 	private static void showAllCustomers() {
 		System.out.println("Printing all clients");
@@ -170,6 +175,13 @@ public class Application {
 		System.out.println("5 - Show customer");
 		System.out.println("6 - Edit customer by Id");
 		System.out.println("7 - Delete customer by Id");
+	}
+	private static void displayEditMenu() {
+		System.out.println("What do you which to edit?");
+		System.out.println("0 - Exit");
+		System.out.println("1 - Name of the customer");
+		System.out.println("2 - Password of the customer");
+		System.out.println("3 - Email of the customer"); 
 	}
 
 	private static Customer populateEmptyDatabase() {
