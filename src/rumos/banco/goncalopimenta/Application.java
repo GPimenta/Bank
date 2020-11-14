@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Application {
 	private static final int DATABASE_SIZE = 3;
-			
+
 	private static final int EXIT = 0;
 	private static final int CREATE_NEW_CUSTOMER = 1;
 	private static final int FIND_CUSTOMER_BY_NAME = 2;
@@ -14,13 +14,14 @@ public class Application {
 	private static final int SHOW_ALL_CUSTOMERS = 4;
 	private static final int EDIT_CUSTOMER = 5;
 	private static final int DELETE_CUSTOMER = 6;
-	
+	private static final int DEPOSIT_MONEY = 7;
+
 
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
 	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
 	private static final int EDIT_CUSTOMER_BY_ID = 3;
-	
-	
+
+
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String GOODBYE = "Thanks for using Rumos Digital Bank";
@@ -34,10 +35,10 @@ public class Application {
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 	private static final String INVALID_TAXID = "Incorrect TaxID";
 	private static final String INVALID_ID = "Incorrect ID";
-	
-	
-	
-	
+
+
+
+
 	private static Customer[] customers = new Customer[DATABASE_SIZE];
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer option;
@@ -56,7 +57,6 @@ public class Application {
 			case FIND_CUSTOMER_BY_NAME:
 				showCustomersByName();
 				//Show costumer by name
-
 				break;
 			case FIND_CUSTOMER_BY_TAXID:
 				showCustomerByTaxId();
@@ -74,6 +74,11 @@ public class Application {
 				deleteCustomerById();
 				//Delete customer by ID
 				break;
+			case DEPOSIT_MONEY:
+				depositMoney();
+				//Deposit balance
+				break;
+
 			case EXIT:
 				System.out.println(GOODBYE);
 				break;
@@ -84,15 +89,35 @@ public class Application {
 		}while(option != 0);
 	}
 
+
+	private static void depositMoney() {
+		System.out.println("Please write your name");
+		String name = scanner.next();
+		System.out.println("Please write your Password");
+		String password = scanner.next();
+		System.out.println("Please insert the amount to deposit in your account");
+		Double amount = scanner.nextDouble();
+		for (int i = 0; i < customers.length; i++) {
+			if(customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
+				customers[i].setBalance(customers[i].getBalance() + amount);
+				return;
+			}
+		}
+		System.out.println(INVALID_NAME_OR_PASSWORD);
+	}
+
+
+
+
 	/**
 	 * Edit customers methods
 	 */
-	
+
 	private static void editCustomer() {
 		displayEditCustomer();
-		
+
 		Integer option = scanner.nextInt();
-		
+
 		switch (option) {
 		case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
 			editCustomerByNameAndPassword();
@@ -125,7 +150,7 @@ public class Application {
 			}
 		}
 		System.err.println(INVALID_NAME_OR_PASSWORD);
-		
+
 	}
 
 	private static void editCustomerByTaxID() {
@@ -136,7 +161,7 @@ public class Application {
 				customers[i] = editCustomerDetails(customers[i]);
 				//Edit Customer
 				return; 
-				}
+			}
 		}
 		System.err.println(INVALID_TAXID);
 	}
@@ -148,7 +173,7 @@ public class Application {
 				customers[i] = editCustomerDetails(customers[i]);
 				//Edit Customer
 				return; 
-				}
+			}
 		}
 		System.err.println(INVALID_ID);
 	}
@@ -183,10 +208,10 @@ public class Application {
 				break;
 			}
 		}while(change != 0);
-		
+
 		return customer;
 	}
-	
+
 	/**
 	 * Show customers methods
 	 */
@@ -233,9 +258,9 @@ public class Application {
 			}
 		}
 	}
-/**
- * Create customer on the array
- */
+	/**
+	 * Create customer on the array
+	 */
 
 	private static void createNewCustomer() {
 		for(int i = 0; i < customers.length; i++  ) {
@@ -264,10 +289,10 @@ public class Application {
 		System.out.println(CUSTOMER_NOT_FOUND);
 	}
 
-/**
- * Populate the array Customers
- * @return
- */
+	/**
+	 * Populate the array Customers
+	 * @return
+	 */
 
 	private static Customer populateEmptyDatabase() {
 		System.out.println("Creating new client");
@@ -301,9 +326,9 @@ public class Application {
 
 		return newCustomer;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Display menus
 	 */
