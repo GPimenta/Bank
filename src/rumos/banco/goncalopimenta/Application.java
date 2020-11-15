@@ -99,11 +99,12 @@ public class Application {
 		Double amount = scanner.nextDouble();
 		for (int i = 0; i < customers.length; i++) {
 			if(customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				customers[i].setBalance(customers[i].getBalance() + amount);
+				customers[i].setBalance(customers[i].getBalance() + Math.abs(amount));
 				return;
 			}
 		}
 		System.out.println(INVALID_NAME_OR_PASSWORD);
+		return;
 	}
 
 
@@ -290,6 +291,21 @@ public class Application {
 	}
 
 	/**
+	 * Check if there is already an taxID
+	 * @param taxId
+	 * @return
+	 */
+	private static Boolean taxIDalreadyExists(String taxId) {
+		for (int i = 0; i < customers.length; i++) {
+			if (customers[i] != null) {
+				if (taxId.equals(customers[i].getTaxId()))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Populate the array Customers
 	 * @return
 	 */
@@ -308,7 +324,11 @@ public class Application {
 		newCustomer.setPassword(scanner.next());
 
 		System.out.println("Please set TaxId");
-		newCustomer.setTaxId(scanner.next());
+		String taxId = scanner.next();
+		if(!taxIDalreadyExists(taxId))
+			newCustomer.setTaxId(taxId);
+		else
+			System.out.println("taxID already exists");
 
 		System.out.println("Please set email");
 		newCustomer.setEmail(scanner.next());
