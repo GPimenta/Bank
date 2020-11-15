@@ -16,8 +16,8 @@ public class Customer {
 	private Double balance;
 
 	// Credit and debit card parameters
-	private Boolean debitCard;
-	private Boolean creditCard;
+	private Boolean debitCard = false;
+	private Boolean creditCard = false;
 
 //	public Customer() {
 //
