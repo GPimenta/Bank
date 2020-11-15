@@ -34,8 +34,10 @@ public class Application {
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 	private static final String INVALID_TAXID = "Incorrect TaxID";
 	private static final String INVALID_ID = "Incorrect ID";
-	private static final String MAXIMUM_DEBIT_CARD = "You already have a Debit Card";
-	private static final String MAXIMUM_CREDIT_CARD = "You already have a Credit Card";
+	private static final String NO_ADD_DEBIT_CARD = "You already have a Debit Card";
+	private static final String NO_ADD_CREDIT_CARD = "You already have a Credit Card";
+	private static final String NO_TAKE_DEBIT_CARD = "You do not have a Debit Card";
+	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
 	private static final String BACK_TO_MAIN_MENU = "Returning to Main Menu";
 
 	private static Customer[] customers = new Customer[DATABASE_SIZE];
@@ -104,12 +106,47 @@ public class Application {
 			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
 				System.out.println("Do you whish to delete a Debit Card? y/n");
 				if (scanner.next().equals("y")) {
+					if (customers[i].isDebitCard()) {
+						customers[i].setDebitCard(false);
+						System.out.println("Debit card removed");
+						return;
+					} else {
+						System.err.println(NO_TAKE_DEBIT_CARD);
+						return;
+					}
 				}
+				System.out.println(BACK_TO_MAIN_MENU);
+				return;
 			}
+			System.err.println(INVALID_NAME_OR_PASSWORD);
 		}
 	}
 
+	private static void deleteCreditCard() {
+		System.out.println("Please write your name");
+		String name = scanner.next();
+		System.out.println("Please write your Password");
+		String password = scanner.next();
+		for (int i = 0; i < customers.length; i++) {
+			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
+				System.out.println("Do you whish to delete a Debit Card? y/n");
+				if (scanner.next().equals("y")) {
+					if (customers[i].isCreditCard()) {
+						customers[i].setCreditCard(false);
+						System.out.println("Credit card removed");
+						return;
+					} else {
+						System.err.println(NO_TAKE_CREDIT_CARD);
+						return;
+					}
+				}
+				System.out.println(BACK_TO_MAIN_MENU);
+				return;
+			}
+			System.err.println(INVALID_NAME_OR_PASSWORD);
+		}
 	}
+
 
 	private static void createDebitCard() {
 		System.out.println("Please write your name");
@@ -124,7 +161,7 @@ public class Application {
 						customers[i].setDebitCard(true);
 						return;
 					} else {
-						System.err.println(MAXIMUM_DEBIT_CARD);
+						System.err.println(NO_ADD_DEBIT_CARD);
 						return;
 					}
 				}
@@ -148,7 +185,7 @@ public class Application {
 						customers[i].setCreditCard(true);
 						return;
 					} else {
-						System.err.println(MAXIMUM_CREDIT_CARD);
+						System.err.println(NO_ADD_CREDIT_CARD);
 						return;
 					}
 				}
