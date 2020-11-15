@@ -1,6 +1,7 @@
 package rumos.banco.goncalopimenta;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.Scanner;
 
 
@@ -328,7 +329,7 @@ public class Application {
 		if(!taxIDalreadyExists(taxId))
 			newCustomer.setTaxId(taxId);
 		else
-			System.out.println("taxID already exists");
+			System.out.println("taxID already exists"); //Melhorar esta parte do codigo, necessario fazer um loop para garantir q o TaxID é bem introduzido
 
 		System.out.println("Please set email");
 		newCustomer.setEmail(scanner.next());
@@ -339,10 +340,20 @@ public class Application {
 		Integer month = scanner.nextInt();
 		System.out.print("Customer year of birth ");
 		Integer year = scanner.nextInt();
-		newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
-
+		if((Year.now().getValue() - year) >= 18)
+			newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
+		else
+			System.out.println("The customer is to young to open bank account");//Melhorar esta parte do codigo, necessario fazer um loop para garantir q o year seja bem introduzido
+		
 		System.out.println("Please set the customer balance");
 		newCustomer.setBalance(scanner.nextDouble());
+		
+		System.out.println("Do you which to have a Debit Card? y/n");
+		if(scanner.next().equals("y"))
+			newCustomer.setDebitCard(true);
+		else
+			newCustomer.setDebitCard(false);
+		
 
 		return newCustomer;
 	}
