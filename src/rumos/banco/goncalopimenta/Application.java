@@ -15,12 +15,21 @@ public class Application {
 	private static final int EDIT_CUSTOMER = 5;
 	private static final int DELETE_CUSTOMER = 6;
 	private static final int DEPOSIT_MONEY = 7;
-	private static final int CREATE_DEBIT_CARD = 8;
-	private static final int CREATE_CREDIT_CARD = 9;
+	private static final int EDIT_BANK_CARDS = 8;
+
+
 
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
 	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
 	private static final int EDIT_CUSTOMER_BY_ID = 3;
+	
+	private static final int CREATE_DEBIT_CARD = 1;
+	private static final int DELETE_DEBIT_CARD = 2;
+	private static final int CREATE_CREDIT_CARD = 3;
+	private static final int DELETE_CREDIT_CARD = 4;
+
+	
+	
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String GOODBYE = "Thanks for using Rumos Digital Bank";
@@ -38,7 +47,7 @@ public class Application {
 	private static final String NO_ADD_CREDIT_CARD = "You already have a Credit Card";
 	private static final String NO_TAKE_DEBIT_CARD = "You do not have a Debit Card";
 	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
-	private static final String BACK_TO_MAIN_MENU = "Returning to Main Menu";
+	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 
 	private static Customer[] customers = new Customer[DATABASE_SIZE];
 	private static Scanner scanner = new Scanner(System.in);
@@ -78,13 +87,9 @@ public class Application {
 				depositMoney();
 				// Deposit balance
 				break;
-			case CREATE_DEBIT_CARD:
-				createDebitCard();
-				// Deposit balance
-				break;
-			case CREATE_CREDIT_CARD:
-				createCreditCard();
-				// Deposit balance
+			case EDIT_BANK_CARDS:
+				editBankCards();
+				// Edit cards
 				break;
 
 			case EXIT:
@@ -97,103 +102,121 @@ public class Application {
 		} while (option != 0);
 	}
 
-	private static void deleteDebitCard() {
+	private static void editBankCards() {
+		Integer save = 0;
+
 		System.out.println("Please write your name");
 		String name = scanner.next();
 		System.out.println("Please write your Password");
 		String password = scanner.next();
+
 		for (int i = 0; i < customers.length; i++) {
 			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Do you whish to delete a Debit Card? y/n");
-				if (scanner.next().equals("y")) {
-					if (customers[i].isDebitCard()) {
-						customers[i].setDebitCard(false);
-						System.out.println("Debit card removed");
-						return;
-					} else {
-						System.err.println(NO_TAKE_DEBIT_CARD);
-						return;
-					}
-				}
-				System.out.println(BACK_TO_MAIN_MENU);
-				return;
+				save = i;
 			}
 			System.err.println(INVALID_NAME_OR_PASSWORD);
+			return;
 		}
-	}
 
-	private static void deleteCreditCard() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Do you whish to delete a Debit Card? y/n");
-				if (scanner.next().equals("y")) {
-					if (customers[i].isCreditCard()) {
-						customers[i].setCreditCard(false);
-						System.out.println("Credit card removed");
-						return;
-					} else {
-						System.err.println(NO_TAKE_CREDIT_CARD);
-						return;
-					}
-				}
-				System.out.println(BACK_TO_MAIN_MENU);
-				return;
+		do {
+
+			displayBankCardsMenu();
+
+			Integer option = scanner.nextInt();
+
+			switch (option) {
+			case CREATE_DEBIT_CARD:
+				createDebitCard(customers[save]);
+				// Add Debit card
+				break;
+			case DELETE_DEBIT_CARD:
+				deleteDebitCard(customers[save]);
+				// Remove Debit card
+				break;
+			case CREATE_CREDIT_CARD:
+				createCreditCard(customers[save]);
+				// Add Credit Card
+				break;
+			case DELETE_CREDIT_CARD:
+				deleteCreditCard(customers[save]);
+				// Remove Credit Card
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in EditBankCards");
+				break;
 			}
-			System.err.println(INVALID_NAME_OR_PASSWORD);
-		}
+		} while (option != 0);
 	}
 
 
-	private static void createDebitCard() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Do you whish to create a Debit Card? y/n");
-				if (scanner.next().equals("y")) {
-					if (!customers[i].isDebitCard()) {
-						customers[i].setDebitCard(true);
-						return;
-					} else {
-						System.err.println(NO_ADD_DEBIT_CARD);
-						return;
-					}
-				}
-				System.out.println(BACK_TO_MAIN_MENU);
+
+	private static void deleteDebitCard(Customer customer) {
+		System.out.println("Do you whish to delete a Debit Card? y/n");
+		if (scanner.next().equals("y")) {
+			if (customer.isDebitCard()) {
+				customer.setDebitCard(false);
+				System.out.println("Debit card removed");
 				return;
-			}
-		}
-		System.err.println(INVALID_NAME_OR_PASSWORD);
-	}
-
-	private static void createCreditCard() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Do you whish to create a Credit Card? y/n");
-				if (scanner.next().equals("y")) {
-					if (!customers[i].isCreditCard()) {
-						customers[i].setCreditCard(true);
-						return;
-					} else {
-						System.err.println(NO_ADD_CREDIT_CARD);
-						return;
-					}
-				}
-				System.out.println(BACK_TO_MAIN_MENU);
+			} else {
+				System.err.println(NO_TAKE_DEBIT_CARD);
 				return;
 			}
 		}
-		System.err.println(INVALID_NAME_OR_PASSWORD);
+		System.out.println(PREVIOUS_MENU);
+		return;
+	}
+
+
+	private static void deleteCreditCard(Customer customer) {
+		System.out.println("Do you whish to delete a Debit Card? y/n");
+		if (scanner.next().equals("y")) {
+			if (customer.isCreditCard()) {
+				customer.setCreditCard(false);
+				System.out.println("Credit card removed");
+				return;
+			} else {
+				System.err.println(NO_TAKE_CREDIT_CARD);
+				return;
+			}
+		}
+		System.out.println(PREVIOUS_MENU);
+		return;
+	}
+
+
+	private static void createDebitCard(Customer customer) {
+		System.out.println("Do you whish to create a Debit Card? y/n");
+		if (scanner.next().equals("y")) {
+			if (!customer.isDebitCard()) {
+				customer.setDebitCard(true);
+				return;
+			} else {
+				System.err.println(NO_ADD_DEBIT_CARD);
+				return;
+			}
+		}
+		System.out.println(PREVIOUS_MENU);
+		return;
+	}
+
+
+	private static void createCreditCard(Customer customer) {
+		System.out.println("Do you whish to create a Credit Card? y/n");
+		if (scanner.next().equals("y")) {
+			if (!customer.isCreditCard()) {
+				customer.setCreditCard(true);
+				return;
+			} else {
+				System.err.println(NO_ADD_CREDIT_CARD);
+				return;
+			}
+		}
+		System.out.println(PREVIOUS_MENU);
+		return;
 	}
 
 	/**
@@ -223,7 +246,7 @@ public class Application {
 	 */
 
 	private static void editCustomer() {
-		displayEditCustomer();
+		displayEditCustomerMenu();
 
 		Integer option = scanner.nextInt();
 
@@ -238,7 +261,7 @@ public class Application {
 			editCustomerByID();
 			break;
 		case EXIT:
-			System.out.println(BACK_TO_MAIN_MENU);
+			System.out.println(PREVIOUS_MENU);
 			break;
 
 		default:
@@ -311,7 +334,7 @@ public class Application {
 				// change email
 				break;
 			case 0:
-				System.out.println(BACK_TO_MAIN_MENU);
+				System.out.println(PREVIOUS_MENU);
 				break;
 			default:
 				System.err.println(INVALID_OPTION + " in EditCustomer");
@@ -487,17 +510,18 @@ public class Application {
 	 * 
 	 * @return
 	 */
-	private static boolean checkNameAndPassword() {
+	private static Customer checkNameAndPassword(Customer[] customers) {
 		System.out.println("Please write your name");
 		String name = scanner.next();
 		System.out.println("Please write your Password");
 		String password = scanner.next();
 		for (int i = 0; i < customers.length; i++) {
 			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				return true;
+				return customers[i];
 			}
 		}
-		return false;
+		System.err.println(INVALID_NAME_OR_PASSWORD);
+		return null;
 	}
 
 	/**
@@ -522,11 +546,19 @@ public class Application {
 		System.out.println("3 - Email of the customer");
 	}
 
-	private static void displayEditCustomer() {
+	private static void displayEditCustomerMenu() {
 		System.out.println("Please choose the several methods to change the credentials of the customer");
 		System.out.println("0 - Return to Original Menu");
 		System.out.println("1 - By name and password");
 		System.out.println("2 - By TaxID");
 		System.out.println("3 - By ID");
+	}
+	private static void displayBankCardsMenu() {
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Create Debit Card");
+		System.out.println("2 - Delete Debit Card");
+		System.out.println("3 - Create Credit Card");
+		System.out.println("4 - Delete Credit Card");
 	}
 }
