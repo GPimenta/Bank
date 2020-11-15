@@ -16,6 +16,8 @@ public class Application {
 	private static final int EDIT_CUSTOMER = 5;
 	private static final int DELETE_CUSTOMER = 6;
 	private static final int DEPOSIT_MONEY = 7;
+	private static final int CREATE_DEBIT_CARD = 8;
+	private static final int CREATE_CREDIT_CARD = 9;
 
 
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
@@ -79,6 +81,14 @@ public class Application {
 				depositMoney();
 				//Deposit balance
 				break;
+			case CREATE_DEBIT_CARD:
+			
+				//Deposit balance
+				break;
+			case CREATE_CREDIT_CARD:
+				
+				//Deposit balance
+				break;
 
 			case EXIT:
 				System.out.println(GOODBYE);
@@ -90,6 +100,23 @@ public class Application {
 		}while(option != 0);
 	}
 
+	
+	private static void createDebitCard() {
+		System.out.println("Please write your name");
+		String name = scanner.next();
+		System.out.println("Please write your Password");
+		String password = scanner.next();
+		System.out.println("Do you whish to create a Debit Card? y/n");
+		if(scanner.next().equals("y")) {
+			
+		}
+		
+	}
+	
+	
+	/**
+	 * Deposit money
+	 */
 
 	private static void depositMoney() {
 		System.out.println("Please write your name");
@@ -349,6 +376,12 @@ public class Application {
 		newCustomer.setBalance(scanner.nextDouble());
 		
 		System.out.println("Do you which to have a Debit Card? y/n");
+		if(scanner.next().equals("y"))
+			newCustomer.setDebitCard(true);
+		else
+			newCustomer.setDebitCard(false);
+		
+		System.out.println("Do you which to have a Credit Card? y/n");
 		if(scanner.next().equals("y"))
 			newCustomer.setDebitCard(true);
 		else

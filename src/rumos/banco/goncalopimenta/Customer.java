@@ -4,23 +4,21 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Customer {
-	//client parameters
+	// client parameters
 	private Integer id;
 	private String name;
 	private String password;
 	private String taxId;
 	private String email;
 	private LocalDate birthday;
-	
-	//Balance parameters
+
+	// Balance parameters
 	private Double balance;
-	
-	//Credit and debit card parameters
-	private boolean debitCard;
-	private boolean creditCard;
-	
-	
-	
+
+	// Credit and debit card parameters
+	private Boolean debitCard;
+	private Boolean creditCard;
+
 //	public Customer() {
 //
 //	}
@@ -34,31 +32,15 @@ public class Customer {
 
 
 
-	
-public boolean isDebitCard() {
-		return debitCard;
-	}
-
-	public void setDebitCard(boolean debitCard) {
-		this.debitCard = debitCard;
-	}
-
-	public boolean isCreditCard() {
-		return creditCard;
-	}
-
-	public void setCreditCard(boolean creditCard) {
-		this.creditCard = creditCard;
-	}
-	
-	
-	
-	//Quando formos usar este método, o código há de ficar algo como customer.calculateAge();
-	//Minha sugestão é que este método se chame 'getAge()' que retorna a idade do customer
-	//o nome 'calculateAge' parece que eu quero calcular a idade dele em outra data
-	//OBS: Não é porque existe um método chamado 'getAge();' que o objecto precisa ter um atributo age
-	//YuriValle 11/11/2020
-	//R: Obrigado pela dica Professor!!
+	// Quando formos usar este método, o código há de ficar algo como
+	// customer.calculateAge();
+	// Minha sugestão é que este método se chame 'getAge()' que retorna a idade
+	// do customer
+	// o nome 'calculateAge' parece que eu quero calcular a idade dele em outra data
+	// OBS: Não é porque existe um método chamado 'getAge();' que o objecto
+	// precisa ter um atributo age
+	// YuriValle 11/11/2020
+	// R: Obrigado pela dica Professor!!
 	public Integer getAge() {
 		LocalDate today = LocalDate.now();
 		Period period = Period.between(this.birthday, today);
@@ -126,6 +108,21 @@ public boolean isDebitCard() {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+	public boolean isDebitCard() {
+		return debitCard;
+	}
+
+	public void setDebitCard(boolean debitCard) {
+		this.debitCard = debitCard;
+	}
+
+	public boolean isCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(boolean creditCard) {
+		this.creditCard = creditCard;
 	}
 
 }
