@@ -97,9 +97,10 @@ public class Application {
 			}
 		} while (option != 0);
 	}
-/******************************************************************************
- * Bank Cards
- ******************************************************************************/
+
+	/******************************************************************************
+	 * Bank Cards
+	 ******************************************************************************/
 	private static void editBankCards() {
 		Integer save = 0;
 		Integer option;
@@ -215,7 +216,7 @@ public class Application {
 	}
 
 	/******************************************************************************
-	 *  Money movement
+	 * Money movement
 	 ******************************************************************************/
 
 	private static void depositMoney() {
@@ -235,12 +236,69 @@ public class Application {
 		System.out.println(INVALID_NAME_OR_PASSWORD);
 		return;
 	}
-	
+
 	private static void withdrawalMoney() {
-		
+		System.out.println("Please write your name");
+		String name = scanner.next();
+		System.out.println("Please write your Password");
+		String password = scanner.next();
+
+		for (int i = 0; i < customers.length; i++) {
+			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
+				System.out.println("Please indicate the amount of money you wish to take");
+				Double amount = scanner.nextDouble();
+				
+				if((customers[i].getBalance() - Math.abs(amount)) < 0D) {
+					System.out.println("You are removing an amount bigger than what you own");/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
+					return;
+				}
+				customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
+				System.out.printf("\nAt the moment you have %f on your account", customers[i].getBalance());
+				return;
+			}
+		}
+		System.out.println(INVALID_NAME_OR_PASSWORD);
+		return;
+
 	}
+
 	private static void transferMoney() {
-		
+		System.out.println("Please write your name");
+		String name = scanner.next();
+		System.out.println("Please write your Password");
+		String password = scanner.next();
+		String accountToTransfer;
+
+		for (int i = 0; i < customers.length; i++) {
+			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
+				System.out.println("Please indicate the amount of money you wish to transfer");
+				Double amount = scanner.nextDouble();
+				
+				if(customers[i].getBalance() - Math.abs(amount)< 0D) {
+					System.out.println("You are removing an amount bigger than what you own");/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
+					return;
+				}
+				
+				System.out.println("Please indicate to which account do you want to transfer?");
+				accountToTransfer = scanner.next();
+				for(Customer customer : customers) {
+					if(customer.getAccountNumber().equals(accountToTransfer)) {
+						System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s", customer.getName(), customer.getTaxId(), customer.getAccountNumber());
+						return;
+						
+					}
+					System.err.println("There is no account with that number.");
+					return;
+				}
+				
+				
+				customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
+				System.out.printf("\nAt the moment you have %f on your account", customers[i].getBalance());
+				return;
+			}
+		}
+		System.out.println(INVALID_NAME_OR_PASSWORD);
+		return;
 	}
 
 	/******************************************************************************
@@ -355,7 +413,7 @@ public class Application {
 
 	/******************************************************************************
 	 * Show customers methods
-	******************************************************************************/
+	 ******************************************************************************/
 
 	private static void showCustomersByName() {
 		System.out.println("What is the customer name?");
@@ -439,7 +497,7 @@ public class Application {
 	 * 
 	 * @param taxId
 	 * @return
-	******************************************************************************/
+	 ******************************************************************************/
 	private static Boolean taxIDalreadyExists(String taxId) {
 		for (int i = 0; i < customers.length; i++) {
 			if (customers[i] != null) {
@@ -536,9 +594,9 @@ public class Application {
 	 * Display menus
 	 ******************************************************************************/
 	private static void displayMenu() {
-		
-		System.out.println("###################### "+MOTD+" ######################");
-		System.out.println( "\t\tPlease choose the action that u want take: ");
+
+		System.out.println("###################### " + MOTD + " ######################");
+		System.out.println("\t\tPlease choose the action that u want take: ");
 		System.out.println("0 - Exit");
 		System.out.println("1 - Create new customer");
 		System.out.println("2 - Show customer by name");
@@ -549,11 +607,11 @@ public class Application {
 		System.out.println("7 - Deposit money on account");
 		System.out.println("8 - Edit bank cards");
 		System.out.println("###########################################################################");
-		
+
 	}
 
 	private static void displayEditCustomerDetailsMenu() {
-		System.out.println("############################ "+TITLE+" ############################");
+		System.out.println("############################ " + TITLE + " ############################");
 		System.out.println("What do you which to edit?");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Name of the customer");
@@ -563,7 +621,7 @@ public class Application {
 	}
 
 	private static void displayEditCustomerMenu() {
-		System.out.println("############################ "+TITLE+" ############################");
+		System.out.println("############################ " + TITLE + " ############################");
 		System.out.println("Please choose the several methods to change the credentials of the customer");
 		System.out.println("0 - Return to Original Menu");
 		System.out.println("1 - By name and password");
@@ -573,7 +631,7 @@ public class Application {
 	}
 
 	private static void displayBankCardsMenu() {
-		System.out.println("############################ "+TITLE+" ############################");
+		System.out.println("############################ " + TITLE + " ############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Create Debit Card");

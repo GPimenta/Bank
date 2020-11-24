@@ -13,7 +13,10 @@ public class Customer {
 	private LocalDate birthday;
 
 	// Balance parameters
+	private String accountNumber; //5 digits
 	private Double balance;
+
+
 
 	// Credit and debit card parameters
 	private Boolean debitCard = false;
@@ -41,17 +44,26 @@ public class Customer {
 	// precisa ter um atributo age
 	// YuriValle 11/11/2020
 	// R: Obrigado pela dica Professor!!
+	
+	
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
+				+ email + ", birthday=" + birthday + ", balance=" + balance + ", accountNumber=" + accountNumber
+				+ ", debitCard=" + debitCard + ", creditCard=" + creditCard + "]";
+	}
+	
+	
+	/**
+	 * Getters and Setters
+	 * 
+	 */
+	
 	public Integer getAge() {
 		LocalDate today = LocalDate.now();
 		Period period = Period.between(this.birthday, today);
 
 		return period.getYears();
-	}
-
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", password=" + password + "\n, taxId=" + taxId + ", email="
-				+ email + ", birthday=" + birthday + ", balance=" + balance + "]";
 	}
 
 	public Integer getId() {
@@ -125,4 +137,11 @@ public class Customer {
 		this.creditCard = creditCard;
 	}
 
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 }
