@@ -14,7 +14,7 @@ public class Application {
 	private static final int SHOW_ALL_CUSTOMERS = 4;
 	private static final int EDIT_CUSTOMER = 5;
 	private static final int DELETE_CUSTOMER = 6;
-	private static final int DEPOSIT_MONEY = 7;
+	private static final int MANAGE_MONEY = 7;
 	private static final int EDIT_BANK_CARDS = 8;
 
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
@@ -25,6 +25,10 @@ public class Application {
 	private static final int DELETE_DEBIT_CARD = 2;
 	private static final int CREATE_CREDIT_CARD = 3;
 	private static final int DELETE_CREDIT_CARD = 4;
+
+	private static final int DEPOSIT_MONEY = 1;
+	private static final int WITHDRAW_MONEY = 2;
+	private static final int TRANSFER_MONEY = 3;
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String TITLE = "Rumos Digital Bank";
@@ -45,12 +49,6 @@ public class Application {
 	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
-	
-	
-	
-	
-	
-	
 
 	private static Customer[] customers = new Customer[DATABASE_SIZE];
 	private static Scanner scanner = new Scanner(System.in);
@@ -86,8 +84,8 @@ public class Application {
 				deleteCustomerById();
 				// Delete customer by ID
 				break;
-			case DEPOSIT_MONEY:
-				depositMoney();
+			case MANAGE_MONEY:
+				moneyManagement();
 				// Deposit balance
 				break;
 			case EDIT_BANK_CARDS:
@@ -109,20 +107,12 @@ public class Application {
 	 * Bank Cards
 	 ******************************************************************************/
 	private static void editBankCards() {
-		Integer save = 0;
 		Integer option;
+		Customer customer;
 
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
+		customer = checkNameAndPassword();
 
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				save = i;
-				break;
-			}
-			System.err.println(INVALID_NAME_OR_PASSWORD);
+		if (customer == null) {
 			return;
 		}
 
@@ -134,19 +124,19 @@ public class Application {
 
 			switch (option) {
 			case CREATE_DEBIT_CARD:
-				createDebitCard(customers[save]);
+				createDebitCard(customer);
 				// Add Debit card
 				break;
 			case DELETE_DEBIT_CARD:
-				deleteDebitCard(customers[save]);
+				deleteDebitCard(customer);
 				// Remove Debit card
 				break;
 			case CREATE_CREDIT_CARD:
-				createCreditCard(customers[save]);
+				createCreditCard(customer);
 				// Add Credit Card
 				break;
 			case DELETE_CREDIT_CARD:
-				deleteCreditCard(customers[save]);
+				deleteCreditCard(customer);
 				// Remove Credit Card
 				break;
 			case EXIT:
@@ -225,134 +215,95 @@ public class Application {
 	/******************************************************************************
 	 * Money movement
 	 ******************************************************************************/
-	
-	
+
 	private static void moneyManagement() {
-		Integer save = 0;
 		Integer option;
-		
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
-		
-		
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				save = i;
-				break;
-			}
-			System.err.println(INVALID_NAME_OR_PASSWORD);
+		Customer customer;
+
+		customer = checkNameAndPassword();
+
+		if (customer == null) {
 			return;
 		}
-		
-		displayMoneyManagement();
-		option = scanner.nextInt();
-		switch (option) {
-		case value:
-			
-			break;
-		case value:
-			
-			break;
-		case value:
-			
-			break;
-		case EXIT:
-			System.out.println(PREVIOUS_MENU);
-			break;
-			
 
-		default:
-			break;
-		}
-		
-		
-		
-	}
-	
+		do {
+			displayMoneyManagement();
+			option = scanner.nextInt();
+			switch (option) {
+			case DEPOSIT_MONEY:
+				depositMoney(customer);
+				break;
+			case WITHDRAW_MONEY:
+				withdrawMoney(customer);
+				break;
+			case TRANSFER_MONEY:
+				transferMoney(customer);
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
 
-	private static void depositMoney() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
-
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Please insert the amount to deposit in your account");
-				Double amount = scanner.nextDouble();
-				customers[i].setBalance(customers[i].getBalance() + Math.abs(amount));
-				return;
+			default:
+				System.err.println(INVALID_OPTION + " in moneyManagement");
+				break;
 			}
-		}
-		System.out.println(INVALID_NAME_OR_PASSWORD);
+		} while (option != 0);
+
+	}
+
+	private static void depositMoney(Customer customer) {
+
+		System.out.println("Please insert the amount to deposit in your account");
+		Double amount = scanner.nextDouble();
+		customer.setBalance(customer.getBalance() + Math.abs(amount));
 		return;
 	}
 
-	private static void withdrawalMoney() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
+	private static void withdrawMoney(Customer customer) {
 
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Please indicate the amount of money you wish to take");
-				Double amount = scanner.nextDouble();
-				
-				if((customers[i].getBalance() - Math.abs(amount)) < 0D) {
-					System.out.println(NO_MONEY_TO_REMOVE);/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
-					return;
-				}
-				customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
-				System.out.printf("\nAt the moment you have %f on your account", customers[i].getBalance());
-				return;
-			}
+		System.out.println("Please indicate the amount of money you wish to take");
+		Double amount = scanner.nextDouble();
+
+		if ((customer.getBalance() - Math.abs(amount)) < 0D) {
+			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
+			return;
 		}
-		System.out.println(INVALID_NAME_OR_PASSWORD);
+		customer.setBalance(customer.getBalance() - Math.abs(amount));
+		System.out.printf("\nAt the moment you have %f on your account\n", customer.getBalance());
 		return;
-
 	}
 
-	private static void transferMoney() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
+	private static void transferMoney(Customer customer) {
+
 		Double amount;
 		String accountToTransfer;
 
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				System.out.println("Please indicate the amount of money you wish to transfer");
-				amount = scanner.nextDouble();
-				
-				if(customers[i].getBalance() - Math.abs(amount)< 0D) {
-					System.out.println(NO_MONEY_TO_REMOVE);/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
-					return;
-				}
-				
-				System.out.println("Please indicate to which account do you want to transfer?");
-				accountToTransfer = scanner.next();
-				for(Customer customer : customers) {
-					if(customer.getAccountNumber().equals(accountToTransfer)) {
-						System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s", customer.getName(), customer.getTaxId(), customer.getAccountNumber());
-						customer.setBalance(customer.getBalance()+amount);
-						customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
-						System.out.println("Presenting both accounts values");
-						System.out.println("From: " + customers[i].toString());
-						System.out.println("To: " + customer);
-						return;
-					}
-					
-				}
-				System.err.println("There is no account with that number.");
-				return;
-				
-			}
+		System.out.println("Please indicate the amount of money you wish to transfer");
+		amount = scanner.nextDouble();
+
+		if (customer.getBalance() - Math.abs(amount) < 0D) {
+			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
+			return;
 		}
-		System.out.println(INVALID_NAME_OR_PASSWORD);
+
+		System.out.println("Please indicate to which account do you want to transfer?");
+		accountToTransfer = scanner.next();
+		for (Customer customerToTransfer : customers) {
+			if(customerToTransfer == null) break;
+			if (customerToTransfer.getAccountNumber().equals(accountToTransfer)) {
+				System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s\n",
+						customerToTransfer.getName(), customerToTransfer.getTaxId(),
+						customerToTransfer.getAccountNumber());
+				customerToTransfer.setBalance(customerToTransfer.getBalance() + amount);
+				customer.setBalance(customer.getBalance() - Math.abs(amount));
+				System.out.println("Presenting both accounts values");
+				System.out.println("From: " + customer.toString());
+				System.out.println("To: " + customerToTransfer.toString());
+				return;
+			}
+
+		}
+		System.err.println("There is no account with that number.");
 		return;
 	}
 
@@ -607,6 +558,9 @@ public class Application {
 																				// garantir q o year seja bem
 																				// introduzido
 
+		System.out.println("Please set the number of the account (5 digits)");
+		newCustomer.setAccountNumber(scanner.next());
+
 		System.out.println("Please set the customer balance");
 		newCustomer.setBalance(scanner.nextDouble());
 
@@ -631,14 +585,15 @@ public class Application {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	private static Customer checkNameAndPassword(Customer[] customers) {
+	private static Customer checkNameAndPassword() {
 		System.out.println("Please write your name");
 		String name = scanner.next();
 		System.out.println("Please write your Password");
 		String password = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				return customers[i];
+
+		for (Customer customer : customers) {
+			if (customer.getName().equals(name) && customer.getPassword().equals(password)) {
+				return customer;
 			}
 		}
 		System.err.println(INVALID_NAME_OR_PASSWORD);
@@ -659,14 +614,14 @@ public class Application {
 		System.out.println("4 - Show all customers");
 		System.out.println("5 - Edit customer");
 		System.out.println("6 - Delete customer by Id");
-		System.out.println("7 - Deposit money on account");
+		System.out.println("7 - Manage money on account");
 		System.out.println("8 - Edit bank cards");
 		System.out.println("###########################################################################");
 
 	}
 
 	private static void displayEditCustomerDetailsMenu() {
-		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("What do you which to edit?");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Name of the customer");
@@ -686,7 +641,7 @@ public class Application {
 	}
 
 	private static void displayBankCardsMenu() {
-		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Create Debit Card");
@@ -695,8 +650,9 @@ public class Application {
 		System.out.println("4 - Delete Credit Card");
 		System.out.println("###########################################################################");
 	}
+
 	private static void displayMoneyManagement() {
-		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Deposit money on your account");
@@ -704,7 +660,5 @@ public class Application {
 		System.out.println("3 - Transfer money to another account");
 		System.out.println("###########################################################################");
 	}
-	
-	
-	
+
 }
