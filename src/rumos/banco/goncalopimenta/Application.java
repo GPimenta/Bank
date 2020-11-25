@@ -44,6 +44,13 @@ public class Application {
 	private static final String NO_TAKE_DEBIT_CARD = "You do not have a Debit Card";
 	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
+	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
+	
+	
+	
+	
+	
+	
 
 	private static Customer[] customers = new Customer[DATABASE_SIZE];
 	private static Scanner scanner = new Scanner(System.in);
@@ -218,6 +225,52 @@ public class Application {
 	/******************************************************************************
 	 * Money movement
 	 ******************************************************************************/
+	
+	
+	private static void moneyManagement() {
+		Integer save = 0;
+		Integer option;
+		
+		System.out.println("Please write your name");
+		String name = scanner.next();
+		System.out.println("Please write your Password");
+		String password = scanner.next();
+		
+		
+		for (int i = 0; i < customers.length; i++) {
+			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
+				save = i;
+				break;
+			}
+			System.err.println(INVALID_NAME_OR_PASSWORD);
+			return;
+		}
+		
+		displayMoneyManagement();
+		option = scanner.nextInt();
+		switch (option) {
+		case value:
+			
+			break;
+		case value:
+			
+			break;
+		case value:
+			
+			break;
+		case EXIT:
+			System.out.println(PREVIOUS_MENU);
+			break;
+			
+
+		default:
+			break;
+		}
+		
+		
+		
+	}
+	
 
 	private static void depositMoney() {
 		System.out.println("Please write your name");
@@ -249,7 +302,7 @@ public class Application {
 				Double amount = scanner.nextDouble();
 				
 				if((customers[i].getBalance() - Math.abs(amount)) < 0D) {
-					System.out.println("You are removing an amount bigger than what you own");/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
+					System.out.println(NO_MONEY_TO_REMOVE);/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
 					return;
 				}
 				customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
@@ -267,15 +320,16 @@ public class Application {
 		String name = scanner.next();
 		System.out.println("Please write your Password");
 		String password = scanner.next();
+		Double amount;
 		String accountToTransfer;
 
 		for (int i = 0; i < customers.length; i++) {
 			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
 				System.out.println("Please indicate the amount of money you wish to transfer");
-				Double amount = scanner.nextDouble();
+				amount = scanner.nextDouble();
 				
 				if(customers[i].getBalance() - Math.abs(amount)< 0D) {
-					System.out.println("You are removing an amount bigger than what you own");/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
+					System.out.println(NO_MONEY_TO_REMOVE);/*NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO*/
 					return;
 				}
 				
@@ -284,17 +338,18 @@ public class Application {
 				for(Customer customer : customers) {
 					if(customer.getAccountNumber().equals(accountToTransfer)) {
 						System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s", customer.getName(), customer.getTaxId(), customer.getAccountNumber());
+						customer.setBalance(customer.getBalance()+amount);
+						customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
+						System.out.println("Presenting both accounts values");
+						System.out.println("From: " + customers[i].toString());
+						System.out.println("To: " + customer);
 						return;
-						
 					}
-					System.err.println("There is no account with that number.");
-					return;
+					
 				}
-				
-				
-				customers[i].setBalance(customers[i].getBalance() - Math.abs(amount));
-				System.out.printf("\nAt the moment you have %f on your account", customers[i].getBalance());
+				System.err.println("There is no account with that number.");
 				return;
+				
 			}
 		}
 		System.out.println(INVALID_NAME_OR_PASSWORD);
@@ -640,4 +695,16 @@ public class Application {
 		System.out.println("4 - Delete Credit Card");
 		System.out.println("###########################################################################");
 	}
+	private static void displayMoneyManagement() {
+		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Deposit money on your account");
+		System.out.println("2 - Withdraw money from your account");
+		System.out.println("3 - Transfer money to another account");
+		System.out.println("###########################################################################");
+	}
+	
+	
+	
 }
