@@ -13,8 +13,9 @@ public class Customer {
 	private LocalDate birthday;
 
 	// Balance parameters
-	private String accountNumber; //5 digits
-	private Double balance;
+	private String accountHolderNumber; //5 digits
+	private Double accountHolderBalance;
+	private String[] secundaryAccountNumber = new String[4];
 
 
 
@@ -49,7 +50,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
-				+ email + ", birthday=" + birthday + ", balance=" + balance + ", accountNumber=" + accountNumber
+				+ email + ", birthday=" + birthday + ", balance=" + accountHolderBalance + ", accountNumber=" + accountHolderNumber
 				+ ", debitCard=" + debitCard + ", creditCard=" + creditCard + "]";
 	}
 	
@@ -115,11 +116,11 @@ public class Customer {
 	}
 
 	public Double getBalance() {
-		return balance;
+		return accountHolderBalance;
 	}
 
 	public void setBalance(Double balance) {
-		this.balance = balance;
+		this.accountHolderBalance = balance;
 	}
 	public boolean isDebitCard() {
 		return debitCard;
@@ -138,10 +139,10 @@ public class Customer {
 	}
 
 	public String getAccountNumber() {
-		return accountNumber;
+		return accountHolderNumber;
 	}
 
 	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
+		this.accountHolderNumber = accountNumber;
 	}
 }
