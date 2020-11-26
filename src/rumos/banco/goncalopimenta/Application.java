@@ -255,7 +255,7 @@ public class Application {
 
 		System.out.println("Please insert the amount to deposit in your account");
 		Double amount = scanner.nextDouble();
-		customer.setBalance(customer.getBalance() + Math.abs(amount));
+		customer.setHolderAccountBalance(customer.getHolderAccountBalance() + Math.abs(amount));
 		return;
 	}
 
@@ -264,12 +264,12 @@ public class Application {
 		System.out.println("Please indicate the amount of money you wish to take");
 		Double amount = scanner.nextDouble();
 
-		if ((customer.getBalance() - Math.abs(amount)) < 0D) {
+		if ((customer.getHolderAccountBalance() - Math.abs(amount)) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
 			return;
 		}
-		customer.setBalance(customer.getBalance() - Math.abs(amount));
-		System.out.printf("\nAt the moment you have %f on your account\n", customer.getBalance());
+		customer.setHolderAccountBalance(customer.getHolderAccountBalance() - Math.abs(amount));
+		System.out.printf("\nAt the moment you have %f on your account\n", customer.getHolderAccountBalance());
 		return;
 	}
 
@@ -281,7 +281,7 @@ public class Application {
 		System.out.println("Please indicate the amount of money you wish to transfer");
 		amount = scanner.nextDouble();
 
-		if (customer.getBalance() - Math.abs(amount) < 0D) {
+		if (customer.getHolderAccountBalance() - Math.abs(amount) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
 			return;
 		}
@@ -290,12 +290,12 @@ public class Application {
 		accountToTransfer = scanner.next();
 		for (Customer customerToTransfer : customers) {
 			if(customerToTransfer == null) break;
-			if (customerToTransfer.getAccountNumber().equals(accountToTransfer)) {
+			if (customerToTransfer.getAccountHolderNumber().equals(accountToTransfer)) {
 				System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s\n",
 						customerToTransfer.getName(), customerToTransfer.getTaxId(),
-						customerToTransfer.getAccountNumber());
-				customerToTransfer.setBalance(customerToTransfer.getBalance() + amount);
-				customer.setBalance(customer.getBalance() - Math.abs(amount));
+						customerToTransfer.getAccountHolderNumber());
+				customerToTransfer.setHolderAccountBalance(customerToTransfer.getHolderAccountBalance() + amount);
+				customer.setHolderAccountBalance(customer.getHolderAccountBalance() - Math.abs(amount));
 				System.out.println("Presenting both accounts values");
 				System.out.println("From: " + customer.toString());
 				System.out.println("To: " + customerToTransfer.toString());
@@ -559,10 +559,19 @@ public class Application {
 																				// introduzido
 
 		System.out.println("Please set the number of the account (5 digits)");
-		newCustomer.setAccountNumber(scanner.next());
+		newCustomer.setAccountHolderNumber(scanner.next());
 
-		System.out.println("Please set the customer balance");
-		newCustomer.setBalance(scanner.nextDouble());
+		System.out.println("Please set the customer balance on its main account");
+		newCustomer.setHolderAccountBalance(scanner.nextDouble());
+		
+		System.out.println("Please indicate how many secondary accounts do you want to have");
+		Integer count = scanner.nextInt();
+		String secondaryAccount;
+		for (int i = 0; i < count; i++) {
+			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",i+1);
+			secondaryAccount = scanner.next();
+			newCustomer.getSecundaryAccountNumber()[i] = secondaryAccount;
+		}
 
 		System.out.println("Do you which to have a Debit Card? y/n");
 		if (scanner.next().equals("y"))

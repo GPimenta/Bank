@@ -2,6 +2,7 @@ package rumos.banco.goncalopimenta;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Arrays;
 
 public class Customer {
 	// client parameters
@@ -15,7 +16,7 @@ public class Customer {
 	// Balance parameters
 	private String accountHolderNumber; //5 digits
 	private Double accountHolderBalance;
-	private String[] secundaryAccountNumber = new String[4];
+	private String[] secondaryAccountNumber = {"","","",""};
 
 
 
@@ -36,6 +37,35 @@ public class Customer {
 
 
 
+	@Override
+	public String toString() {
+		return "Customer:\n"
+				+ " id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
+				+ email + ", birthday=" + birthday + ", accountHolderNumber=" + accountHolderNumber
+				+ ", accountHolderBalance=" + accountHolderBalance + ",\nsecundaryAccountNumber="
+				+ Arrays.toString(secondaryAccountNumber) + ", debitCard=" + debitCard + ", creditCard=" + creditCard
+				+ "]";
+	}
+
+
+
+	/**
+	 * Getters and Setters
+	 * 
+	 */
+	
+	
+	public String[] getSecundaryAccountNumber() {
+		return secondaryAccountNumber;
+	}
+
+
+
+
+
+	public void setSecundaryAccountNumber(String[] secundaryAccountNumber) {
+		this.secondaryAccountNumber = secundaryAccountNumber;
+	}
 	// Quando formos usar este método, o código há de ficar algo como
 	// customer.calculateAge();
 	// Minha sugestão é que este método se chame 'getAge()' que retorna a idade
@@ -45,20 +75,6 @@ public class Customer {
 	// precisa ter um atributo age
 	// YuriValle 11/11/2020
 	// R: Obrigado pela dica Professor!!
-	
-	
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
-				+ email + ", birthday=" + birthday + ", balance=" + accountHolderBalance + ", accountNumber=" + accountHolderNumber
-				+ ", debitCard=" + debitCard + ", creditCard=" + creditCard + "]";
-	}
-	
-	
-	/**
-	 * Getters and Setters
-	 * 
-	 */
 	
 	public Integer getAge() {
 		LocalDate today = LocalDate.now();
@@ -115,11 +131,11 @@ public class Customer {
 		this.birthday = dateOfBirth;
 	}
 
-	public Double getBalance() {
+	public Double getHolderAccountBalance() {
 		return accountHolderBalance;
 	}
 
-	public void setBalance(Double balance) {
+	public void setHolderAccountBalance(Double balance) {
 		this.accountHolderBalance = balance;
 	}
 	public boolean isDebitCard() {
@@ -138,11 +154,11 @@ public class Customer {
 		this.creditCard = creditCard;
 	}
 
-	public String getAccountNumber() {
+	public String getAccountHolderNumber() {
 		return accountHolderNumber;
 	}
 
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountHolderNumber(String accountNumber) {
 		this.accountHolderNumber = accountNumber;
 	}
 }
