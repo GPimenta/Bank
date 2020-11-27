@@ -231,10 +231,10 @@ public class Application {
 			option = scanner.nextInt();
 			switch (option) {
 			case DEPOSIT_MONEY:
-				depositMoney(customer);
+				depositMoneyOnHolderAccount(customer);
 				break;
 			case WITHDRAW_MONEY:
-				withdrawMoney(customer);
+				withdrawMoneyOnHolderAccount(customer);
 				break;
 			case TRANSFER_MONEY:
 				transferMoney(customer);
@@ -251,15 +251,52 @@ public class Application {
 
 	}
 
-	private static void depositMoney(Customer customer) {
+	private static void depositMoneyOnHolderAccount(Customer customer) {
 
 		System.out.println("Please insert the amount to deposit in your account");
 		Double amount = scanner.nextDouble();
 		customer.setHolderAccountBalance(customer.getHolderAccountBalance() + Math.abs(amount));
 		return;
 	}
+	
+	
+	
+	private static void depositMoneyOnSecundaryAccount(Customer customer) {
+		String secundaryAccount = checkSecundaryAccount(customer);
+		String decision;
+		
+		if(secundaryAccount == null) return; // NECESSARIO FAZER LOOP PARA POR O SECUNDARY NUMBER CORRECTO OU QUERER SAIR
+		
+		for (Customer getCustomer : customers) {
+			if(getCustomer.getAccountHolderNumber().equals(secundaryAccount)) {
+				depositMoneyOnHolderAccount(getCustomer);
+				return;
+			}
+		}
+		System.out.println("There is no Holder account");
+		return;
+		
+		
+		
+	}
 
-	private static void withdrawMoney(Customer customer) {
+	private static String checkSecundaryAccount(Customer customer) {
+		System.out.println("From which of your secundary account do want to transfer money? ");
+		System.out.printf("\nThe accounts that you have associated are: %s", customer.getSecundaryAccountNumber().toString());
+		String secundaryAccount;
+		
+		secundaryAccount = scanner.next();
+		for(String otherAccounts : customer.getSecundaryAccountNumber()) {
+			if(otherAccounts.equals(secundaryAccount)) {
+				System.out.println("The choosen account is: "+ otherAccounts);
+				return otherAccounts;
+			}
+		}
+		System.err.println("The secundary account does not correspond to the ones that you own");
+		return null;
+	}
+
+	private static void withdrawMoneyOnHolderAccount(Customer customer) {
 
 		System.out.println("Please indicate the amount of money you wish to take");
 		Double amount = scanner.nextDouble();
