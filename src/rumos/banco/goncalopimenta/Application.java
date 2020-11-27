@@ -368,15 +368,30 @@ public class Application {
 		System.err.println("There is no account with that number.");
 		return;
 	}
+	/**
+	 * Account History movement
+	 *
+	 */
 	
-	
-	private static void accountHistoryMovement(Customer customer, String amount) {
-		customer.getTransactionHistory().add(amount);
+	private static void showAccountHistoryMovement(Customer customer) {
 		for(String transactionHistory: customer.getTransactionHistory()) {
 			System.out.println("The transaction history: " + transactionHistory);
 		}
 		System.out.println("The total amount of: "+ customer.getHolderAccountBalance());
 	}
+	
+	
+	
+	private static void addTAccountHistoryMovement(Customer customer, String amount) {
+		customer.getTransactionHistory().add(amount);
+		showAccountHistoryMovement(customer);
+	}
+
+
+	
+	
+	
+	
 	
 
 	/******************************************************************************
