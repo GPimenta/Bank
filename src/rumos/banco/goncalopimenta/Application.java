@@ -568,7 +568,7 @@ public class Application {
 		Integer count = scanner.nextInt();
 		String secondaryAccount;
 		for (int i = 0; i < count; i++) {
-			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",i+1);
+			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ", i+1);
 			secondaryAccount = scanner.next();
 			newCustomer.getSecundaryAccountNumber()[i] = secondaryAccount;
 		}
