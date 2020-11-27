@@ -2,6 +2,7 @@ package rumos.banco.goncalopimenta;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Customer {
@@ -17,6 +18,8 @@ public class Customer {
 	private String accountHolderNumber; //5 digits
 	private Double accountHolderBalance;
 	private String[] secondaryAccountNumber = {"","","",""};
+	private ArrayList<String> transactionHistory = new ArrayList<String>();
+
 
 
 
@@ -53,7 +56,13 @@ public class Customer {
 	 * Getters and Setters
 	 * 
 	 */
-	
+	public ArrayList<String> getTransactionHistory() {
+		return transactionHistory;
+	}
+
+	public void setTransactionHistory(ArrayList<String> transactionHistory) {
+		this.transactionHistory = transactionHistory;
+	}
 	
 	public String[] getSecundaryAccountNumber() {
 		return secondaryAccountNumber;

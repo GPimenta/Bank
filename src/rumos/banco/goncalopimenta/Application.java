@@ -368,6 +368,16 @@ public class Application {
 		System.err.println("There is no account with that number.");
 		return;
 	}
+	
+	
+	private static void accountHistoryMovement(Customer customer, String amount) {
+		customer.getTransactionHistory().add(amount);
+		for(String transactionHistory: customer.getTransactionHistory()) {
+			System.out.println("The transaction history: " + transactionHistory);
+		}
+		System.out.println("The total amount of: "+ customer.getHolderAccountBalance());
+	}
+	
 
 	/******************************************************************************
 	 * Edit customers methods
