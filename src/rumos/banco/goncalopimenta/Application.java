@@ -26,9 +26,11 @@ public class Application {
 	private static final int CREATE_CREDIT_CARD = 3;
 	private static final int DELETE_CREDIT_CARD = 4;
 
-	private static final int DEPOSIT_MONEY = 1;
-	private static final int WITHDRAW_MONEY = 2;
-	private static final int TRANSFER_MONEY = 3;
+	private static final int DEPOSIT_MONEY_ON_HOLDER_ACCOUNT = 1;
+	private static final int DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT = 2;
+	private static final int WITHDRAW_MONEY_ON_HOLDER_ACCOUNT = 3;
+	private static final int WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT = 4;
+	private static final int TRANSFER_MONEY = 5;
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String TITLE = "Rumos Digital Bank";
@@ -230,10 +232,16 @@ public class Application {
 			displayMoneyManagement();
 			option = scanner.nextInt();
 			switch (option) {
-			case DEPOSIT_MONEY:
+			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
 				depositMoneyOnHolderAccount(customer);
 				break;
-			case WITHDRAW_MONEY:
+			case DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT:
+				depositMoneyOnSecundaryAccount(customer);
+				break;
+			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
+				withdrawMoneyOnHolderAccount(customer);
+				break;
+			case WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT:
 				withdrawMoneyOnHolderAccount(customer);
 				break;
 			case TRANSFER_MONEY:
@@ -701,8 +709,10 @@ public class Application {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
-		System.out.println("1 - Deposit money on your account");
-		System.out.println("2 - Withdraw money from your account");
+		System.out.println("1 - Deposit money on your Holder Account");
+		System.out.println("1 - Deposit money on your Secundary Account");
+		System.out.println("2 - Withdraw money from your Holder Account");
+		System.out.println("2 - Withdraw money from your Secundary Account");
 		System.out.println("3 - Transfer money to another account");
 		System.out.println("###########################################################################");
 	}
