@@ -2,6 +2,7 @@ package rumos.banco.goncalopimenta;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Application {
@@ -242,7 +243,7 @@ public class Application {
 				withdrawMoneyOnHolderAccount(customer);
 				break;
 			case WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT:
-				withdrawMoneyOnHolderAccount(customer);
+				withdrawMoneyOnSecundaryAccount(customer);
 				break;
 			case TRANSFER_MONEY:
 				transferMoney(customer);
@@ -266,37 +267,52 @@ public class Application {
 		customer.setHolderAccountBalance(customer.getHolderAccountBalance() + Math.abs(amount));
 		return;
 	}
-	
-	
-	
+
 	private static void depositMoneyOnSecundaryAccount(Customer customer) {
 		String secundaryAccount = checkSecundaryAccount(customer);
 		String decision;
-		
-		if(secundaryAccount == null) return; // NECESSARIO FAZER LOOP PARA POR O SECUNDARY NUMBER CORRECTO OU QUERER SAIR
-		
+
+		if (secundaryAccount == null)
+			return; // NECESSARIO FAZER LOOP PARA POR O SECUNDARY NUMBER CORRECTO OU QUERER SAIR
+
 		for (Customer getCustomer : customers) {
-			if(getCustomer.getAccountHolderNumber().equals(secundaryAccount)) {
+			if (getCustomer.getAccountHolderNumber().equals(secundaryAccount)) {
 				depositMoneyOnHolderAccount(getCustomer);
 				return;
 			}
 		}
 		System.out.println("There is no Holder account");
 		return;
-		
-		
-		
+
+	}
+
+	private static void withdrawMoneyOnSecundaryAccount(Customer customer) {
+		String secundaryAccount = checkSecundaryAccount(customer);
+		String decision;
+
+		if (secundaryAccount == null)
+			return; // NECESSARIO FAZER LOOP PARA POR O SECUNDARY NUMBER CORRECTO OU QUERER SAIR
+
+		for (Customer getCustomer : customers) {
+			if (getCustomer.getAccountHolderNumber().equals(secundaryAccount)) {
+				withdrawMoneyOnHolderAccount(getCustomer);
+				return;
+			}
+		}
+		System.out.println("There is no Holder account");
+		return;
 	}
 
 	private static String checkSecundaryAccount(Customer customer) {
-		System.out.println("From which of your secundary account do want to transfer money? ");
-		System.out.printf("\nThe accounts that you have associated are: %s", customer.getSecundaryAccountNumber().toString());
+		System.out.println("From which of your secundary account do want to perform action? ");
+		System.out.printf("\nThe accounts that you have associated are: %s",
+				Arrays.toString(customer.getSecundaryAccountNumber()) );
 		String secundaryAccount;
-		
+
 		secundaryAccount = scanner.next();
-		for(String otherAccounts : customer.getSecundaryAccountNumber()) {
-			if(otherAccounts.equals(secundaryAccount)) {
-				System.out.println("The choosen account is: "+ otherAccounts);
+		for (String otherAccounts : customer.getSecundaryAccountNumber()) {
+			if (otherAccounts.equals(secundaryAccount)) {
+				System.out.println("The choosen account is: " + otherAccounts);
 				return otherAccounts;
 			}
 		}
@@ -334,7 +350,8 @@ public class Application {
 		System.out.println("Please indicate to which account do you want to transfer?");
 		accountToTransfer = scanner.next();
 		for (Customer customerToTransfer : customers) {
-			if(customerToTransfer == null) break;
+			if (customerToTransfer == null)
+				break;
 			if (customerToTransfer.getAccountHolderNumber().equals(accountToTransfer)) {
 				System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s\n",
 						customerToTransfer.getName(), customerToTransfer.getTaxId(),
@@ -608,12 +625,13 @@ public class Application {
 
 		System.out.println("Please set the customer balance on its main account");
 		newCustomer.setHolderAccountBalance(scanner.nextDouble());
-		
+
 		System.out.println("Please indicate how many secondary accounts do you want to have");
 		Integer count = scanner.nextInt();
 		String secondaryAccount;
 		for (int i = 0; i < count; i++) {
-			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ", i+1);
+			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
+					i + 1);
 			secondaryAccount = scanner.next();
 			newCustomer.getSecundaryAccountNumber()[i] = secondaryAccount;
 		}
@@ -710,10 +728,10 @@ public class Application {
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Deposit money on your Holder Account");
-		System.out.println("1 - Deposit money on your Secundary Account");
-		System.out.println("2 - Withdraw money from your Holder Account");
-		System.out.println("2 - Withdraw money from your Secundary Account");
-		System.out.println("3 - Transfer money to another account");
+		System.out.println("2 - Deposit money on your Secundary Account");
+		System.out.println("3 - Withdraw money from your Holder Account");
+		System.out.println("4 - Withdraw money from your Secundary Account");
+		System.out.println("5 - Transfer money to another account");
 		System.out.println("###########################################################################");
 	}
 

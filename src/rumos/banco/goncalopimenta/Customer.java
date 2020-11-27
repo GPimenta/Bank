@@ -59,10 +59,6 @@ public class Customer {
 		return secondaryAccountNumber;
 	}
 
-
-
-
-
 	public void setSecundaryAccountNumber(String[] secundaryAccountNumber) {
 		this.secondaryAccountNumber = secundaryAccountNumber;
 	}
