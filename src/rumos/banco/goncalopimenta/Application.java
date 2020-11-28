@@ -32,6 +32,8 @@ public class Application {
 	private static final int WITHDRAW_MONEY_ON_HOLDER_ACCOUNT = 3;
 	private static final int WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT = 4;
 	private static final int TRANSFER_MONEY = 5;
+	private static final int CHECK_ACCOUNT_HISTORY = 6;
+	
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String TITLE = "Rumos Digital Bank";
@@ -248,6 +250,9 @@ public class Application {
 			case TRANSFER_MONEY:
 				transferMoney(customer);
 				break;
+			case CHECK_ACCOUNT_HISTORY:
+				showAccountHistoryMovement(customer);
+				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
@@ -265,6 +270,7 @@ public class Application {
 		System.out.println("Please insert the amount to deposit in your account");
 		Double amount = scanner.nextDouble();
 		customer.setHolderAccountBalance(customer.getHolderAccountBalance() + Math.abs(amount));
+		addTAccountHistoryMovement(customer, amount.toString());
 		return;
 	}
 
@@ -284,6 +290,21 @@ public class Application {
 		System.out.println("There is no Holder account");
 		return;
 
+	}
+
+	private static void withdrawMoneyOnHolderAccount(Customer customer) {
+
+		System.out.println("Please indicate the amount of money you wish to take");
+		Double amount = scanner.nextDouble();
+
+		if ((customer.getHolderAccountBalance() - Math.abs(amount)) < 0D) {
+			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
+			return;
+		}
+		customer.setHolderAccountBalance(customer.getHolderAccountBalance() - Math.abs(amount));
+		addTAccountHistoryMovement(customer, "-" + amount.toString());
+		System.out.printf("\nAt the moment you have %f on your account\n", customer.getHolderAccountBalance());
+		return;
 	}
 
 	private static void withdrawMoneyOnSecundaryAccount(Customer customer) {
@@ -306,7 +327,7 @@ public class Application {
 	private static String checkSecundaryAccount(Customer customer) {
 		System.out.println("From which of your secundary account do want to perform action? ");
 		System.out.printf("\nThe accounts that you have associated are: %s",
-				Arrays.toString(customer.getSecundaryAccountNumber()) );
+				Arrays.toString(customer.getSecundaryAccountNumber()));
 		String secundaryAccount;
 
 		secundaryAccount = scanner.next();
@@ -318,20 +339,6 @@ public class Application {
 		}
 		System.err.println("The secundary account does not correspond to the ones that you own");
 		return null;
-	}
-
-	private static void withdrawMoneyOnHolderAccount(Customer customer) {
-
-		System.out.println("Please indicate the amount of money you wish to take");
-		Double amount = scanner.nextDouble();
-
-		if ((customer.getHolderAccountBalance() - Math.abs(amount)) < 0D) {
-			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
-			return;
-		}
-		customer.setHolderAccountBalance(customer.getHolderAccountBalance() - Math.abs(amount));
-		System.out.printf("\nAt the moment you have %f on your account\n", customer.getHolderAccountBalance());
-		return;
 	}
 
 	private static void transferMoney(Customer customer) {
@@ -358,6 +365,7 @@ public class Application {
 						customerToTransfer.getAccountHolderNumber());
 				customerToTransfer.setHolderAccountBalance(customerToTransfer.getHolderAccountBalance() + amount);
 				customer.setHolderAccountBalance(customer.getHolderAccountBalance() - Math.abs(amount));
+				addTAccountHistoryMovement(customer, "-" + amount.toString());
 				System.out.println("Presenting both accounts values");
 				System.out.println("From: " + customer.toString());
 				System.out.println("To: " + customerToTransfer.toString());
@@ -368,31 +376,22 @@ public class Application {
 		System.err.println("There is no account with that number.");
 		return;
 	}
+
 	/**
 	 * Account History movement
 	 *
 	 */
-	
+
 	private static void showAccountHistoryMovement(Customer customer) {
-		for(String transactionHistory: customer.getTransactionHistory()) {
+		for (String transactionHistory : customer.getTransactionHistory()) {
 			System.out.println("The transaction history: " + transactionHistory);
 		}
-		System.out.println("The total amount of: "+ customer.getHolderAccountBalance());
+		System.out.println("The total amount of: " + customer.getHolderAccountBalance());
 	}
-	
-	
-	
+
 	private static void addTAccountHistoryMovement(Customer customer, String amount) {
 		customer.getTransactionHistory().add(amount);
-		showAccountHistoryMovement(customer);
 	}
-
-
-	
-	
-	
-	
-	
 
 	/******************************************************************************
 	 * Edit customers methods
@@ -757,6 +756,8 @@ public class Application {
 		System.out.println("3 - Withdraw money from your Holder Account");
 		System.out.println("4 - Withdraw money from your Secundary Account");
 		System.out.println("5 - Transfer money to another account");
+		System.out.println("6 - Show history account");
+		
 		System.out.println("###########################################################################");
 	}
 
