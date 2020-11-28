@@ -126,6 +126,7 @@ public class Application {
 	
 	private static void addSecundaryAccount(Customer customer) {
 		Integer index = checkSecundaryAccounts(customer);
+		String 
 		if(index  < 4) {
 			customer.getSecundaryAccountNumber()[index];
 		}
