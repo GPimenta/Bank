@@ -13,18 +13,14 @@ public class Application {
 	private static final int SHOW_CUSTOMER = 2;
 	private static final int TO_DECIDE = 3;
 	private static final int TO_DECIDE_2 = 4;
-	private static final int EDIT_CUSTOMER = 5;
+	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 5;
 	private static final int DELETE_CUSTOMER = 6;
 	private static final int MANAGE_MONEY = 7;
 	private static final int EDIT_BANK_CARDS = 8;
-	
-	private static final int SHOW_CUSTOMER_BY_NAME= 1;
+
+	private static final int SHOW_CUSTOMER_BY_NAME = 1;
 	private static final int SHOW_CUSTOMER_BY_TAXID = 2;
 	private static final int SHOW_ALL_CUSTOMER = 3;
-	
-	
-	
-	
 
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
 	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
@@ -81,19 +77,19 @@ public class Application {
 				createNewCustomer();
 				break;
 			case SHOW_CUSTOMER:
-				showCustomersByName();
+				showCustomer();
 				// Show costumer by name
 				break;
 			case TO_DECIDE:
-				showCustomerByTaxId();
+//				showCustomerByTaxId();
 				// Show costumer by taxId
 				break;
 			case TO_DECIDE_2:
-				showAllCustomers();
+//				showAllCustomers();
 				// Show all costumers
 				break;
-			case EDIT_CUSTOMER:
-				editCustomer();
+			case EDIT_CUSTOMER_PERSONAL_DETAILS:
+				editCustomerPersonalDetails();
 				// Edit customer by ID
 				break;
 			case DELETE_CUSTOMER:
@@ -118,6 +114,43 @@ public class Application {
 			}
 		} while (option != 0);
 	}
+	
+	
+	private static void editSecundaryAccounts() {
+		checkNameAndPassword();
+		
+	}
+	
+
+	
+	
+	private static void addSecundaryAccount(Customer customer) {
+		Integer index = checkSecundaryAccounts(customer);
+		if(index  < 4) {
+			customer.getSecundaryAccountNumber()[index];
+		}
+	}
+
+
+	private static int checkSecundaryAccounts(Customer customer) {
+		Integer index = 4;
+		for (int i = 0; i < customer.getSecundaryAccountNumber().length; i++) {
+			if(customer.getSecundaryAccountNumber()[i].isBlank()) {
+				System.out.println("There is possability to add an secundary account");
+				index = i;
+				return index;
+			}
+		}
+		System.out.println("You can not have more secundary accounts"); // COMO TENHO EM VECTOR TENHO Q TRAZER COMIGO UM INDEX. TALVEZ PARA SIMPLIFICAR DEVA TRANSFORMAR EM LISTA
+		return index;
+	}
+	
+	private static void deleteSecundaryAccount() {
+		
+	}
+	
+	
+	
 
 	/******************************************************************************
 	 * Bank Cards
@@ -408,7 +441,7 @@ public class Application {
 	 * Edit customers methods
 	 ******************************************************************************/
 
-	private static void editCustomer() {
+	private static void editCustomerPersonalDetails() {
 		Integer option;
 		do {
 
@@ -521,11 +554,8 @@ public class Application {
 	private static void showCustomer() {
 		System.out.println("Choose the prefered method to search the customer");
 		Integer change;
-		
-		
-		
+
 		do {
-			
 			displayShowCustomer();
 			change = scanner.nextInt();
 			switch (change) {
@@ -538,23 +568,17 @@ public class Application {
 			case SHOW_ALL_CUSTOMER:
 				showAllCustomers();
 				break;
-			case 0:
+			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
-
 			default:
+				System.err.println(INVALID_OPTION + " in showCustomer");
 				break;
 			}
-			
-			
-			
-		}while(change != 0);
-		
-		
-		
+
+		} while (change != 0);
+		return;
 	}
-
-
 
 	private static void showCustomersByName() {
 		System.out.println("What is the customer name?");
@@ -754,9 +778,9 @@ public class Application {
 		System.out.println("\t\tPlease choose the action that u want take: ");
 		System.out.println("0 - Exit");
 		System.out.println("1 - Create new customer");
-		System.out.println("2 - Show customer by name");
-		System.out.println("3 - Show customer by taxId");
-		System.out.println("4 - Show all customers");
+		System.out.println("2 - Show customer methods");
+		System.out.println("3 - TO DECIDE");
+		System.out.println("4 - TO DECIDE");
 		System.out.println("5 - Edit customer");
 		System.out.println("6 - Delete customer by Id");
 		System.out.println("7 - Manage money on account");
@@ -764,6 +788,7 @@ public class Application {
 		System.out.println("###########################################################################");
 
 	}
+
 	private static void displayShowCustomer() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
