@@ -10,17 +10,29 @@ public class Application {
 
 	private static final int EXIT = 0;
 	private static final int CREATE_NEW_CUSTOMER = 1;
-	private static final int FIND_CUSTOMER_BY_NAME = 2;
-	private static final int FIND_CUSTOMER_BY_TAXID = 3;
-	private static final int SHOW_ALL_CUSTOMERS = 4;
+	private static final int SHOW_CUSTOMER = 2;
+	private static final int TO_DECIDE = 3;
+	private static final int TO_DECIDE_2 = 4;
 	private static final int EDIT_CUSTOMER = 5;
 	private static final int DELETE_CUSTOMER = 6;
 	private static final int MANAGE_MONEY = 7;
 	private static final int EDIT_BANK_CARDS = 8;
+	
+	private static final int SHOW_CUSTOMER_BY_NAME= 1;
+	private static final int SHOW_CUSTOMER_BY_TAXID = 2;
+	private static final int SHOW_ALL_CUSTOMER = 3;
+	
+	
+	
+	
 
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
 	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
 	private static final int EDIT_CUSTOMER_BY_ID = 3;
+
+	private static final int CHANGE_NAME = 1;
+	private static final int CHANGE_PASSWORD = 2;
+	private static final int CHANGE_EMAIL = 3;
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
@@ -33,7 +45,6 @@ public class Application {
 	private static final int WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT = 4;
 	private static final int TRANSFER_MONEY = 5;
 	private static final int CHECK_ACCOUNT_HISTORY = 6;
-	
 
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String TITLE = "Rumos Digital Bank";
@@ -69,15 +80,15 @@ public class Application {
 			case CREATE_NEW_CUSTOMER:
 				createNewCustomer();
 				break;
-			case FIND_CUSTOMER_BY_NAME:
+			case SHOW_CUSTOMER:
 				showCustomersByName();
 				// Show costumer by name
 				break;
-			case FIND_CUSTOMER_BY_TAXID:
+			case TO_DECIDE:
 				showCustomerByTaxId();
 				// Show costumer by taxId
 				break;
-			case SHOW_ALL_CUSTOMERS:
+			case TO_DECIDE_2:
 				showAllCustomers();
 				// Show all costumers
 				break;
@@ -424,7 +435,7 @@ public class Application {
 		} while (option != 0);
 	}
 
-	private static void editCustomerByNameAndPassword() {
+	private static void editCustomerByNameAndPassword() { // CODIGO REPETIDO, DEVE SER ALTERADO
 		System.out.println("Please write the name of the customer");
 		String name = scanner.next();
 		System.out.println("Please write the Password of the customer");
@@ -476,22 +487,22 @@ public class Application {
 			change = scanner.nextInt();
 
 			switch (change) {
-			case 1:
+			case CHANGE_NAME:
 				System.out.println("What is the new name?");
 				customer.setName(scanner.next());
 				// Change Name
 				break;
-			case 2:
+			case CHANGE_PASSWORD:
 				System.out.println("What is the new password?");
 				customer.setPassword(scanner.next());
 				// Change password
 				break;
-			case 3:
+			case CHANGE_EMAIL:
 				System.out.println("What is the new email?");
 				customer.setEmail(scanner.next());
 				// change email
 				break;
-			case 0:
+			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
 			default:
@@ -506,6 +517,44 @@ public class Application {
 	/******************************************************************************
 	 * Show customers methods
 	 ******************************************************************************/
+
+	private static void showCustomer() {
+		System.out.println("Choose the prefered method to search the customer");
+		Integer change;
+		
+		
+		
+		do {
+			
+			displayShowCustomer();
+			change = scanner.nextInt();
+			switch (change) {
+			case SHOW_CUSTOMER_BY_NAME:
+				showCustomersByName();
+				break;
+			case SHOW_CUSTOMER_BY_TAXID:
+				showCustomerByTaxId();
+				break;
+			case SHOW_ALL_CUSTOMER:
+				showAllCustomers();
+				break;
+			case 0:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				break;
+			}
+			
+			
+			
+		}while(change != 0);
+		
+		
+		
+	}
+
+
 
 	private static void showCustomersByName() {
 		System.out.println("What is the customer name?");
@@ -715,6 +764,15 @@ public class Application {
 		System.out.println("###########################################################################");
 
 	}
+	private static void displayShowCustomer() {
+		System.out.println("############################ " + TITLE + " #############################");
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Show customer by name");
+		System.out.println("2 - Show customer by taxId");
+		System.out.println("3 - Show all customers");
+		System.out.println("###########################################################################");
+	}
 
 	private static void displayEditCustomerDetailsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
@@ -757,7 +815,6 @@ public class Application {
 		System.out.println("4 - Withdraw money from your Secundary Account");
 		System.out.println("5 - Transfer money to another account");
 		System.out.println("6 - Show history account");
-		
 		System.out.println("###########################################################################");
 	}
 
