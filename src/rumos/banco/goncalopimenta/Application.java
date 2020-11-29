@@ -3,7 +3,9 @@ package rumos.banco.goncalopimenta;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
+import java.security.SecureRandom;
 
 public class Application {
 	private static final int DATABASE_SIZE = 3;
@@ -65,6 +67,7 @@ public class Application {
 	private static Customer[] customers = new Customer[DATABASE_SIZE];
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer option;
+	private static SecureRandom random = new SecureRandom();
 
 	public static void main(String[] args) {
 
@@ -125,15 +128,33 @@ public class Application {
 	
 	
 	private static void addSecundaryAccount(Customer customer) {
-		Integer index = checkSecundaryAccounts(customer);
-		String 
+		Integer index = checkSecondaryAccounts(customer);
+		String secondAccount;
+		
 		if(index  < 4) {
-			customer.getSecundaryAccountNumber()[index];
+			System.out.println("Please indicate what account do you wish to have as Second account?");
+			secondAccount = scanner.next();
+			if(checkIfAccountHolderExists(secondAccount)) {
+				customer.getSecundaryAccountNumber()[index] = secondAccount;
+				return;
+			}
+			return;
 		}
 	}
 
+	private static boolean checkIfAccountHolderExists(String secondaryAccount) {
+		for(Customer costumer : customers) {
+			if(costumer.getAccountHolderNumber().equals(secondaryAccount)) {
+				System.out.println("The account holder number that you which to associate as your secondary account exists ");
+				System.out.println("The details of the costumer are: " + costumer.toString());
+				return true;
+			}
+		}
+		System.err.println("There is no Holder Account customer with that account");
+		return false;
+	}
 
-	private static int checkSecundaryAccounts(Customer customer) {
+	private static int checkSecondaryAccounts(Customer customer) {
 		Integer index = 4;
 		for (int i = 0; i < customer.getSecundaryAccountNumber().length; i++) {
 			if(customer.getSecundaryAccountNumber()[i].isBlank()) {
@@ -146,11 +167,14 @@ public class Application {
 		return index;
 	}
 	
-	private static void deleteSecundaryAccount() {
-		
+	private static void deleteSecundaryAccount(Customer customer) {
+
+		System.out.println("Please indicate which account");
 	}
 	
-	
+	private static void checkIfItHasSecondaryAccounts() {
+		
+	}
 	
 
 	/******************************************************************************
