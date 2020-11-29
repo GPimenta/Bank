@@ -117,24 +117,45 @@ public class Application {
 			}
 		} while (option != 0);
 	}
-	
-	
-	private static void editSecundaryAccounts() {
-		checkNameAndPassword();
-		
-	}
-	
 
-	
-	
+	private static void editSecondaryAccounts() {
+		Customer customer = checkNameAndPassword();
+		Integer choose;
+
+		do {
+			displaySecondaryAccountsMenu();
+
+			choose = scanner.nextInt();
+
+			switch (choose) {
+			case 1:
+				addSecundaryAccount(customer);
+				break;
+			case 2:
+				deleteSecundaryAccount(customer);
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in EditSecundaryAccounts");
+				break;
+			}
+
+		} while (choose != 0);
+	}
+
+
+
 	private static void addSecundaryAccount(Customer customer) {
 		Integer index = checkSecondaryAccounts(customer);
 		String secondAccount;
-		
-		if(index  < 4) {
+
+		if (index < 4) {
 			System.out.println("Please indicate what account do you wish to have as Second account?");
 			secondAccount = scanner.next();
-			if(checkIfAccountHolderExists(secondAccount)) {
+			if (checkIfAccountHolderExists(secondAccount)) {
 				customer.getSecundaryAccountNumber()[index] = secondAccount;
 				return;
 			}
@@ -143,9 +164,10 @@ public class Application {
 	}
 
 	private static boolean checkIfAccountHolderExists(String secondaryAccount) {
-		for(Customer costumer : customers) {
-			if(costumer.getAccountHolderNumber().equals(secondaryAccount)) {
-				System.out.println("The account holder number that you which to associate as your secondary account exists ");
+		for (Customer costumer : customers) {
+			if (costumer.getAccountHolderNumber().equals(secondaryAccount)) {
+				System.out.println(
+						"The account holder number that you which to associate as your secondary account exists ");
 				System.out.println("The details of the costumer are: " + costumer.toString());
 				return true;
 			}
@@ -157,25 +179,48 @@ public class Application {
 	private static int checkSecondaryAccounts(Customer customer) {
 		Integer index = 4;
 		for (int i = 0; i < customer.getSecundaryAccountNumber().length; i++) {
-			if(customer.getSecundaryAccountNumber()[i].isBlank()) {
-				System.out.println("There is possability to add an secundary account");
+			if (customer.getSecundaryAccountNumber()[i].isBlank()) {
+				System.out.println("There is possability to add an secondary account");
 				index = i;
 				return index;
 			}
 		}
-		System.out.println("You can not have more secundary accounts"); // COMO TENHO EM VECTOR TENHO Q TRAZER COMIGO UM INDEX. TALVEZ PARA SIMPLIFICAR DEVA TRANSFORMAR EM LISTA
+		System.out.println("You can not have more secundary accounts"); // COMO TENHO EM VECTOR TENHO Q TRAZER COMIGO UM
+																		// INDEX. TALVEZ PARA SIMPLIFICAR DEVA
+																		// TRANSFORMAR EM LISTA
 		return index;
 	}
-	
-	private static void deleteSecundaryAccount(Customer customer) {
 
-		System.out.println("Please indicate which account");
+	private static void deleteSecundaryAccount(Customer customer) {
+		String secondaryAccount;
+
+		if (!checkIfItHasSecondaryAccounts(customer))
+			return;
+
+		System.out.println("Please indicate which secondary account you wish to delete");
+		secondaryAccount = scanner.next();
+		for (String deleteSecondaryAccount : customer.getSecundaryAccountNumber()) {
+			if (deleteSecondaryAccount.equals(secondaryAccount)) {
+				deleteSecondaryAccount = "";
+				System.out.println("Account deleted");
+				System.out.print("The remaining secondary accounts are: "
+						+ Arrays.toString(customer.getSecundaryAccountNumber()));
+				return;
+			}
+		}
+		System.out.println("The account that you have requested to delete does not belong to you");
+
 	}
-	
-	private static void checkIfItHasSecondaryAccounts() {
-		
+
+	private static boolean checkIfItHasSecondaryAccounts(Customer customer) {
+
+		for (String secondaryAccounts : customer.getSecundaryAccountNumber()) {
+			if (secondaryAccounts.isBlank())
+				return true;
+		}
+		System.err.println("You do not have Secondary accounts to delete.");
+		return false;
 	}
-	
 
 	/******************************************************************************
 	 * Bank Cards
@@ -301,7 +346,7 @@ public class Application {
 		}
 
 		do {
-			displayMoneyManagement();
+			displayMoneyManagementMenu();
 			option = scanner.nextInt();
 			switch (option) {
 			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
@@ -581,7 +626,7 @@ public class Application {
 		Integer change;
 
 		do {
-			displayShowCustomer();
+			displayShowCustomerMenu();
 			change = scanner.nextInt();
 			switch (change) {
 			case SHOW_CUSTOMER_BY_NAME:
@@ -814,7 +859,7 @@ public class Application {
 
 	}
 
-	private static void displayShowCustomer() {
+	private static void displayShowCustomerMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
@@ -843,6 +888,14 @@ public class Application {
 		System.out.println("3 - By ID");
 		System.out.println("###########################################################################");
 	}
+	private static void displaySecondaryAccountsMenu() {
+		System.out.println("############################ " + TITLE + " #############################");
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Create Secondary Account");
+		System.out.println("2 - Delete Secondary Account");
+		System.out.println("###########################################################################");
+	}
 
 	private static void displayBankCardsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
@@ -855,7 +908,7 @@ public class Application {
 		System.out.println("###########################################################################");
 	}
 
-	private static void displayMoneyManagement() {
+	private static void displayMoneyManagementMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
