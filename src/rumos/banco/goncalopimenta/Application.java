@@ -13,7 +13,7 @@ public class Application {
 	private static final int EXIT = 0;
 	private static final int CREATE_NEW_CUSTOMER = 1;
 	private static final int SHOW_CUSTOMER = 2;
-	private static final int TO_DECIDE = 3;
+	private static final int EDIT_CUSTOMER_ACCOUNTS = 3;
 	private static final int TO_DECIDE_2 = 4;
 	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 5;
 	private static final int DELETE_CUSTOMER = 6;
@@ -83,8 +83,8 @@ public class Application {
 				showCustomer();
 				// Show costumer by name
 				break;
-			case TO_DECIDE:
-//				showCustomerByTaxId();
+			case EDIT_CUSTOMER_ACCOUNTS:
+				editSecondaryAccounts();
 				// Show costumer by taxId
 				break;
 			case TO_DECIDE_2:
@@ -121,6 +121,10 @@ public class Application {
 	private static void editSecondaryAccounts() {
 		Customer customer = checkNameAndPassword();
 		Integer choose;
+		
+		if (customer == null) {
+			return;
+		}
 
 		do {
 			displaySecondaryAccountsMenu();
@@ -155,6 +159,12 @@ public class Application {
 		if (index < 4) {
 			System.out.println("Please indicate what account do you wish to have as Second account?");
 			secondAccount = scanner.next();
+			for(String checkIfTheSameAccount : customer.getSecundaryAccountNumber()) {
+				if(checkIfTheSameAccount.equals(secondAccount)) {
+					System.err.println("The account that you are requesting to be secondary it is your Holder acocunt");
+					return;
+				}
+			}
 			if (checkIfAccountHolderExists(secondAccount)) {
 				customer.getSecundaryAccountNumber()[index] = secondAccount;
 				return;
@@ -165,6 +175,7 @@ public class Application {
 
 	private static boolean checkIfAccountHolderExists(String secondaryAccount) {
 		for (Customer costumer : customers) {
+			if(costumer == null) break;
 			if (costumer.getAccountHolderNumber().equals(secondaryAccount)) {
 				System.out.println(
 						"The account holder number that you which to associate as your secondary account exists ");
@@ -199,11 +210,12 @@ public class Application {
 
 		System.out.println("Please indicate which secondary account you wish to delete");
 		secondaryAccount = scanner.next();
-		for (String deleteSecondaryAccount : customer.getSecundaryAccountNumber()) {
-			if (deleteSecondaryAccount.equals(secondaryAccount)) {
-				deleteSecondaryAccount = "";
+		
+		for (int i = 0; i < customer.getSecundaryAccountNumber().length; i++) {
+			if (customer.getSecundaryAccountNumber()[i].equals(secondaryAccount)) {
+				customer.getSecundaryAccountNumber()[i] = "";
 				System.out.println("Account deleted");
-				System.out.print("The remaining secondary accounts are: "
+				System.out.print("The remaining secondary accounts are: \n"
 						+ Arrays.toString(customer.getSecundaryAccountNumber()));
 				return;
 			}
@@ -831,6 +843,7 @@ public class Application {
 		String password = scanner.next();
 
 		for (Customer customer : customers) {
+			if(customer == null) break;
 			if (customer.getName().equals(name) && customer.getPassword().equals(password)) {
 				return customer;
 			}
@@ -849,9 +862,9 @@ public class Application {
 		System.out.println("0 - Exit");
 		System.out.println("1 - Create new customer");
 		System.out.println("2 - Show customer methods");
-		System.out.println("3 - TO DECIDE");
+		System.out.println("3 - Edit customer accounts");
 		System.out.println("4 - TO DECIDE");
-		System.out.println("5 - Edit customer");
+		System.out.println("5 - Edit customer personal details");
 		System.out.println("6 - Delete customer by Id");
 		System.out.println("7 - Manage money on account");
 		System.out.println("8 - Edit bank cards");
