@@ -118,10 +118,13 @@ public class Application {
 		} while (option != 0);
 	}
 
+	/**
+	 * Edit secundary accounts
+	 */
 	private static void editSecondaryAccounts() {
 		Customer customer = checkNameAndPassword();
 		Integer choose;
-		
+
 		if (customer == null) {
 			return;
 		}
@@ -150,7 +153,11 @@ public class Application {
 		} while (choose != 0);
 	}
 
-
+	/**
+	 * Add Secundary account
+	 * 
+	 * @param customer
+	 */
 
 	private static void addSecundaryAccount(Customer customer) {
 		Integer index = checkSecondaryAccounts(customer);
@@ -159,8 +166,8 @@ public class Application {
 		if (index < 4) {
 			System.out.println("Please indicate what account do you wish to have as Second account?");
 			secondAccount = scanner.next();
-			for(String checkIfTheSameAccount : customer.getSecundaryAccountNumber()) {
-				if(checkIfTheSameAccount.equals(secondAccount)) {
+			for (String checkIfTheSameAccount : customer.getSecundaryAccountNumber()) {
+				if (checkIfTheSameAccount.equals(secondAccount)) {
 					System.err.println("The account that you are requesting to be secondary it is your Holder acocunt");
 					return;
 				}
@@ -173,9 +180,17 @@ public class Application {
 		}
 	}
 
+	/**
+	 * Verify if holder account exist to be able to create a secondary account
+	 * 
+	 * @param secondaryAccount
+	 * @return
+	 */
+
 	private static boolean checkIfAccountHolderExists(String secondaryAccount) {
 		for (Customer costumer : customers) {
-			if(costumer == null) break;
+			if (costumer == null)
+				break;
 			if (costumer.getAccountHolderNumber().equals(secondaryAccount)) {
 				System.out.println(
 						"The account holder number that you which to associate as your secondary account exists ");
@@ -187,6 +202,13 @@ public class Application {
 		return false;
 	}
 
+	/**
+	 * Verify if it is possible to add a secondary account
+	 * 
+	 * @param customer
+	 * @return
+	 */
+
 	private static int checkSecondaryAccounts(Customer customer) {
 		Integer index = 4;
 		for (int i = 0; i < customer.getSecundaryAccountNumber().length; i++) {
@@ -196,11 +218,16 @@ public class Application {
 				return index;
 			}
 		}
-		System.out.println("You can not have more secundary accounts"); // COMO TENHO EM VECTOR TENHO Q TRAZER COMIGO UM
+		System.out.println("You can not have more secondary accounts"); // COMO TENHO EM VECTOR TENHO Q TRAZER COMIGO UM
 																		// INDEX. TALVEZ PARA SIMPLIFICAR DEVA
 																		// TRANSFORMAR EM LISTA
 		return index;
 	}
+
+	/**
+	 * Delete secundary account
+	 * 
+	 */
 
 	private static void deleteSecundaryAccount(Customer customer) {
 		String secondaryAccount;
@@ -210,7 +237,7 @@ public class Application {
 
 		System.out.println("Please indicate which secondary account you wish to delete");
 		secondaryAccount = scanner.next();
-		
+
 		for (int i = 0; i < customer.getSecundaryAccountNumber().length; i++) {
 			if (customer.getSecundaryAccountNumber()[i].equals(secondaryAccount)) {
 				customer.getSecundaryAccountNumber()[i] = "";
@@ -223,6 +250,13 @@ public class Application {
 		System.out.println("The account that you have requested to delete does not belong to you");
 
 	}
+
+	/**
+	 * Verify if it is possible to delete secondary account
+	 * 
+	 * @param customer
+	 * @return
+	 */
 
 	private static boolean checkIfItHasSecondaryAccounts(Customer customer) {
 
@@ -803,7 +837,14 @@ public class Application {
 		newCustomer.setAccountHolderNumber(scanner.next());
 
 		System.out.println("Please set the customer balance on its main account");
-		newCustomer.setHolderAccountBalance(scanner.nextDouble());
+
+		Double moneyDeposit = scanner.nextDouble();
+		if (moneyDeposit > 50) {
+			newCustomer.setHolderAccountBalance(moneyDeposit);
+
+		} else {
+			System.err.println("In order to create an account its necessary to deposit >=50€");
+		}
 
 		System.out.println("Please indicate how many secondary accounts do you want to have");
 		Integer count = scanner.nextInt();
@@ -843,7 +884,8 @@ public class Application {
 		String password = scanner.next();
 
 		for (Customer customer : customers) {
-			if(customer == null) break;
+			if (customer == null)
+				break;
 			if (customer.getName().equals(name) && customer.getPassword().equals(password)) {
 				return customer;
 			}
@@ -901,6 +943,7 @@ public class Application {
 		System.out.println("3 - By ID");
 		System.out.println("###########################################################################");
 	}
+
 	private static void displaySecondaryAccountsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
