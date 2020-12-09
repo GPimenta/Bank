@@ -857,16 +857,28 @@ public class Application {
 		}
 
 		System.out.println("Do you which to have a Debit Card? y/n");
-		if (scanner.next().equals("y"))
+		if (scanner.next().equals("y")) {
 			newCustomer.setDebitCard(true);
-		else
+			System.out.println("Please indicate the debit card number");
+			String cardNumber = scanner.next();
+			newCustomer.setDebitCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the debit card number");
+			String pinCard = scanner.next();
+			newCustomer.setDebitCardPin(pinCard);
+		} else
 			newCustomer.setDebitCard(false);
 
 		System.out.println("Do you which to have a Credit Card? y/n");
-		if (scanner.next().equals("y"))
-			newCustomer.setDebitCard(true);
-		else
-			newCustomer.setDebitCard(false);
+		if (scanner.next().equals("y")) {
+			newCustomer.setCreditCard(true);
+			System.out.println("Please indicate the credit card number");
+			String cardNumber = scanner.next();
+			newCustomer.setCreditCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the credit card number");
+			String pinCard = scanner.next();
+			newCustomer.setCreditCardPin(pinCard);
+		} else
+			newCustomer.setCreditCard(false);
 
 		return newCustomer;
 	}
