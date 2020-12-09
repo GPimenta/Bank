@@ -352,6 +352,7 @@ public class Application {
 		if (scanner.next().equals("y")) {
 			if (!customer.isDebitCard()) {
 				customer.setDebitCard(true);
+				createDebitCardDetails(customer);
 				return;
 			} else {
 				System.err.println(NO_ADD_DEBIT_CARD);
@@ -367,6 +368,7 @@ public class Application {
 		if (scanner.next().equals("y")) {
 			if (!customer.isCreditCard()) {
 				customer.setCreditCard(true);
+				createCreditCardDetails(customer);
 				return;
 			} else {
 				System.err.println(NO_ADD_CREDIT_CARD);
@@ -375,6 +377,26 @@ public class Application {
 		}
 		System.out.println(PREVIOUS_MENU);
 		return;
+	}
+
+	private static void createDebitCardDetails(Customer customer) {
+		System.out.println("Creating the details of the debit card");
+		System.out.println("Please indicate the number of the debit card");
+		String cardNumber = scanner.next();
+		customer.setDebitCardNumber(cardNumber);
+		System.out.println("Please indicate the pin number of the debit card");
+		String pinCard = scanner.next();
+		customer.setDebitCardPin(pinCard);
+	}
+
+	private static void createCreditCardDetails(Customer customer) {
+		System.out.println("Creating the details of the credit card");
+		System.out.println("Please indicate the number of the credit card");
+		String cardNumber = scanner.next();
+		customer.setCreditCardNumber(cardNumber);
+		System.out.println("Please indicate the pin number of the credit card");
+		String pinCard = scanner.next();
+		customer.setCreditCardPin(pinCard);
 	}
 
 	/******************************************************************************
