@@ -320,6 +320,7 @@ public class Application {
 		if (scanner.next().equals("y")) {
 			if (customer.isDebitCard()) {
 				customer.setDebitCard(false);
+				deleteDebitCardDetails(customer);
 				System.out.println("Debit card removed");
 				return;
 			} else {
@@ -336,6 +337,7 @@ public class Application {
 		if (scanner.next().equals("y")) {
 			if (customer.isCreditCard()) {
 				customer.setCreditCard(false);
+				deleteCreditCardDetails(customer);
 				System.out.println("Credit card removed");
 				return;
 			} else {
@@ -397,6 +399,22 @@ public class Application {
 		System.out.println("Please indicate the pin number of the credit card");
 		String pinCard = scanner.next();
 		customer.setCreditCardPin(pinCard);
+	}
+	
+	private static void deleteDebitCardDetails(Customer customer) {
+		System.out.println("Deleting the details of the debit card");
+		customer.setDebitCardNumber(null);
+		System.out.println("Debit card number deleted");
+		customer.setDebitCardPin(null);
+		System.out.println("Debit card pin number deleted");
+	}
+	
+	private static void deleteCreditCardDetails(Customer customer) {
+		System.out.println("Deleting the details of the credit card");
+		customer.setCreditCardNumber(null);
+		System.out.println("Credit card number deleted");
+		customer.setCreditCardPin(null);
+		System.out.println("Credit card pin number deleted");
 	}
 
 	/******************************************************************************
@@ -865,7 +883,7 @@ public class Application {
 			newCustomer.setHolderAccountBalance(moneyDeposit);
 
 		} else {
-			System.err.println("In order to create an account its necessary to deposit >=50€");
+			System.err.println("In order to create an account its necessary to deposit >=50€\n");
 		}
 
 		System.out.println("Please indicate how many secondary accounts do you want to have");
