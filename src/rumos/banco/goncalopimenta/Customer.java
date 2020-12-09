@@ -28,6 +28,7 @@ public class Customer {
 	private Boolean creditCard = false;
 	private String creditCardNumber;
 	private String creditCardPin;
+	
 
 //	public Customer() {
 //
