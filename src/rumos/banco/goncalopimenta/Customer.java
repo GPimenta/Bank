@@ -15,17 +15,19 @@ public class Customer {
 	private LocalDate birthday;
 
 	// Balance parameters
-	private String accountHolderNumber; //5 digits
+	private String accountHolderNumber; // 5 digits
 	private Double accountHolderBalance;
-	private String[] secondaryAccountNumber = {"","","",""};
+	private String[] secondaryAccountNumber = { "", "", "", "" };
 	private ArrayList<String> transactionHistory = new ArrayList<String>();
-
-
-
 
 	// Credit and debit card parameters
 	private Boolean debitCard = false;
+	private String debitCardNumber;
+	private String debitCardPin;
+
 	private Boolean creditCard = false;
+	private String creditCardNumber;
+	private String creditCardPin;
 
 //	public Customer() {
 //
@@ -37,33 +39,67 @@ public class Customer {
 //		this.name = name;
 //		this.password = password;
 //	}
-
-
-
-	@Override
-	public String toString() {
-		return "Customer:\n"
-				+ " id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
-				+ email + ", birthday=" + birthday + ", accountHolderNumber=" + accountHolderNumber
-				+ ", accountHolderBalance=" + accountHolderBalance + ",\nsecundaryAccountNumber="
-				+ Arrays.toString(secondaryAccountNumber) + ", debitCard=" + debitCard + ", creditCard=" + creditCard
-				+ "]";
-	}
-
-
+	/**
+	 * ToString Override
+	 */
 
 	/**
 	 * Getters and Setters
 	 * 
 	 */
+
 	public ArrayList<String> getTransactionHistory() {
 		return transactionHistory;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer \n"
+				+ " [id=" + id + ", name=" + name + ", password=" + password + ", taxId=" + taxId + ", email="
+				+ email + ", birthday=" + birthday + "\n, accountHolderNumber=" + accountHolderNumber
+				+ ", accountHolderBalance=" + accountHolderBalance + ", secondaryAccountNumber="
+				+ Arrays.toString(secondaryAccountNumber) + "\n, transactionHistory=" + transactionHistory
+				+ "\n, debitCard=" + debitCard + ", debitCardNumber=" + debitCardNumber + ", debitCardPin=" + debitCardPin
+				+ "\n, creditCard=" + creditCard + ", creditCardNumber=" + creditCardNumber + ", creditCardPin="
+				+ creditCardPin + "]";
+	}
+
+	public String getDebitCardNumber() {
+		return debitCardNumber;
+	}
+
+	public void setDebitCardNumber(String debitCardNumber) {
+		this.debitCardNumber = debitCardNumber;
+	}
+
+	public String getDebitCardPin() {
+		return debitCardPin;
+	}
+
+	public void setDebitCardPin(String debitCardPin) {
+		this.debitCardPin = debitCardPin;
+	}
+
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}
+
+	public String getCreditCardPin() {
+		return creditCardPin;
+	}
+
+	public void setCreditCardPin(String creditCardPin) {
+		this.creditCardPin = creditCardPin;
 	}
 
 	public void setTransactionHistory(ArrayList<String> transactionHistory) {
 		this.transactionHistory = transactionHistory;
 	}
-	
+
 	public String[] getSecundaryAccountNumber() {
 		return secondaryAccountNumber;
 	}
@@ -80,7 +116,7 @@ public class Customer {
 	// precisa ter um atributo age
 	// YuriValle 11/11/2020
 	// R: Obrigado pela dica Professor!!
-	
+
 	public Integer getAge() {
 		LocalDate today = LocalDate.now();
 		Period period = Period.between(this.birthday, today);
@@ -143,6 +179,7 @@ public class Customer {
 	public void setHolderAccountBalance(Double balance) {
 		this.accountHolderBalance = balance;
 	}
+
 	public boolean isDebitCard() {
 		return debitCard;
 	}
