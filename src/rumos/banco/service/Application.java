@@ -5,6 +5,9 @@ import java.time.Year;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+
+import rumos.banco.model.Customer;
+
 import java.security.SecureRandom;
 
 public class Application {

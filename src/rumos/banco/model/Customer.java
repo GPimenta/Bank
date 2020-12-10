@@ -1,4 +1,4 @@
-package rumos.banco.service;
+package rumos.banco.model;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -30,25 +30,52 @@ public class Customer {
 	private String creditCardPin;
 	
 
-//	public Customer() {
-//
-//	}
-//
-//	public Customer(Integer id, String name, String password) {
-//		this();
-//		this.id = id;
-//		this.name = name;
-//		this.password = password;
-//	}
+
+
+	
+	
+	
+	
+	
+	public Customer() {
+		super();
+	}
+
+	public Customer(String name, String password, String taxId, String email, LocalDate birthday,
+			String accountHolderNumber, Double accountHolderBalance) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.taxId = taxId;
+		this.email = email;
+		this.birthday = birthday;
+		this.accountHolderNumber = accountHolderNumber;
+		this.accountHolderBalance = accountHolderBalance;
+	}
+
+	public Customer(String name, String password, String taxId, String email, LocalDate birthday,
+			String accountHolderNumber, Double accountHolderBalance, String[] secondaryAccountNumber, Boolean debitCard,
+			String debitCardNumber, String debitCardPin, Boolean creditCard, String creditCardNumber,
+			String creditCardPin) {
+		this.name = name;
+		this.password = password;
+		this.taxId = taxId;
+		this.email = email;
+		this.birthday = birthday;
+		this.accountHolderNumber = accountHolderNumber;
+		this.accountHolderBalance = accountHolderBalance;
+		this.secondaryAccountNumber = secondaryAccountNumber;
+		this.debitCard = debitCard;
+		this.debitCardNumber = debitCardNumber;
+		this.debitCardPin = debitCardPin;
+		this.creditCard = creditCard;
+		this.creditCardNumber = creditCardNumber;
+		this.creditCardPin = creditCardPin;
+	}
+
 	/**
 	 * ToString Override
 	 */
-
-	/**
-	 * Getters and Setters
-	 * 
-	 */
-
 	public ArrayList<String> getTransactionHistory() {
 		return transactionHistory;
 	}
@@ -64,7 +91,10 @@ public class Customer {
 				+ "\n, creditCard=" + creditCard + ", creditCardNumber=" + creditCardNumber + ", creditCardPin="
 				+ creditCardPin + "]";
 	}
-
+	/**
+	 * Getters and Setters
+	 * 
+	 */
 	public String getDebitCardNumber() {
 		return debitCardNumber;
 	}
