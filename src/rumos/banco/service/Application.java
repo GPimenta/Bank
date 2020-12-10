@@ -245,7 +245,7 @@ public class Application {
 			if (customer.getSecundaryAccountNumber()[i].equals(secondaryAccount)) {
 				customer.getSecundaryAccountNumber()[i] = "";
 				System.out.println("Account deleted");
-				System.out.print("The remaining secondary accounts are: \n"
+				System.out.print("The remaining secondary accounts are: "
 						+ Arrays.toString(customer.getSecundaryAccountNumber()));
 				return;
 			}
@@ -753,9 +753,9 @@ public class Application {
 					showCustomerByTaxId();
 					return;
 				}
+				System.out.println(customer.toString());
 				return;
 			}
-			System.out.println(customer.toString());
 		}
 		System.err.println(CUSTOMER_NOT_FOUND);
 	}
