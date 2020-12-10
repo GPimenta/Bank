@@ -1,14 +1,13 @@
 package rumos.banco.service;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 import rumos.banco.model.Customer;
-
-import java.security.SecureRandom;
 
 public class Application {
 	private static final int DATABASE_SIZE = 3;
@@ -67,7 +66,8 @@ public class Application {
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
 
-	private static Customer[] customers = new Customer[DATABASE_SIZE];
+//	private static Customer[] customers = new Customer[DATABASE_SIZE];
+	private static ArrayList<Customer> customers = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer option;
 	private static SecureRandom random = new SecureRandom();
@@ -632,12 +632,14 @@ public class Application {
 		String name = scanner.next();
 		System.out.println("Please write the Password of the customer");
 		String password = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().equals(name) && customers[i].getPassword().equals(password)) {
-				customers[i] = editCustomerDetails(customers[i]);
+		
+		for(Customer customer : customers) {
+			if (customer.getName().equals(name) && customer.getPassword().equals(password)) {
+				customer = editCustomerDetails(customer);
 				return;
 			}
 		}
+		
 		System.err.println(INVALID_NAME_OR_PASSWORD);
 		return;
 
@@ -646,10 +648,10 @@ public class Application {
 	private static void editCustomerByTaxID() {
 		System.out.println("Please write the taxID of the customer, in order to edit it");
 		String taxId = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getTaxId() == taxId) {
-				customers[i] = editCustomerDetails(customers[i]);
-				// Edit Customer
+		
+		for (Customer customer : customers) {
+			if(customer.getTaxId() == taxId) {
+				customer = editCustomerDetails(customer);
 				return;
 			}
 		}
@@ -660,11 +662,10 @@ public class Application {
 	private static void editCustomerByID() {
 		System.out.println("Please write the ID of the customer, in order to edit it");
 		Integer id = scanner.nextInt();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getId() == id) {
-				customers[i] = editCustomerDetails(customers[i]);
-				// Edit Customer
-				return;
+		
+		for (Customer customer : customers) {
+			if (customer.getId() == id) {
+				customer = editCustomerDetails(customer);
 			}
 		}
 		System.err.println(INVALID_ID);
@@ -742,43 +743,38 @@ public class Application {
 	private static void showCustomersByName() {
 		System.out.println("What is the customer name?");
 		String name = scanner.next();
-
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getName().toLowerCase().equals(name.toLowerCase())) {
-				for (int j = (i + 1); j < customers.length; j++) {
-					if (customers[j].getName().toLowerCase().equals(name.toLowerCase())) {
-						System.err.println(
-								"There is another client with the same name. Its necessary to search by the taxId.");
-						System.out.printf("Presenting the both clients with the same name \nFirst %s \nSecond %s",
-								customers[i], customers[j]);
-						showCustomerByTaxId();
-						return;
-					}
+		int i = 0;
+		
+		for (Customer customer : customers) {
+			if (customer.getName().toLowerCase().equals(name.toLowerCase())) {
+				i++;
+				if(i>1) {
+					System.err.println("There is another client with the same name. Its necessary to search by the taxId.");
+					showCustomerByTaxId();
+					return;
 				}
-				System.out.println(customers[i].toString());
 				return;
 			}
+			System.out.println(customer.toString());
 		}
 		System.err.println(CUSTOMER_NOT_FOUND);
 	}
 
 	private static void showAllCustomers() {
 		System.out.println("Printing all clients");
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i] != null) {
-				System.out.println(customers[i].toString());
-			}
+		for (Customer customer : customers) {
+			System.out.println(customer.toString());
 		}
 	}
 
 	private static void showCustomerByTaxId() {
 		System.out.println("What is costumer by taxID ?");
 		String taxId = scanner.next();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].equals(null))
-				continue;
-			if (customers[i].getTaxId().equals(taxId)) {
-				System.out.println("The costumer is: " + customers[i].toString());
+		
+		for (Customer customer : customers) {
+			if (customer.equals(null)) continue;
+			if(customer.getTaxId().equals(taxId)) {
+				System.out.println("The costumer is: " + customer.toString());
 				return;
 			}
 		}
@@ -789,14 +785,12 @@ public class Application {
 	 ******************************************************************************/
 
 	private static void createNewCustomer() {
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i] == null) {
-				customers[i] = populateEmptyDatabase();
-				System.out.println(CUSTOMER_CREATED);
-				return;
-			}
-		}
-		System.err.println("The Clients vector is full");
+		Customer customer = new Customer();
+		
+		customer = populateEmptyDatabase();
+		System.out.println(CUSTOMER_CREATED);
+		customers.add(customer);
+		
 	}
 
 	/******************************************************************************
@@ -806,9 +800,9 @@ public class Application {
 	private static void deleteCustomerById() {
 		System.out.println("Please write the ID of the customer, in order to delete it");
 		Integer id = scanner.nextInt();
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i].getId() == id) {
-				customers[i] = null;
+		for (Customer customer : customers) {
+			if(customer.getId() == id) {
+				customers.remove(customer);
 				System.out.println(CUSTOMER_DELETED);
 				return;
 			}
@@ -823,12 +817,14 @@ public class Application {
 	 * @return
 	 ******************************************************************************/
 	private static Boolean taxIDalreadyExists(String taxId) {
-		for (int i = 0; i < customers.length; i++) {
-			if (customers[i] != null) {
-				if (taxId.equals(customers[i].getTaxId()))
+		
+		for (Customer customer : customers) {
+			if(customer != null) {
+				if(taxId.equals(customer.getTaxId()))
 					return true;
 			}
 		}
+		
 		return false;
 	}
 

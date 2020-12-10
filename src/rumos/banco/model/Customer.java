@@ -29,21 +29,23 @@ public class Customer {
 	private String creditCardNumber;
 	private String creditCardPin;
 	
-
-
-
 	
 	
-	
+	/**
+	 * Constructor
+	 * 
+	 * 
+	 * Validar se é necessário, sendo q o prof nas praticas não o realizou!!!!
+	 */
 	
 	
 	public Customer() {
-		super();
+		
 	}
 
 	public Customer(String name, String password, String taxId, String email, LocalDate birthday,
 			String accountHolderNumber, Double accountHolderBalance) {
-		super();
+		this();
 		this.name = name;
 		this.password = password;
 		this.taxId = taxId;
@@ -57,13 +59,7 @@ public class Customer {
 			String accountHolderNumber, Double accountHolderBalance, String[] secondaryAccountNumber, Boolean debitCard,
 			String debitCardNumber, String debitCardPin, Boolean creditCard, String creditCardNumber,
 			String creditCardPin) {
-		this.name = name;
-		this.password = password;
-		this.taxId = taxId;
-		this.email = email;
-		this.birthday = birthday;
-		this.accountHolderNumber = accountHolderNumber;
-		this.accountHolderBalance = accountHolderBalance;
+		this(name, password, taxId,email,birthday,accountHolderNumber,accountHolderBalance);
 		this.secondaryAccountNumber = secondaryAccountNumber;
 		this.debitCard = debitCard;
 		this.debitCardNumber = debitCardNumber;
