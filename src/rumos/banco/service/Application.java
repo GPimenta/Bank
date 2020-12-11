@@ -650,7 +650,7 @@ public class Application {
 		String taxId = scanner.next();
 		
 		for (Customer customer : customers) {
-			if(customer.getTaxId() == taxId) {
+			if(customer.getTaxId().equals(taxId) ) {
 				customer = editCustomerDetails(customer);
 				return;
 			}
@@ -664,7 +664,7 @@ public class Application {
 		Integer id = scanner.nextInt();
 		
 		for (Customer customer : customers) {
-			if (customer.getId() == id) {
+			if (customer.getId().equals(id) ) {
 				customer = editCustomerDetails(customer);
 			}
 		}
