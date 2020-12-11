@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 public class Account {
 
+	
+	
+	private String password;
+	private Integer customerId;
+	
+	
+	
+	
 	private String accountHolderNumber; // 5 digits
 	private Double accountHolderBalance;
 	private String[] secondaryAccountNumber = { "", "", "", "" };
