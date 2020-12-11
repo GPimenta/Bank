@@ -1022,7 +1022,7 @@ public class Application {
 		System.out.println("1 - Deposit money on your Holder Account");
 		System.out.println("2 - Deposit money on your Secundary Account");
 		System.out.println("3 - Withdraw money from your Holder Account");
-		System.out.println("4 - Withdraw money from your Secundary Account");
+		System.out.println("4 - Withdraw money from your Secondary Account");
 		System.out.println("5 - Transfer money to another account");
 		System.out.println("6 - Show history account");
 		System.out.println("###########################################################################");
