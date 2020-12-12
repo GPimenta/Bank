@@ -1,4 +1,4 @@
-package rumos.banco.service;
+package rumos.banco.console;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
