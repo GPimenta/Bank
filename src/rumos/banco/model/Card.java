@@ -17,7 +17,7 @@ public class Card {
 	
 	
 	
-	public Boolean getDebitCard() {
+	public Boolean isDebitCard() {
 		return debitCard;
 	}
 	public void setDebitCard(Boolean debitCard) {
@@ -35,7 +35,7 @@ public class Card {
 	public void setDebitCardPin(String debitCardPin) {
 		this.debitCardPin = debitCardPin;
 	}
-	public Boolean getCreditCard() {
+	public Boolean isCreditCard() {
 		return creditCard;
 	}
 	public void setCreditCard(Boolean creditCard) {
