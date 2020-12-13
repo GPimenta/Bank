@@ -40,9 +40,9 @@ public class Application {
 	private static final int DELETE_CREDIT_CARD = 4;
 
 	private static final int DEPOSIT_MONEY_ON_HOLDER_ACCOUNT = 1;
-	private static final int DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT = 2;
+	private static final int DEPOSIT_MONEY_ON_SECONDARY_ACCOUNT = 2;
 	private static final int WITHDRAW_MONEY_ON_HOLDER_ACCOUNT = 3;
-	private static final int WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT = 4;
+	private static final int WITHDRAW_MONEY_ON_SECONDARY_ACCOUNT = 4;
 	private static final int TRANSFER_MONEY = 5;
 	private static final int CHECK_ACCOUNT_HISTORY = 6;
 
@@ -122,7 +122,7 @@ public class Application {
 	}
 
 	/**
-	 * Edit secundary accounts
+	 * Edit secondary accounts
 	 */
 	private static void editSecondaryAccounts() {
 		Customer customer = checkNameAndPassword();
@@ -139,10 +139,10 @@ public class Application {
 
 			switch (choose) {
 			case 1:
-				addSecundaryAccount(customer);
+				addSecondaryAccount(customer);
 				break;
 			case 2:
-				deleteSecundaryAccount(customer);
+				deleteSecondaryAccount(customer);
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
@@ -162,7 +162,7 @@ public class Application {
 	 * @param customer
 	 */
 
-	private static void addSecundaryAccount(Customer customer) {
+	private static void addSecondaryAccount(Customer customer) {
 		Integer index = checkSecondaryAccounts(customer);
 		String secondAccount;
 
@@ -232,7 +232,7 @@ public class Application {
 	 * 
 	 */
 
-	private static void deleteSecundaryAccount(Customer customer) {
+	private static void deleteSecondaryAccount(Customer customer) {
 		String secondaryAccount;
 
 		if (!checkIfItHasSecondaryAccounts(customer))
@@ -441,14 +441,14 @@ public class Application {
 			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
 				depositMoneyOnHolderAccount(customer);
 				break;
-			case DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT:
+			case DEPOSIT_MONEY_ON_SECONDARY_ACCOUNT:
 				depositMoneyOnSecundaryAccount(customer);
 				break;
 			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
 				withdrawMoneyOnHolderAccount(customer);
 				break;
-			case WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT:
-				withdrawMoneyOnSecundaryAccount(customer);
+			case WITHDRAW_MONEY_ON_SECONDARY_ACCOUNT:
+				withdrawMoneyOnSecondaryAccount(customer);
 				break;
 			case TRANSFER_MONEY:
 				transferMoney(customer);
@@ -478,7 +478,7 @@ public class Application {
 	}
 
 	private static void depositMoneyOnSecundaryAccount(Customer customer) {
-		String secundaryAccount = checkSecundaryAccount(customer);
+		String secundaryAccount = checkSecondaryAccount(customer);
 		String decision;
 
 		if (secundaryAccount == null)
@@ -510,8 +510,8 @@ public class Application {
 		return;
 	}
 
-	private static void withdrawMoneyOnSecundaryAccount(Customer customer) {
-		String secundaryAccount = checkSecundaryAccount(customer);
+	private static void withdrawMoneyOnSecondaryAccount(Customer customer) {
+		String secundaryAccount = checkSecondaryAccount(customer);
 		String decision;
 
 		if (secundaryAccount == null)
@@ -527,7 +527,7 @@ public class Application {
 		return;
 	}
 
-	private static String checkSecundaryAccount(Customer customer) {
+	private static String checkSecondaryAccount(Customer customer) {
 		System.out.println("From which of your secundary account do want to perform action? ");
 		System.out.printf("\nThe accounts that you have associated are: %s",
 				Arrays.toString(customer.getSecundaryAccountNumber()));
@@ -540,7 +540,7 @@ public class Application {
 				return otherAccounts;
 			}
 		}
-		System.err.println("The secundary account does not correspond to the ones that you own");
+		System.err.println("The secondary account does not correspond to the ones that you own");
 		return null;
 	}
 
