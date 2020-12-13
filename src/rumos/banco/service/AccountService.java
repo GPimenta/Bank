@@ -26,15 +26,15 @@ public class AccountService {
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
 	
 	
-	private ArrayList<Account> accounts = new ArrayList<>();
+	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	
 	
 	private static void editSecondaryAccounts() {
-		Customer customer = checkNameAndPassword();
+		Account account = checkNameAndPassword();
 		Integer choose;
 
-		if (customer == null) {
+		if (account == null) {
 			return;
 		}
 
@@ -45,10 +45,10 @@ public class AccountService {
 
 			switch (choose) {
 			case 1:
-				addSecondaryAccount(customer);
+				addSecondaryAccount(account);
 				break;
 			case 2:
-				deleteSecondaryAccount(customer);
+				deleteSecondaryAccount(account);
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
@@ -70,14 +70,14 @@ public class AccountService {
 		if (index < 4) {
 			System.out.println("Please indicate what account do you wish to have as Second account?");
 			secondAccount = scanner.next();
-			for (String checkIfTheSameAccount : account.getSecundaryAccountNumber()) {
+			for (String checkIfTheSameAccount : account.getSecondaryAccountNumber()) {
 				if (checkIfTheSameAccount.equals(secondAccount)) {
 					System.err.println("The account that you are requesting to be secondary it is your Holder acocunt");
 					return;
 				}
 			}
 			if (checkIfAccountHolderExists(secondAccount)) {
-				account.getSecundaryAccountNumber()[index] = secondAccount;
+				account.getSecondaryAccountNumber()[index] = secondAccount;
 				return;
 			}
 			return;
@@ -101,8 +101,8 @@ public class AccountService {
 	
 	private static int checkSecondaryAccounts(Account account) {
 		Integer index = 4;
-		for (int i = 0; i < account.getSecundaryAccountNumber().length; i++) {
-			if (account.getSecundaryAccountNumber()[i].isBlank()) {
+		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
+			if (account.getSecondaryAccountNumber()[i].isBlank()) {
 				System.out.println("There is possability to add an secondary account");
 				index = i;
 				return index;
@@ -123,12 +123,12 @@ public class AccountService {
 		System.out.println("Please indicate which secondary account you wish to delete");
 		secondaryAccount = scanner.next();
 
-		for (int i = 0; i < account.getSecundaryAccountNumber().length; i++) {
-			if (account.getSecundaryAccountNumber()[i].equals(secondaryAccount)) {
-				account.getSecundaryAccountNumber()[i] = "";
+		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
+			if (account.getSecondaryAccountNumber()[i].equals(secondaryAccount)) {
+				account.getSecondaryAccountNumber()[i] = "";
 				System.out.println("Account deleted");
 				System.out.print("The remaining secondary accounts are: "
-						+ Arrays.toString(account.getSecundaryAccountNumber()));
+						+ Arrays.toString(account.getSecondaryAccountNumber()));
 				return;
 			}
 		}
@@ -138,7 +138,7 @@ public class AccountService {
 	
 	private static boolean checkIfItHasSecondaryAccounts(Account account) {
 
-		for (String secondaryAccounts : account.getSecundaryAccountNumber()) {
+		for (String secondaryAccounts : account.getSecondaryAccountNumber()) {
 			if (secondaryAccounts.isBlank())
 				return true;
 		}
@@ -152,11 +152,11 @@ public class AccountService {
 
 	private static void moneyManagement() {
 		Integer option;
-		Customer customer;
+		Account account;
 
-		customer = checkNameAndPassword();
+		account = checkNameAndPassword();
 
-		if (customer == null) {
+		if (account == null) {
 			return;
 		}
 
@@ -165,22 +165,22 @@ public class AccountService {
 			option = scanner.nextInt();
 			switch (option) {
 			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
-				depositMoneyOnHolderAccount(customer);
+				depositMoneyOnHolderAccount(account);
 				break;
 			case DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT:
-				depositMoneyOnSecundaryAccount(customer);
+				depositMoneyOnSecundaryAccount(account);
 				break;
 			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
-				withdrawMoneyOnHolderAccount(customer);
+				withdrawMoneyOnHolderAccount(account);
 				break;
 			case WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT:
-				withdrawMoneyOnSecondaryAccount(customer);
+				withdrawMoneyOnSecondaryAccount(account);
 				break;
 			case TRANSFER_MONEY:
-				transferMoney(customer);
+				transferMoney(account);
 				break;
 			case CHECK_ACCOUNT_HISTORY:
-				showAccountHistoryMovement(customer);
+				showAccountHistoryMovement(account);
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
@@ -198,7 +198,7 @@ public class AccountService {
 
 		System.out.println("Please insert the amount to deposit in your account");
 		Double amount = scanner.nextDouble();
-		account.setHolderAccountBalance(account.getHolderAccountBalance() + Math.abs(amount));
+		account.setAccountHolderBalance(account.getAccountHolderBalance() + Math.abs(amount));
 		addTAccountHistoryMovement(account, amount.toString());
 		return;
 	}
@@ -226,13 +226,13 @@ public class AccountService {
 		System.out.println("Please indicate the amount of money you wish to take");
 		Double amount = scanner.nextDouble();
 
-		if ((account.getHolderAccountBalance() - Math.abs(amount)) < 0D) {
+		if ((account.getAccountHolderBalance() - Math.abs(amount)) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
 			return;
 		}
-		account.setHolderAccountBalance(account.getHolderAccountBalance() - Math.abs(amount));
+		account.setAccountHolderBalance(account.getAccountHolderBalance() - Math.abs(amount));
 		addTAccountHistoryMovement(account, "-" + amount.toString());
-		System.out.printf("\nAt the moment you have %f on your account\n", account.getHolderAccountBalance());
+		System.out.printf("\nAt the moment you have %f on your account\n", account.getAccountHolderBalance());
 		return;
 	}
 
@@ -256,11 +256,11 @@ public class AccountService {
 	private static String checkSecondaryAccount(Account account) {
 		System.out.println("From which of your secundary account do want to perform action? ");
 		System.out.printf("\nThe accounts that you have associated are: %s",
-				Arrays.toString(account.getSecundaryAccountNumber()));
+				Arrays.toString(account.getSecondaryAccountNumber()));
 		String secundaryAccount;
 
 		secundaryAccount = scanner.next();
-		for (String otherAccounts : account.getSecundaryAccountNumber()) {
+		for (String otherAccounts : account.getSecondaryAccountNumber()) {
 			if (otherAccounts.equals(secundaryAccount)) {
 				System.out.println("The choosen account is: " + otherAccounts);
 				return otherAccounts;
@@ -278,7 +278,7 @@ public class AccountService {
 		System.out.println("Please indicate the amount of money you wish to transfer");
 		amount = scanner.nextDouble();
 
-		if (account.getHolderAccountBalance() - Math.abs(amount) < 0D) {
+		if (account.getAccountHolderBalance() - Math.abs(amount) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
 			return;
 		}
@@ -289,11 +289,11 @@ public class AccountService {
 			if (customerToTransfer == null)
 				break;
 			if (customerToTransfer.getAccountHolderNumber().equals(accountToTransfer)) {
-				System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s\n",
-						customerToTransfer.getName(), customerToTransfer.getTaxId(),
-						customerToTransfer.getAccountHolderNumber());
-				customerToTransfer.setHolderAccountBalance(customerToTransfer.getHolderAccountBalance() + amount);
-				account.setHolderAccountBalance(account.getHolderAccountBalance() - Math.abs(amount));
+//				System.out.printf("\nThe account belongs to Name: %s, TaxId: %s and Account Number: %s\n",
+//						customerToTransfer.getName(), customerToTransfer.getTaxId(),
+//						customerToTransfer.getAccountHolderNumber());
+				customerToTransfer.setAccountHolderBalance(customerToTransfer.getAccountHolderBalance() + amount);
+				account.setAccountHolderBalance(account.getAccountHolderBalance() - Math.abs(amount));
 				addTAccountHistoryMovement(account, "-" + amount.toString());
 				System.out.println("Presenting both accounts values");
 				System.out.println("From: " + account.toString());
@@ -314,7 +314,7 @@ public class AccountService {
 		for (String transactionHistory : account.getTransactionHistory()) {
 			System.out.println("The transaction history: " + transactionHistory);
 		}
-		System.out.println("The total amount of: " + account.getHolderAccountBalance());
+		System.out.println("The total amount of: " + account.getAccountHolderBalance());
 	}
 	
 	
@@ -324,16 +324,16 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	private static Customer checkNameAndPassword() {
-		System.out.println("Please write your name");
-		String name = scanner.next();
-		System.out.println("Please write your Password");
+	private static Account checkNameAndPassword() {
+		System.out.println("Please write your account holder number");
+		String accountHolderNumber = scanner.next();
+		System.out.println("Please write your Password account");
 		String password = scanner.next();
 
 		for (Account account : accounts) {
 			if (account == null)
 				break;
-			if (account.getName().equals(name) && account.getPassword().equals(password)) {
+			if (account.getAccountHolderNumber().equals(accountHolderNumber) && account.getPasswordAccount().equals(password)) {
 				return account;
 			}
 		}
