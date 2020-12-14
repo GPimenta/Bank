@@ -159,7 +159,7 @@ public class CustomerService {
 	 * @param taxId
 	 * @return
 	 ******************************************************************************/
-	public  Boolean taxIDalreadyExists(String taxId) {
+	public Boolean taxIDalreadyExists(String taxId) {
 		
 		for (Customer customer : customers) {
 			if(customer != null) {
@@ -169,6 +169,13 @@ public class CustomerService {
 		}
 		
 		return false;
+	}
+	
+	public void showCustomersDetails(){
+		for(Customer customer : customers) {
+			System.out.println("The customer: ");
+			System.out.println(customer.toString());
+		}
 	}
 
 	private static void displayEditCustomerDetailsMenu() {

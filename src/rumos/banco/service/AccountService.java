@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import rumos.banco.model.Account;
+import rumos.banco.model.Customer;
 import rumos.banco.model.Customer_Old;
 
 public class AccountService {
@@ -28,9 +29,21 @@ public class AccountService {
 	
 	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
+	private static Integer id = 0;
 	
 	
-	private static void editSecondaryAccounts() {
+	
+	public Account save(Account account) {
+		id++;
+		account.setCustomerId(id);
+		accounts.add(account);
+		
+		return account;
+	}
+	
+	
+	
+	public void editSecondaryAccounts() {
 		Account account = checkNameAndPassword();
 		Integer choose;
 
@@ -63,7 +76,7 @@ public class AccountService {
 	}
 	
 	
-	private static void addSecondaryAccount(Account account) {
+	public void addSecondaryAccount(Account account) {
 		Integer index = checkSecondaryAccounts(account);
 		String secondAccount;
 
@@ -84,7 +97,7 @@ public class AccountService {
 		}
 	}
 	
-	private static boolean checkIfAccountHolderExists(String secondaryAccount) {
+	public boolean checkIfAccountHolderExists(String secondaryAccount) {
 		for (Account account : accounts) {
 			if (account == null)
 				break;
@@ -99,7 +112,7 @@ public class AccountService {
 		return false;
 	}
 	
-	private static int checkSecondaryAccounts(Account account) {
+	public int checkSecondaryAccounts(Account account) {
 		Integer index = 4;
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
 			if (account.getSecondaryAccountNumber()[i].isBlank()) {
@@ -114,7 +127,7 @@ public class AccountService {
 		return index;
 	}
 	
-	private static void deleteSecondaryAccount(Account account) {
+	public void deleteSecondaryAccount(Account account) {
 		String secondaryAccount;
 
 		if (!checkIfItHasSecondaryAccounts(account))
@@ -136,7 +149,7 @@ public class AccountService {
 
 	}
 	
-	private static boolean checkIfItHasSecondaryAccounts(Account account) {
+	public boolean checkIfItHasSecondaryAccounts(Account account) {
 
 		for (String secondaryAccounts : account.getSecondaryAccountNumber()) {
 			if (secondaryAccounts.isBlank())
@@ -150,7 +163,7 @@ public class AccountService {
 	 * Money movement
 	 ******************************************************************************/
 
-	private static void moneyManagement() {
+	public void moneyManagement() {
 		Integer option;
 		Account account;
 
@@ -194,7 +207,7 @@ public class AccountService {
 
 	}
 
-	private static void depositMoneyOnHolderAccount(Account account) {
+	public void depositMoneyOnHolderAccount(Account account) {
 
 		System.out.println("Please insert the amount to deposit in your account");
 		Double amount = scanner.nextDouble();
@@ -203,7 +216,7 @@ public class AccountService {
 		return;
 	}
 
-	private static void depositMoneyOnSecundaryAccount(Account account) {
+	public void depositMoneyOnSecundaryAccount(Account account) {
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -221,7 +234,7 @@ public class AccountService {
 
 	}
 
-	private static void withdrawMoneyOnHolderAccount(Account account) {
+	public void withdrawMoneyOnHolderAccount(Account account) {
 
 		System.out.println("Please indicate the amount of money you wish to take");
 		Double amount = scanner.nextDouble();
@@ -236,7 +249,7 @@ public class AccountService {
 		return;
 	}
 
-	private static void withdrawMoneyOnSecondaryAccount(Account account) {
+	public void withdrawMoneyOnSecondaryAccount(Account account) {
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -253,7 +266,7 @@ public class AccountService {
 		return;
 	}
 
-	private static String checkSecondaryAccount(Account account) {
+	public String checkSecondaryAccount(Account account) {
 		System.out.println("From which of your secundary account do want to perform action? ");
 		System.out.printf("\nThe accounts that you have associated are: %s",
 				Arrays.toString(account.getSecondaryAccountNumber()));
@@ -270,7 +283,7 @@ public class AccountService {
 		return null;
 	}
 
-	private static void transferMoney(Account account) {
+	public void transferMoney(Account account) {
 
 		Double amount;
 		String accountToTransfer;
@@ -310,7 +323,7 @@ public class AccountService {
 	 *
 	 */
 
-	private static void showAccountHistoryMovement(Account account) {
+	public void showAccountHistoryMovement(Account account) {
 		for (String transactionHistory : account.getTransactionHistory()) {
 			System.out.println("The transaction history: " + transactionHistory);
 		}
@@ -324,7 +337,7 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	private static Account checkNameAndPassword() {
+	public Account checkNameAndPassword() {
 		System.out.println("Please write your account holder number");
 		String accountHolderNumber = scanner.next();
 		System.out.println("Please write your Password account");
@@ -341,14 +354,19 @@ public class AccountService {
 		return null;
 	}
 	
-	
+	public void showAccountsDetails(){
+		for(Account account : accounts) {
+			System.out.println("The account: ");
+			System.out.println(account.toString());
+		}
+	}
 	
 
-	private static void addTAccountHistoryMovement(Account account, String amount) {
+	public void addTAccountHistoryMovement(Account account, String amount) {
 		account.getTransactionHistory().add(amount);
 	}
 	
-	private static void displaySecondaryAccountsMenu() {
+	public void displaySecondaryAccountsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
@@ -357,7 +375,7 @@ public class AccountService {
 		System.out.println("###########################################################################");
 	}
 	
-	private static void displayMoneyManagementMenu() {
+	public void displayMoneyManagementMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");

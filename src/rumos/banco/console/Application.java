@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.util.Scanner;
 
+import rumos.banco.model.Account;
 import rumos.banco.model.Customer;
-import rumos.banco.model.Customer_Old;
+import rumos.banco.service.AccountService;
+import rumos.banco.service.CardService;
 import rumos.banco.service.CustomerService;
 
 public class Application {
@@ -67,6 +69,10 @@ public class Application {
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer option;
 	private static SecureRandom random = new SecureRandom();
+	private static CustomerService customerService = new CustomerService();
+	private static AccountService accountService = new AccountService();
+	private static CardService cardService = new CardService();
+	
 	
 	
 	
@@ -78,6 +84,7 @@ public class Application {
 			switch (option) {
 			case CREATE_NEW_CUSTOMER:
 				createNewCustomer();
+				createNewAccount();
 				break;
 //			case SHOW_CUSTOMER:
 //				showCustomer();
@@ -127,7 +134,6 @@ public class Application {
 	private static Customer populateCustomer() {
 		System.out.println("Creating new client");
 		Customer newCustomer = new Customer();
-		CustomerService customerService = new CustomerService();
 		
 		System.out.println("Please set Name");
 		newCustomer.setName(scanner.next());
@@ -158,14 +164,65 @@ public class Application {
 	
 	private static void createNewCustomer() {
 		Customer customer = new Customer();
-		CustomerService customerService = new CustomerService();
+		
 		
 		customer = populateCustomer();
 		System.out.println(CUSTOMER_CREATED);
 		customerService.save(customer);
+		
+		customerService.showCustomersDetails();
 
 	}
 	
+	/******************************************************************************
+	 * Populate the Accounts
+	 * 
+	 * @return
+	 ******************************************************************************/
+	
+	private static Account populateAccount() {
+		System.out.println("Creating new account");
+		Account newAccount = new Account();
+		
+		
+		System.out.println("Please set the number of the account (5 digits)");
+		newAccount.setAccountHolderNumber(scanner.next());
+
+		System.out.println("Please set the customer balance on its main account");
+
+		Double moneyDeposit = scanner.nextDouble();
+		if (moneyDeposit > 50) {
+			newAccount.setAccountHolderBalance(moneyDeposit);
+
+		} else {
+			System.err.println("In order to create an account its necessary to deposit >=50€\n");
+		}
+
+		System.out.println("Please indicate how many secondary accounts do you want to have");
+		Integer count = scanner.nextInt();
+		String secondaryAccount;
+		for (int i = 0; i < count; i++) {
+			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
+					i + 1);
+			secondaryAccount = scanner.next();
+			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
+		}
+		
+		return newAccount;
+	}
+	
+	private static void createNewAccount() {
+		Account account = new Account();
+		
+		
+		account = populateAccount();
+		System.out.println(CUSTOMER_CREATED);
+		accountService.save(account);
+		
+		accountService.showAccountsDetails();
+
+	}
+
 	
 	/******************************************************************************
 	 * Display menus
