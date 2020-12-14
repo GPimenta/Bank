@@ -6,6 +6,7 @@ import java.time.Year;
 import java.util.Scanner;
 
 import rumos.banco.model.Customer;
+import rumos.banco.model.Customer_Old;
 import rumos.banco.service.CustomerService;
 
 public class Application {
@@ -70,14 +71,14 @@ public class Application {
 	
 	
 	public static void main(String[] args) {
-//		do {
-//			displayMenu();
-//			option = scanner.nextInt();
-//
-//			switch (option) {
-//			case CREATE_NEW_CUSTOMER:
-//				createNewCustomer();
-//				break;
+		do {
+			displayMenu();
+			option = scanner.nextInt();
+
+			switch (option) {
+			case CREATE_NEW_CUSTOMER:
+				createNewCustomer();
+				break;
 //			case SHOW_CUSTOMER:
 //				showCustomer();
 //				// Show costumer by name
@@ -106,15 +107,15 @@ public class Application {
 //				editBankCards();
 //				// Edit cards
 //				break;
-//
-//			case EXIT:
-//				System.out.println(GOODBYE);
-//				break;
-//			default:
-//				System.err.println(INVALID_OPTION + " in DisplayMenu");
-//				break;
-//			}
-//		} while (option != 0);
+
+			case EXIT:
+				System.out.println(GOODBYE);
+				break;
+			default:
+				System.err.println(INVALID_OPTION + " in DisplayMenu");
+				break;
+			}
+		} while (option != 0);
 
 	}
 	/******************************************************************************
@@ -151,12 +152,19 @@ public class Application {
 			newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
 		else
 			System.out.println("The customer is to young to open bank account");
-		
-		
 
 		return newCustomer;
 	}
+	
+	private static void createNewCustomer() {
+		Customer customer = new Customer();
+		CustomerService customerService = new CustomerService();
+		
+		customer = populateCustomer();
+		System.out.println(CUSTOMER_CREATED);
+		customerService.save(customer);
 
+	}
 	
 	
 	/******************************************************************************
