@@ -3,6 +3,7 @@ package rumos.banco.service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import rumos.banco.model.Customer;
 import rumos.banco.model.Customer_Old;
 
 public class CustomerService {
@@ -29,11 +30,11 @@ public class CustomerService {
 
 	
 	
-	private static ArrayList<Customer_Old> customers = new ArrayList<>();
+	private static ArrayList<Customer> customers = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
 	
-	public Customer_Old save(Customer_Old customer) {
+	public Customer save(Customer customer) {
 		id++;
 		customer.setId(id);
 		customers.add(customer);
@@ -53,7 +54,7 @@ public class CustomerService {
 			option = scanner.nextInt();
 			switch (option) {
 			case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
-				editCustomerByNameAndPassword();
+				editCustomerByName();
 				break;
 			case EDIT_CUSTOMER_BY_TAXID:
 				editCustomerByTaxID();
@@ -72,14 +73,13 @@ public class CustomerService {
 		} while (option != 0);
 	}
 
-	private void editCustomerByNameAndPassword() {
+	public void editCustomerByName() {
 		System.out.println("Please write the name of the customer");
 		String name = scanner.next();
-		System.out.println("Please write the Password of the customer");
-		String password = scanner.next();
 
-		for (Customer_Old customer : customers) {
-			if (customer.getName().equals(name) && customer.getPassword().equals(password)) {
+
+		for (Customer customer : customers) {
+			if (customer.getName().equals(name)) {
 				customer = editCustomerDetails(customer);
 				return;
 			}
@@ -90,11 +90,11 @@ public class CustomerService {
 
 	}
 
-	private void editCustomerByTaxID() {
+	public void editCustomerByTaxID() {
 		System.out.println("Please write the taxID of the customer, in order to edit it");
 		String taxId = scanner.next();
 
-		for (Customer_Old customer : customers) {
+		for (Customer customer : customers) {
 			if (customer.getTaxId().equals(taxId)) {
 				customer = editCustomerDetails(customer);
 				return;
@@ -104,11 +104,11 @@ public class CustomerService {
 		return;
 	}
 
-	private void editCustomerByID() {
+	public void editCustomerByID() {
 		System.out.println("Please write the ID of the customer, in order to edit it");
 		Integer id = scanner.nextInt();
 
-		for (Customer_Old customer : customers) {
+		for (Customer customer : customers) {
 			if (customer.getId().equals(id)) {
 				customer = editCustomerDetails(customer);
 			}
@@ -117,7 +117,7 @@ public class CustomerService {
 		return;
 	}
 
-	private Customer_Old editCustomerDetails(Customer_Old customer) {
+	public Customer editCustomerDetails(Customer customer) {
 		Integer change;
 		do {
 
@@ -131,8 +131,8 @@ public class CustomerService {
 				// Change Name
 				break;
 			case CHANGE_PASSWORD:
-				System.out.println("What is the new password?");
-				customer.setPassword(scanner.next());
+				System.out.println("NOTHING HERE");
+//				customer.setPassword(scanner.next());
 				// Change password
 				break;
 			case CHANGE_EMAIL:
@@ -151,6 +151,24 @@ public class CustomerService {
 
 		return customer;
 
+	}
+	
+	/******************************************************************************
+	 * Check if there is already an taxID
+	 * 
+	 * @param taxId
+	 * @return
+	 ******************************************************************************/
+	public  Boolean taxIDalreadyExists(String taxId) {
+		
+		for (Customer customer : customers) {
+			if(customer != null) {
+				if(taxId.equals(customer.getTaxId()))
+					return true;
+			}
+		}
+		
+		return false;
 	}
 
 	private static void displayEditCustomerDetailsMenu() {
