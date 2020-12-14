@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import rumos.banco.model.Card;
-import rumos.banco.model.Customer;
+import rumos.banco.model.Customer_Old;
 
 public class CardService {
 	

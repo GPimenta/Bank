@@ -3,7 +3,7 @@ package rumos.banco.service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import rumos.banco.model.Customer;
+import rumos.banco.model.Customer_Old;
 
 public class CustomerService {
 	
@@ -29,11 +29,11 @@ public class CustomerService {
 
 	
 	
-	private static ArrayList<Customer> customers = new ArrayList<>();
+	private static ArrayList<Customer_Old> customers = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
 	
-	public Customer save(Customer customer) {
+	public Customer_Old save(Customer_Old customer) {
 		id++;
 		customer.setId(id);
 		customers.add(customer);
@@ -78,7 +78,7 @@ public class CustomerService {
 		System.out.println("Please write the Password of the customer");
 		String password = scanner.next();
 
-		for (Customer customer : customers) {
+		for (Customer_Old customer : customers) {
 			if (customer.getName().equals(name) && customer.getPassword().equals(password)) {
 				customer = editCustomerDetails(customer);
 				return;
@@ -94,7 +94,7 @@ public class CustomerService {
 		System.out.println("Please write the taxID of the customer, in order to edit it");
 		String taxId = scanner.next();
 
-		for (Customer customer : customers) {
+		for (Customer_Old customer : customers) {
 			if (customer.getTaxId().equals(taxId)) {
 				customer = editCustomerDetails(customer);
 				return;
@@ -108,7 +108,7 @@ public class CustomerService {
 		System.out.println("Please write the ID of the customer, in order to edit it");
 		Integer id = scanner.nextInt();
 
-		for (Customer customer : customers) {
+		for (Customer_Old customer : customers) {
 			if (customer.getId().equals(id)) {
 				customer = editCustomerDetails(customer);
 			}
@@ -117,7 +117,7 @@ public class CustomerService {
 		return;
 	}
 
-	private Customer editCustomerDetails(Customer customer) {
+	private Customer_Old editCustomerDetails(Customer_Old customer) {
 		Integer change;
 		do {
 
