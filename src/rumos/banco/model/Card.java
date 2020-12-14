@@ -3,8 +3,6 @@ package rumos.banco.model;
 public class Card {
 	
 	private Integer customerId;
-	private String passwordCard;
-	
 	
 	private Boolean debitCard = false;
 	private String debitCardNumber;
@@ -14,8 +12,15 @@ public class Card {
 	private String creditCardNumber;
 	private String creditCardPin;
 	
+
 	
 	
+	public Integer getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
 	
 	public Boolean isDebitCard() {
 		return debitCard;

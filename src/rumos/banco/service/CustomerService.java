@@ -29,8 +29,21 @@ public class CustomerService {
 
 	
 	
-	private ArrayList<Customer> customers = new ArrayList<>();
-	private Scanner scanner = new Scanner(System.in);
+	private static ArrayList<Customer> customers = new ArrayList<>();
+	private static Scanner scanner = new Scanner(System.in);
+	private static Integer id = 0;
+	
+	public Customer save(Customer customer) {
+		id++;
+		customer.setId(id);
+		customers.add(customer);
+		
+		return customer;
+	}
+	
+	
+	
+	
 
 	public void editCustomerPersonalDetails() {
 		Integer option;

@@ -33,6 +33,16 @@ public class CardService {
 	
 	private static ArrayList<Card> cards = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
+	private static Integer id = 0;
+	
+	public Card save(Card card) {
+		id++;
+		card.setCustomerId(id);
+		cards.add(card);
+		
+		return card;
+	}
+	
 	
 	/******************************************************************************
 	 * Bank Cards
