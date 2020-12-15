@@ -47,11 +47,11 @@ public class CardService {
 	/******************************************************************************
 	 * Bank Cards
 	 ******************************************************************************/
-	private static void editBankCards() {
+	public void editBankCards() {
 		Integer option;
 		Card card;
 
-		card = checkNameAndPassword();
+		card = checkCardNumberAndPassword();
 
 		if (card == null) {
 			return;
@@ -91,7 +91,7 @@ public class CardService {
 		} while (option != 0);
 	}
 
-	private static void deleteDebitCard(Card card) {
+	public void deleteDebitCard(Card card) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
 			if (card.isDebitCard()) {
@@ -108,7 +108,7 @@ public class CardService {
 		return;
 	}
 
-	private static void deleteCreditCard(Card card) {
+	public void deleteCreditCard(Card card) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
 			if (card.isCreditCard()) {
@@ -125,7 +125,7 @@ public class CardService {
 		return;
 	}
 
-	private static void createDebitCard(Card card) {
+	public void createDebitCard(Card card) {
 		System.out.println("Do you whish to create a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
 			if (!card.isDebitCard()) {
@@ -141,7 +141,7 @@ public class CardService {
 		return;
 	}
 
-	private static void createCreditCard(Card card) {
+	public void createCreditCard(Card card) {
 		System.out.println("Do you whish to create a Credit Card? y/n");
 		if (scanner.next().equals("y")) {
 			if (!card.isCreditCard()) {
@@ -157,7 +157,7 @@ public class CardService {
 		return;
 	}
 
-	private static void createDebitCardDetails(Card card) {
+	public void createDebitCardDetails(Card card) {
 		System.out.println("Creating the details of the debit card");
 		System.out.println("Please indicate the number of the debit card");
 		String cardNumber = scanner.next();
@@ -167,7 +167,7 @@ public class CardService {
 		card.setDebitCardPin(pinCard);
 	}
 
-	private static void createCreditCardDetails(Card card) {
+	public void createCreditCardDetails(Card card) {
 		System.out.println("Creating the details of the credit card");
 		System.out.println("Please indicate the number of the credit card");
 		String cardNumber = scanner.next();
@@ -177,7 +177,7 @@ public class CardService {
 		card.setCreditCardPin(pinCard);
 	}
 	
-	private static void deleteDebitCardDetails(Card card) {
+	public void deleteDebitCardDetails(Card card) {
 		System.out.println("Deleting the details of the debit card");
 		card.setDebitCardNumber(null);
 		System.out.println("Debit card number deleted");
@@ -185,7 +185,7 @@ public class CardService {
 		System.out.println("Debit card pin number deleted");
 	}
 	
-	private static void deleteCreditCardDetails(Card card) {
+	public void deleteCreditCardDetails(Card card) {
 		System.out.println("Deleting the details of the credit card");
 		card.setCreditCardNumber(null);
 		System.out.println("Credit card number deleted");
@@ -194,30 +194,29 @@ public class CardService {
 	}
 	
 	/******************************************************************************
-	 * check if the name and password are correct At the moment its unused since we
-	 * need to have the index to know who is the customer
+	 * check if the name and password are correct 
 	 * 
 	 * @return
 	 ******************************************************************************/
-	private static Card checkNameAndPassword() {
-		System.out.println("Please write your name");
-		String cardNumber = scanner.next();
-		System.out.println("Please write your Password");
-		String password = scanner.next();
-
-		for (Card card : cards) {
-			if (card == null)
-				break;
-			if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(password)) {
-				return card;
-			}
-			if (card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(password)) {
-				return card;
-			}
-		}
-		System.err.println(INVALID_NAME_OR_PASSWORD);
-		return null;
+	public Card checkCardNumberAndPassword() {
+		Card card = new Card();
+		String choose;
+		System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
+		choose = scanner.next().toLowerCase();
+		
+		if(choose.equals("debit")) 
+			card = findDebitCard();
+		if(choose.equals("credit"))
+			card = findCreditCard();
+		
+		return card;
 	}
+	/******************************************************************************
+	 * Show cards
+	 * 
+	 * 
+	 *
+	 ******************************************************************************/
 	
 	public void showCardsDetails() {
 		for (Card card : cards) {
@@ -225,6 +224,64 @@ public class CardService {
 			System.out.println(card.toString());
 		}
 	}
+	/******************************************************************************
+	 * Find cards
+	 * 
+	 * 
+	 *
+	 ******************************************************************************/
+	public Card findDebitCard() {
+		String cardNumber;
+		String cardPin;
+		
+		System.out.println("Please indicate the debit card number");
+		cardNumber = scanner.next();
+		System.out.println("Please indicate the pin");
+		cardPin = scanner.next();
+		
+		for(Card card : cards) {
+			if(card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
+				System.out.println(card.toString());
+				return card;	
+			}
+		}
+		System.out.println(INVALID_NAME_OR_PASSWORD);
+		return null;
+	}
+	
+	public Card findCreditCard() {
+		String cardNumber;
+		String cardPin;
+		
+		System.out.println("Please indicate the credit card number");
+		cardNumber = scanner.next();
+		System.out.println("Please indicate the pin");
+		cardPin = scanner.next();
+		
+		for(Card card : cards) {
+			if(card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
+				System.out.println(card.toString());
+				return card;
+			}
+		}
+		System.out.println(INVALID_NAME_OR_PASSWORD);
+		return null;
+	}
+	
+
+	
+	
+	
+	
+	/******************************************************************************
+	 * Display menu
+	 * 
+	 * 
+	 *
+	 ******************************************************************************/
+	
+	
+	
 	
 	private static void displayBankCardsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
