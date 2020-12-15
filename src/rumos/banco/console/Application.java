@@ -6,6 +6,7 @@ import java.time.Year;
 import java.util.Scanner;
 
 import rumos.banco.model.Account;
+import rumos.banco.model.Card;
 import rumos.banco.model.Customer;
 import rumos.banco.service.AccountService;
 import rumos.banco.service.CardService;
@@ -85,6 +86,7 @@ public class Application {
 			case CREATE_NEW_CUSTOMER:
 				createNewCustomer();
 				createNewAccount();
+				CreateNewCard();
 				break;
 //			case SHOW_CUSTOMER:
 //				showCustomer();
@@ -223,6 +225,50 @@ public class Application {
 
 	}
 
+	private static Card populateCard() {
+		Card newCard = new Card();
+		
+		
+		System.out.println("Do you which to have a Debit Card? y/n");
+		if (scanner.next().equals("y")) {
+			newCard.setDebitCard(true);
+			System.out.println("Please indicate the debit card number");
+			String cardNumber = scanner.next();
+			newCard.setDebitCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the debit card number");
+			String pinCard = scanner.next();
+			newCard.setDebitCardPin(pinCard);
+		} else
+			newCard.setDebitCard(false);
+
+		System.out.println("Do you which to have a Credit Card? y/n");
+		if (scanner.next().equals("y")) {
+			newCard.setCreditCard(true);
+			System.out.println("Please indicate the credit card number");
+			String cardNumber = scanner.next();
+			newCard.setCreditCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the credit card number");
+			String pinCard = scanner.next();
+			newCard.setCreditCardPin(pinCard);
+		} else
+			newCard.setCreditCard(false);
+		
+		
+		return newCard;
+	}
+	
+	
+	private static void CreateNewCard() {
+		Card card = new Card();
+		card = populateCard();
+		System.out.println(CUSTOMER_CREATED);
+		cardService.save(card);
+		
+		cardService.showCardsDetails();
+	}
+	
+	
+	
 	
 	/******************************************************************************
 	 * Display menus

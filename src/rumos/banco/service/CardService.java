@@ -219,6 +219,13 @@ public class CardService {
 		return null;
 	}
 	
+	public void showCardsDetails() {
+		for (Card card : cards) {
+			System.out.println("The Cards: ");
+			System.out.println(card.toString());
+		}
+	}
+	
 	private static void displayBankCardsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");

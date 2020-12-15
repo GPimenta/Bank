@@ -15,6 +15,71 @@ public class Card {
 
 	
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((creditCard == null) ? 0 : creditCard.hashCode());
+		result = prime * result + ((creditCardNumber == null) ? 0 : creditCardNumber.hashCode());
+		result = prime * result + ((creditCardPin == null) ? 0 : creditCardPin.hashCode());
+		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
+		result = prime * result + ((debitCard == null) ? 0 : debitCard.hashCode());
+		result = prime * result + ((debitCardNumber == null) ? 0 : debitCardNumber.hashCode());
+		result = prime * result + ((debitCardPin == null) ? 0 : debitCardPin.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Card other = (Card) obj;
+		if (creditCard == null) {
+			if (other.creditCard != null)
+				return false;
+		} else if (!creditCard.equals(other.creditCard))
+			return false;
+		if (creditCardNumber == null) {
+			if (other.creditCardNumber != null)
+				return false;
+		} else if (!creditCardNumber.equals(other.creditCardNumber))
+			return false;
+		if (creditCardPin == null) {
+			if (other.creditCardPin != null)
+				return false;
+		} else if (!creditCardPin.equals(other.creditCardPin))
+			return false;
+		if (customerId == null) {
+			if (other.customerId != null)
+				return false;
+		} else if (!customerId.equals(other.customerId))
+			return false;
+		if (debitCard == null) {
+			if (other.debitCard != null)
+				return false;
+		} else if (!debitCard.equals(other.debitCard))
+			return false;
+		if (debitCardNumber == null) {
+			if (other.debitCardNumber != null)
+				return false;
+		} else if (!debitCardNumber.equals(other.debitCardNumber))
+			return false;
+		if (debitCardPin == null) {
+			if (other.debitCardPin != null)
+				return false;
+		} else if (!debitCardPin.equals(other.debitCardPin))
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "Card [customerId=" + customerId + ", debitCard=" + debitCard + ", debitCardNumber=" + debitCardNumber
+				+ ", debitCardPin=" + debitCardPin + ", creditCard=" + creditCard + ", creditCardNumber="
+				+ creditCardNumber + ", creditCardPin=" + creditCardPin + "]";
+	}
 	public Integer getCustomerId() {
 		return customerId;
 	}
