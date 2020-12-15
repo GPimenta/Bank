@@ -88,10 +88,11 @@ public class Application {
 				createNewAccount();
 				CreateNewCard();
 				break;
-//			case SHOW_CUSTOMER:
+			case SHOW_CUSTOMER:
+				cardService.editBankCards();
 //				showCustomer();
 //				// Show costumer by name
-//				break;
+				break;
 //			case EDIT_CUSTOMER_ACCOUNTS:
 //				editSecondaryAccounts();
 //				// Show costumer by taxId
