@@ -202,14 +202,22 @@ public class CardService {
 		Card card = new Card();
 		String choose;
 		System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
-		choose = scanner.next().toLowerCase();
+		do {
+			choose = scanner.next().toLowerCase();
+			if(choose.equals("debit")) {
+				card = findDebitCard();
+				return card;
+			}
+			if(choose.equals("credit")) {
+				card = findCreditCard();
+				return card;
+			}
+			System.err.println("Please write debit or credit");
+		}
+		while(!(choose.equals("debit") || choose.equals("credit")));
+			
 		
-		if(choose.equals("debit")) 
-			card = findDebitCard();
-		if(choose.equals("credit"))
-			card = findCreditCard();
-		
-		return card;
+		return null;
 	}
 	/******************************************************************************
 	 * Show cards
