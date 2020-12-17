@@ -7,17 +7,13 @@ import rumos.banco.model.Card;
 import rumos.banco.model.Customer_Old;
 
 public class CardService {
-	
-
 
 	private static final int EXIT = 0;
-
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
 	private static final int CREATE_CREDIT_CARD = 3;
 	private static final int DELETE_CREDIT_CARD = 4;
-
 
 	private static final String TITLE = "Rumos Digital Bank";
 
@@ -29,28 +25,29 @@ public class CardService {
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 
-	
-	
 	private static ArrayList<Card> cards = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
-	
+
 	public Card save(Card card) {
 		id++;
 		card.setCustomerId(id);
 		cards.add(card);
-		
+
 		return card;
 	}
-	
-	
+
 	/******************************************************************************
 	 * Bank Cards
 	 ******************************************************************************/
-	public void editBankCards() {
+	public void editBankCards(Integer customerId) {
 		Integer option;
 		Card card;
-
+		
+		if(findCustomerCard(customerId) == null) {
+			return;
+		}
+		
 		card = checkCardNumberAndPassword();
 
 		if (card == null) {
@@ -176,7 +173,7 @@ public class CardService {
 		String pinCard = scanner.next();
 		card.setCreditCardPin(pinCard);
 	}
-	
+
 	public void deleteDebitCardDetails(Card card) {
 		System.out.println("Deleting the details of the debit card");
 		card.setDebitCardNumber(null);
@@ -184,7 +181,7 @@ public class CardService {
 		card.setDebitCardPin(null);
 		System.out.println("Debit card pin number deleted");
 	}
-	
+
 	public void deleteCreditCardDetails(Card card) {
 		System.out.println("Deleting the details of the credit card");
 		card.setCreditCardNumber(null);
@@ -192,9 +189,9 @@ public class CardService {
 		card.setCreditCardPin(null);
 		System.out.println("Credit card pin number deleted");
 	}
-	
+
 	/******************************************************************************
-	 * check if the name and password are correct 
+	 * check if the cardnumber and password are correct
 	 * 
 	 * @return
 	 ******************************************************************************/
@@ -204,34 +201,34 @@ public class CardService {
 		System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
 		do {
 			choose = scanner.next().toLowerCase();
-			if(choose.equals("debit")) {
+			if (choose.equals("debit")) {
 				card = findDebitCard();
 				return card;
 			}
-			if(choose.equals("credit")) {
+			if (choose.equals("credit")) {
 				card = findCreditCard();
 				return card;
 			}
 			System.err.println("Please write debit or credit");
-		}
-		while(!(choose.equals("debit") || choose.equals("credit")));
-			
-		
+		} while (!(choose.equals("debit") || choose.equals("credit")));
+
 		return null;
 	}
+
 	/******************************************************************************
 	 * Show cards
 	 * 
 	 * 
 	 *
 	 ******************************************************************************/
-	
+
 	public void showCardsDetails() {
 		for (Card card : cards) {
 			System.out.println("The Cards: ");
 			System.out.println(card.toString());
 		}
 	}
+
 	/******************************************************************************
 	 * Find cards
 	 * 
@@ -241,33 +238,14 @@ public class CardService {
 	public Card findDebitCard() {
 		String cardNumber;
 		String cardPin;
-		
+
 		System.out.println("Please indicate the debit card number");
 		cardNumber = scanner.next();
 		System.out.println("Please indicate the pin");
 		cardPin = scanner.next();
-		
-		for(Card card : cards) {
-			if(card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
-				System.out.println(card.toString());
-				return card;	
-			}
-		}
-		System.out.println(INVALID_NAME_OR_PASSWORD);
-		return null;
-	}
-	
-	public Card findCreditCard() {
-		String cardNumber;
-		String cardPin;
-		
-		System.out.println("Please indicate the credit card number");
-		cardNumber = scanner.next();
-		System.out.println("Please indicate the pin");
-		cardPin = scanner.next();
-		
-		for(Card card : cards) {
-			if(card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
+
+		for (Card card : cards) {
+			if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
 				System.out.println(card.toString());
 				return card;
 			}
@@ -275,22 +253,55 @@ public class CardService {
 		System.out.println(INVALID_NAME_OR_PASSWORD);
 		return null;
 	}
-	
 
-	
-	
-	
-	
+	public Card findCreditCard() {
+		String cardNumber;
+		String cardPin;
+
+		System.out.println("Please indicate the credit card number");
+		cardNumber = scanner.next();
+		System.out.println("Please indicate the pin");
+		cardPin = scanner.next();
+
+		for (Card card : cards) {
+			if (card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
+				System.out.println(card.toString());
+				return card;
+			}
+		}
+		System.out.println(INVALID_NAME_OR_PASSWORD);
+		return null;
+	}
+
+	/******************************************************************************
+	 * Return the card from customer 
+	 * 
+	 * 
+	 *
+	 ******************************************************************************/
+
+	public Card findCustomerCard(Integer customerId) {
+		
+		
+		for (Card card : cards) {
+			if(card.getCustomerId().equals(customerId)) {
+				System.out.println("Card found");
+				return card;
+			}
+		}
+		System.out.println("Customer do not have a card");
+		return null;
+		
+		
+	}
+
 	/******************************************************************************
 	 * Display menu
 	 * 
 	 * 
 	 *
 	 ******************************************************************************/
-	
-	
-	
-	
+
 	private static void displayBankCardsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
@@ -301,5 +312,5 @@ public class CardService {
 		System.out.println("4 - Delete Credit Card");
 		System.out.println("###########################################################################");
 	}
-	
+
 }

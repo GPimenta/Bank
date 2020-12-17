@@ -89,7 +89,7 @@ public class Application {
 				CreateNewCard();
 				break;
 			case SHOW_CUSTOMER:
-				cardService.editBankCards();
+				
 //				showCustomer();
 //				// Show costumer by name
 				break;
@@ -114,7 +114,8 @@ public class Application {
 //				// Deposit balance
 //				break;
 //			case EDIT_BANK_CARDS:
-//				editBankCards();
+//				cardService.editBankCards(1);
+//				
 //				// Edit cards
 //				break;
 
