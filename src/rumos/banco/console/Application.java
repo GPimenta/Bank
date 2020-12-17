@@ -89,7 +89,7 @@ public class Application {
 				CreateNewCard();
 				break;
 			case SHOW_CUSTOMER:
-				
+				accountService.editSecondaryAccounts();
 //				showCustomer();
 //				// Show costumer by name
 				break;
@@ -191,6 +191,9 @@ public class Application {
 		
 		System.out.println("Please set the number of the account (5 digits)");
 		newAccount.setAccountHolderNumber(scanner.next());
+		
+		System.out.println("Please set the password for your holder account");
+		newAccount.setPasswordAccount(scanner.next());
 
 		System.out.println("Please set the customer balance on its main account");
 
@@ -226,7 +229,11 @@ public class Application {
 		accountService.showAccountsDetails();
 
 	}
-
+	/******************************************************************************
+	 * Populate the Cards
+	 * 
+	 * @return
+	 ******************************************************************************/
 	private static Card populateCard() {
 		Card newCard = new Card();
 		
