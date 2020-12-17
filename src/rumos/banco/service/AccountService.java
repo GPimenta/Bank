@@ -83,9 +83,13 @@ public class AccountService {
 			secondAccount = scanner.next();
 			for (String checkIfTheSameAccount : account.getSecondaryAccountNumber()) {
 				if (checkIfTheSameAccount.equals(secondAccount)) {
-					System.err.println("The account that you are requesting to be secondary it is your Holder acocunt");
+					System.err.println("The account that you are requesting to be secondary it is already your secondary account");
 					return;
 				}
+			}
+			if(account.getAccountHolderNumber().equals(secondAccount)) {
+				System.out.println("The action cannot be perform, you can not make your holder account as secondary");
+				return;
 			}
 			if (checkIfAccountHolderExists(secondAccount)) {
 				account.getSecondaryAccountNumber()[index] = secondAccount;
@@ -138,7 +142,7 @@ public class AccountService {
 			if (account.getSecondaryAccountNumber()[i].equals(secondaryAccount)) {
 				account.getSecondaryAccountNumber()[i] = "";
 				System.out.println("Account deleted");
-				System.out.print("The remaining secondary accounts are: "
+				System.out.println("The remaining secondary accounts are: "
 						+ Arrays.toString(account.getSecondaryAccountNumber()));
 				return;
 			}
