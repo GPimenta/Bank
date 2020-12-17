@@ -264,7 +264,7 @@ public class AccountService {
 		String decision;
 
 		if (secondaryAccount == null)
-			return; // NECESSARIO FAZER LOOP PARA POR O SECUNDARY NUMBER CORRECTO OU QUERER SAIR
+			return; // NECESSARIO FAZER LOOP PARA POR O SECONDARY NUMBER CORRECTO OU QUERER SAIR
 
 		for (Account getAccount : accounts) {
 			if (getAccount.getAccountHolderNumber().equals(secondaryAccount)) {
@@ -277,14 +277,14 @@ public class AccountService {
 	}
 
 	public String checkSecondaryAccount(Account account) {
-		System.out.println("From which of your secundary account do want to perform action? ");
+		System.out.println("From which of your secondary account do want to perform action? ");
 		System.out.printf("\nThe accounts that you have associated are: %s",
 				Arrays.toString(account.getSecondaryAccountNumber()));
-		String secundaryAccount;
+		String secondaryAccount;
 
-		secundaryAccount = scanner.next();
+		secondaryAccount = scanner.next();
 		for (String otherAccounts : account.getSecondaryAccountNumber()) {
-			if (otherAccounts.equals(secundaryAccount)) {
+			if (otherAccounts.equals(secondaryAccount)) {
 				System.out.println("The choosen account is: " + otherAccounts);
 				return otherAccounts;
 			}
@@ -391,6 +391,21 @@ public class AccountService {
 		account.getTransactionHistory().add(amount);
 	}
 	
+	/******************************************************************************
+	 * Find Customer Account
+	 * 
+	 * 
+	 ******************************************************************************/
+	public Account findCustomerAccount(int customerId) {
+		for (Account account : accounts) {
+			if(account.getCustomerId().equals(customerId)) {
+				System.out.println("Account found");
+				return account;
+			}
+		}
+		System.out.println("Customer does not have an account");
+		return null;
+	}
 	
 	
 	/******************************************************************************
