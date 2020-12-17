@@ -10,41 +10,40 @@ import rumos.banco.model.Customer_Old;
 
 public class AccountService {
 	private static final int EXIT = 0;
-             
-             
+
 	private static final int DEPOSIT_MONEY_ON_HOLDER_ACCOUNT = 1;
 	private static final int DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT = 2;
 	private static final int WITHDRAW_MONEY_ON_HOLDER_ACCOUNT = 3;
 	private static final int WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT = 4;
 	private static final int TRANSFER_MONEY = 5;
 	private static final int CHECK_ACCOUNT_HISTORY = 6;
-             
 
 	private static final String TITLE = "Rumos Digital Bank";
 	private static final String INVALID_OPTION = "Invalid Option!";
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
-	
-	
+
 	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
-	
-	
-	
+
 	public Account save(Account account) {
 		id++;
 		account.setCustomerId(id);
 		accounts.add(account);
-		
+
 		return account;
 	}
-	
-	
-	
+
+	/******************************************************************************
+	 * Check secondaryAccounts
+	 * 
+	 * 
+	 ******************************************************************************/
+
 	public void editSecondaryAccounts() {
-		Account account = checkNameAndPassword();
+		Account account = checkAccountNameAndPassword();
 		Integer choose;
 
 		if (account == null) {
@@ -74,8 +73,7 @@ public class AccountService {
 
 		} while (choose != 0);
 	}
-	
-	
+
 	public void addSecondaryAccount(Account account) {
 		Integer index = checkSecondaryAccounts(account);
 		String secondAccount;
@@ -96,7 +94,7 @@ public class AccountService {
 			return;
 		}
 	}
-	
+
 	public boolean checkIfAccountHolderExists(String secondaryAccount) {
 		for (Account account : accounts) {
 			if (account == null)
@@ -111,7 +109,7 @@ public class AccountService {
 		System.err.println("There is no Holder Account customer with that account");
 		return false;
 	}
-	
+
 	public int checkSecondaryAccounts(Account account) {
 		Integer index = 4;
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
@@ -126,7 +124,7 @@ public class AccountService {
 																		// TRANSFORMAR EM LISTA
 		return index;
 	}
-	
+
 	public void deleteSecondaryAccount(Account account) {
 		String secondaryAccount;
 
@@ -148,7 +146,7 @@ public class AccountService {
 		System.out.println("The account that you have requested to delete does not belong to you");
 
 	}
-	
+
 	public boolean checkIfItHasSecondaryAccounts(Account account) {
 
 		for (String secondaryAccounts : account.getSecondaryAccountNumber()) {
@@ -158,16 +156,18 @@ public class AccountService {
 		System.err.println("You do not have Secondary accounts to delete.");
 		return false;
 	}
-	
+
 	/******************************************************************************
 	 * Money movement
+	 * 
+	 * 
 	 ******************************************************************************/
 
 	public void moneyManagement() {
 		Integer option;
 		Account account;
 
-		account = checkNameAndPassword();
+		account = checkAccountNameAndPassword();
 
 		if (account == null) {
 			return;
@@ -181,7 +181,7 @@ public class AccountService {
 				depositMoneyOnHolderAccount(account);
 				break;
 			case DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT:
-				depositMoneyOnSecundaryAccount(account);
+				depositMoneyOnSecondaryAccount(account);
 				break;
 			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
 				withdrawMoneyOnHolderAccount(account);
@@ -206,6 +206,12 @@ public class AccountService {
 		} while (option != 0);
 
 	}
+	
+	/******************************************************************************
+	 * Deposit money on accounts
+	 * 
+	 * @return
+	 ******************************************************************************/
 
 	public void depositMoneyOnHolderAccount(Account account) {
 
@@ -216,7 +222,7 @@ public class AccountService {
 		return;
 	}
 
-	public void depositMoneyOnSecundaryAccount(Account account) {
+	public void depositMoneyOnSecondaryAccount(Account account) {
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -233,7 +239,11 @@ public class AccountService {
 		return;
 
 	}
-
+	/******************************************************************************
+	 * withdraw money on accounts
+	 * 
+	 * @return
+	 ******************************************************************************/
 	public void withdrawMoneyOnHolderAccount(Account account) {
 
 		System.out.println("Please indicate the amount of money you wish to take");
@@ -282,6 +292,11 @@ public class AccountService {
 		System.err.println("The secondary account does not correspond to the ones that you own");
 		return null;
 	}
+	/******************************************************************************
+	 * Transfer money on any account
+	 * 
+	 * @return
+	 ******************************************************************************/
 
 	public void transferMoney(Account account) {
 
@@ -318,26 +333,13 @@ public class AccountService {
 		System.err.println("There is no account with that number.");
 		return;
 	}
-	/**
-	 * Account History movement
-	 *
-	 */
 
-	public void showAccountHistoryMovement(Account account) {
-		for (String transactionHistory : account.getTransactionHistory()) {
-			System.out.println("The transaction history: " + transactionHistory);
-		}
-		System.out.println("The total amount of: " + account.getAccountHolderBalance());
-	}
-	
-	
 	/******************************************************************************
-	 * check if the name and password are correct At the moment its unused since we
-	 * need to have the index to know who is the customer
+	 * check if the account holder and password are correct
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public Account checkNameAndPassword() {
+	public Account checkAccountNameAndPassword() {
 		System.out.println("Please write your account holder number");
 		String accountHolderNumber = scanner.next();
 		System.out.println("Please write your Password account");
@@ -346,26 +348,58 @@ public class AccountService {
 		for (Account account : accounts) {
 			if (account == null)
 				break;
-			if (account.getAccountHolderNumber().equals(accountHolderNumber) && account.getPasswordAccount().equals(password)) {
+			if (account.getAccountHolderNumber().equals(accountHolderNumber)
+					&& account.getPasswordAccount().equals(password)) {
 				return account;
 			}
 		}
 		System.err.println(INVALID_NAME_OR_PASSWORD);
 		return null;
 	}
-	
-	public void showAccountsDetails(){
-		for(Account account : accounts) {
+
+	/******************************************************************************
+	 * Prints all accounts
+	 * 
+	 * 
+	 ******************************************************************************/
+	public void showAccountsDetails() {
+		for (Account account : accounts) {
 			System.out.println("The account: ");
 			System.out.println(account.toString());
 		}
 	}
-	
+
+	/******************************************************************************
+	 * Account History movement
+	 *
+	 ******************************************************************************/
+
+	public void showAccountHistoryMovement(Account account) {
+		for (String transactionHistory : account.getTransactionHistory()) {
+			System.out.println("The transaction history: " + transactionHistory);
+		}
+		System.out.println("The total amount of: " + account.getAccountHolderBalance());
+	}
+
+	/******************************************************************************
+	 * Add to account history
+	 * 
+	 * 
+	 ******************************************************************************/
 
 	public void addTAccountHistoryMovement(Account account, String amount) {
 		account.getTransactionHistory().add(amount);
 	}
 	
+	
+	
+	/******************************************************************************
+	 * Display methods
+	 * 
+	 * 
+	 ******************************************************************************/
+	
+
 	public void displaySecondaryAccountsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
@@ -374,7 +408,7 @@ public class AccountService {
 		System.out.println("2 - Delete Secondary Account");
 		System.out.println("###########################################################################");
 	}
-	
+
 	public void displayMoneyManagementMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
@@ -387,5 +421,5 @@ public class AccountService {
 		System.out.println("6 - Show history account");
 		System.out.println("###########################################################################");
 	}
-	
+
 }
