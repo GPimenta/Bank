@@ -27,6 +27,12 @@ public class AccountService {
 	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
+	
+	/******************************************************************************
+	 * Add Account
+	 * 
+	 * 
+	 ******************************************************************************/
 
 	public Account save(Account account) {
 		id++;
@@ -410,6 +416,17 @@ public class AccountService {
 		System.out.println("Customer does not have an account");
 		return null;
 	}
+	
+	/******************************************************************************
+	 * Display account by customer Id
+	 * 
+	 * 
+	 ******************************************************************************/
+	public void displayAccount(int customerId) {
+		Account account = findCustomerAccount(customerId);
+		System.out.println(account.toString());
+	}
+	
 	
 	
 	/******************************************************************************

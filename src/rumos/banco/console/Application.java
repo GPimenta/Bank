@@ -89,7 +89,7 @@ public class Application {
 				CreateNewCard();
 				break;
 			case SHOW_CUSTOMER:
-				accountService.moneyManagement();
+				customerService.editCustomerPersonalDetails();
 //				showCustomer();
 //				// Show costumer by name
 				break;

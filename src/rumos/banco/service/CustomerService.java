@@ -170,12 +170,55 @@ public class CustomerService {
 		
 		return false;
 	}
-	
+	/******************************************************************************
+	 * Show all customers
+	 * 
+	 *
+	 ******************************************************************************/
 	public void showCustomersDetails(){
 		for(Customer customer : customers) {
 			System.out.println("The customer: ");
 			System.out.println(customer.toString());
 		}
+	}
+	/******************************************************************************
+	 * Show customer using Name and TaxId
+	 * 
+	 *@return int Id customer
+	 ******************************************************************************/
+	public Integer findCustomerByNameAndTaxId() {
+		String name;
+		String taxId;
+		
+		System.out.println("Please indicate the name of the Customer");
+		name = scanner.next();
+		System.out.println("Please indicate the taxId of the Customer");
+		taxId = scanner.next();
+		
+		
+		for (Customer customer : customers) {
+			if(customer.getName().equals(name) && customer.getTaxId().equals(taxId)) {
+				System.out.println(customer.toString());
+				return customer.getId();
+			}
+		}
+		System.err.println("Customer not found");
+		return null;
+	}
+	/******************************************************************************
+	 * Show customer using Id customer
+	 * 
+	 *
+	 ******************************************************************************/
+	public Customer findCustomerById(int customerId) {
+		for(Customer customer : customers) {
+			if(customer.getId().equals(customerId)) {
+				System.out.println(customer.toString());
+				return customer;
+			}
+		}
+		System.err.println("Customer not found");
+		return null;
 	}
 
 	private static void displayEditCustomerDetailsMenu() {
