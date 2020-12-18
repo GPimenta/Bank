@@ -433,7 +433,7 @@ public class AccountService {
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Deposit money on your Holder Account");
-		System.out.println("2 - Deposit money on your Secundary Account");
+		System.out.println("2 - Deposit money on your Secondary Account");
 		System.out.println("3 - Withdraw money from your Holder Account");
 		System.out.println("4 - Withdraw money from your Secondary Account");
 		System.out.println("5 - Transfer money to another account");
