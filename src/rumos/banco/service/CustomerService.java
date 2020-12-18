@@ -1,5 +1,7 @@
 package rumos.banco.service;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,6 +36,13 @@ public class CustomerService {
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
 	
+	
+	
+	/******************************************************************************
+	 * Save Customer
+	 * 
+	 * @return
+	 ******************************************************************************/
 	public Customer save(Customer customer) {
 		id++;
 		customer.setId(id);
@@ -41,8 +50,41 @@ public class CustomerService {
 		
 		return customer;
 	}
-	
-	
+	/******************************************************************************
+	 * Populate the Customers
+	 * 
+	 * @return
+	 ******************************************************************************/
+	public  Customer populateCustomer() {
+		System.out.println("Creating new client");
+		Customer newCustomer = new Customer();
+		
+		System.out.println("Please set Name");
+		newCustomer.setName(scanner.next());
+		
+		System.out.println("Please set TaxId");
+		String taxId = scanner.next();
+		if (!taxIDalreadyExists(taxId))
+			newCustomer.setTaxId(taxId);
+		else
+			System.out.println("taxID already exists");
+		
+		System.out.println("Please set email");
+		newCustomer.setEmail(scanner.next());
+
+		System.out.print("Customer day of birth ");
+		Integer day = scanner.nextInt();
+		System.out.print("Customer month of birth ");
+		Integer month = scanner.nextInt();
+		System.out.print("Customer year of birth ");
+		Integer year = scanner.nextInt();
+		if ((Year.now().getValue() - year) >= 18)
+			newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
+		else
+			System.out.println("The customer is to young to open bank account");
+
+		return newCustomer;
+	}
 	
 	
 

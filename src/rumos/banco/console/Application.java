@@ -66,17 +66,14 @@ public class Application {
 	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
-	
+
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer option;
 	private static SecureRandom random = new SecureRandom();
 	private static CustomerService customerService = new CustomerService();
 	private static AccountService accountService = new AccountService();
 	private static CardService cardService = new CardService();
-	
-	
-	
-	
+
 	public static void main(String[] args) {
 		do {
 			displayMenu();
@@ -129,156 +126,55 @@ public class Application {
 		} while (option != 0);
 
 	}
+
 	/******************************************************************************
-	 * Populate the Customers
+	 * Create Customer
 	 * 
 	 * @return
 	 ******************************************************************************/
 
-	private static Customer populateCustomer() {
-		System.out.println("Creating new client");
-		Customer newCustomer = new Customer();
-		
-		System.out.println("Please set Name");
-		newCustomer.setName(scanner.next());
-		
-		System.out.println("Please set TaxId");
-		String taxId = scanner.next();
-		if (!customerService.taxIDalreadyExists(taxId))
-			newCustomer.setTaxId(taxId);
-		else
-			System.out.println("taxID already exists");
-		
-		System.out.println("Please set email");
-		newCustomer.setEmail(scanner.next());
-
-		System.out.print("Customer day of birth ");
-		Integer day = scanner.nextInt();
-		System.out.print("Customer month of birth ");
-		Integer month = scanner.nextInt();
-		System.out.print("Customer year of birth ");
-		Integer year = scanner.nextInt();
-		if ((Year.now().getValue() - year) >= 18)
-			newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
-		else
-			System.out.println("The customer is to young to open bank account");
-
-		return newCustomer;
-	}
-	
 	private static void createNewCustomer() {
 		Customer customer = new Customer();
-		
-		
-		customer = populateCustomer();
+
+		customer = customerService.populateCustomer();
 		System.out.println(CUSTOMER_CREATED);
 		customerService.save(customer);
-		
+
 		customerService.showCustomersDetails();
 
 	}
-	
 	/******************************************************************************
-	 * Populate the Accounts
+	 * Create Account
 	 * 
 	 * @return
 	 ******************************************************************************/
-	
-	private static Account populateAccount() {
-		System.out.println("Creating new account");
-		Account newAccount = new Account();
-		
-		
-		System.out.println("Please set the number of the account (5 digits)");
-		newAccount.setAccountHolderNumber(scanner.next());
-		
-		System.out.println("Please set the password for your holder account");
-		newAccount.setPasswordAccount(scanner.next());
 
-		System.out.println("Please set the customer balance on its main account");
-
-		Double moneyDeposit = scanner.nextDouble();
-		if (moneyDeposit > 50) {
-			newAccount.setAccountHolderBalance(moneyDeposit);
-
-		} else {
-			System.err.println("In order to create an account its necessary to deposit >=50€\n");
-		}
-
-		System.out.println("Please indicate how many secondary accounts do you want to have");
-		Integer count = scanner.nextInt();
-		String secondaryAccount;
-		for (int i = 0; i < count; i++) {
-			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
-					i + 1);
-			secondaryAccount = scanner.next();
-			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
-		}
-		
-		return newAccount;
-	}
-	
 	private static void createNewAccount() {
 		Account account = new Account();
-		
-		
-		account = populateAccount();
+
+		account = accountService.populateAccount();
 		System.out.println(CUSTOMER_CREATED);
 		accountService.save(account);
-		
+
 		accountService.showAccountsDetails();
 
 	}
-	/******************************************************************************
-	 * Populate the Cards
-	 * 
-	 * 
-	 ******************************************************************************/
-	private static Card populateCard() {
-		Card newCard = new Card();
-		
-		
-		System.out.println("Do you which to have a Debit Card? y/n");
-		if (scanner.next().equals("y")) {
-			newCard.setDebitCard(true);
-			System.out.println("Please indicate the debit card number");
-			String cardNumber = scanner.next();
-			newCard.setDebitCardNumber(cardNumber);
-			System.out.println("Please indicate the pin of the debit card number");
-			String pinCard = scanner.next();
-			newCard.setDebitCardPin(pinCard);
-		} else
-			newCard.setDebitCard(false);
 
-		System.out.println("Do you which to have a Credit Card? y/n");
-		if (scanner.next().equals("y")) {
-			newCard.setCreditCard(true);
-			System.out.println("Please indicate the credit card number");
-			String cardNumber = scanner.next();
-			newCard.setCreditCardNumber(cardNumber);
-			System.out.println("Please indicate the pin of the credit card number");
-			String pinCard = scanner.next();
-			newCard.setCreditCardPin(pinCard);
-		} else
-			newCard.setCreditCard(false);
-		
-		
-		return newCard;
-	}
-	
-	
+	/******************************************************************************
+	 * Create Card
+	 * 
+	 * @return
+	 ******************************************************************************/
+
 	private static void CreateNewCard() {
 		Card card = new Card();
-		card = populateCard();
+		card = cardService.populateCard();
 		System.out.println(CUSTOMER_CREATED);
 		cardService.save(card);
-		
+
 		cardService.showCardsDetails();
 	}
-	
-	
-	
-	
+
 	/******************************************************************************
 	 * Display menus
 	 ******************************************************************************/
@@ -298,7 +194,5 @@ public class Application {
 		System.out.println("###########################################################################");
 
 	}
-	
-	
 
 }

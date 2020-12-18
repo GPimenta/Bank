@@ -29,6 +29,11 @@ public class CardService {
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
 
+	/******************************************************************************
+	 * Save Card
+	 * 
+	 * 
+	 ******************************************************************************/
 	public Card save(Card card) {
 		id++;
 		card.setCustomerId(id);
@@ -38,16 +43,51 @@ public class CardService {
 	}
 
 	/******************************************************************************
+	 * Populate the Cards
+	 * 
+	 * 
+	 ******************************************************************************/
+	public Card populateCard() {
+		Card newCard = new Card();
+
+		System.out.println("Do you which to have a Debit Card? y/n");
+		if (scanner.next().equals("y")) {
+			newCard.setDebitCard(true);
+			System.out.println("Please indicate the debit card number");
+			String cardNumber = scanner.next();
+			newCard.setDebitCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the debit card number");
+			String pinCard = scanner.next();
+			newCard.setDebitCardPin(pinCard);
+		} else
+			newCard.setDebitCard(false);
+
+		System.out.println("Do you which to have a Credit Card? y/n");
+		if (scanner.next().equals("y")) {
+			newCard.setCreditCard(true);
+			System.out.println("Please indicate the credit card number");
+			String cardNumber = scanner.next();
+			newCard.setCreditCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the credit card number");
+			String pinCard = scanner.next();
+			newCard.setCreditCardPin(pinCard);
+		} else
+			newCard.setCreditCard(false);
+
+		return newCard;
+	}
+
+	/******************************************************************************
 	 * Bank Cards
 	 ******************************************************************************/
 	public void editBankCards(Integer customerId) {
 		Integer option;
 		Card card;
-		
-		if(findCustomerCard(customerId) == null) {
+
+		if (findCustomerCard(customerId) == null) {
 			return;
 		}
-		
+
 		card = checkCardNumberAndPassword();
 
 		if (card == null) {
@@ -274,25 +314,23 @@ public class CardService {
 	}
 
 	/******************************************************************************
-	 * Return the card from customer 
+	 * Return the card from customer
 	 * 
 	 * 
 	 *
 	 ******************************************************************************/
 
 	public Card findCustomerCard(Integer customerId) {
-		
-		
+
 		for (Card card : cards) {
-			if(card.getCustomerId().equals(customerId)) {
+			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Card found");
 				return card;
 			}
 		}
 		System.out.println("Customer do not have a card");
 		return null;
-		
-		
+
 	}
 
 	/******************************************************************************

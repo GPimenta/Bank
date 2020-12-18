@@ -27,7 +27,7 @@ public class AccountService {
 	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
-	
+
 	/******************************************************************************
 	 * Add Account
 	 * 
@@ -40,6 +40,45 @@ public class AccountService {
 		accounts.add(account);
 
 		return account;
+	}
+
+	/******************************************************************************
+	 * Populate the Accounts
+	 * 
+	 * @return
+	 ******************************************************************************/
+
+	public Account populateAccount() {
+		System.out.println("Creating new account");
+		Account newAccount = new Account();
+
+		System.out.println("Please set the number of the account (5 digits)");
+		newAccount.setAccountHolderNumber(scanner.next());
+
+		System.out.println("Please set the password for your holder account");
+		newAccount.setPasswordAccount(scanner.next());
+
+		System.out.println("Please set the customer balance on its main account");
+
+		Double moneyDeposit = scanner.nextDouble();
+		if (moneyDeposit > 50) {
+			newAccount.setAccountHolderBalance(moneyDeposit);
+
+		} else {
+			System.err.println("In order to create an account its necessary to deposit >=50€\n");
+		}
+
+		System.out.println("Please indicate how many secondary accounts do you want to have");
+		Integer count = scanner.nextInt();
+		String secondaryAccount;
+		for (int i = 0; i < count; i++) {
+			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
+					i + 1);
+			secondaryAccount = scanner.next();
+			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
+		}
+
+		return newAccount;
 	}
 
 	/******************************************************************************
@@ -89,11 +128,12 @@ public class AccountService {
 			secondAccount = scanner.next();
 			for (String checkIfTheSameAccount : account.getSecondaryAccountNumber()) {
 				if (checkIfTheSameAccount.equals(secondAccount)) {
-					System.err.println("The account that you are requesting to be secondary it is already your secondary account");
+					System.err.println(
+							"The account that you are requesting to be secondary it is already your secondary account");
 					return;
 				}
 			}
-			if(account.getAccountHolderNumber().equals(secondAccount)) {
+			if (account.getAccountHolderNumber().equals(secondAccount)) {
 				System.out.println("The action cannot be perform, you can not make your holder account as secondary");
 				return;
 			}
@@ -216,7 +256,7 @@ public class AccountService {
 		} while (option != 0);
 
 	}
-	
+
 	/******************************************************************************
 	 * Deposit money on accounts
 	 * 
@@ -249,6 +289,7 @@ public class AccountService {
 		return;
 
 	}
+
 	/******************************************************************************
 	 * withdraw money on accounts
 	 * 
@@ -302,6 +343,7 @@ public class AccountService {
 		System.err.println("The secondary account does not correspond to the ones that you own");
 		return null;
 	}
+
 	/******************************************************************************
 	 * Transfer money on any account
 	 * 
@@ -400,7 +442,7 @@ public class AccountService {
 	public void addTAccountHistoryMovement(Account account, String amount) {
 		account.getTransactionHistory().add(amount);
 	}
-	
+
 	/******************************************************************************
 	 * Find Customer Account
 	 * 
@@ -408,7 +450,7 @@ public class AccountService {
 	 ******************************************************************************/
 	public Account findCustomerAccount(int customerId) {
 		for (Account account : accounts) {
-			if(account.getCustomerId().equals(customerId)) {
+			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Account found");
 				return account;
 			}
@@ -416,7 +458,7 @@ public class AccountService {
 		System.out.println("Customer does not have an account");
 		return null;
 	}
-	
+
 	/******************************************************************************
 	 * Display account by customer Id
 	 * 
@@ -426,15 +468,12 @@ public class AccountService {
 		Account account = findCustomerAccount(customerId);
 		System.out.println(account.toString());
 	}
-	
-	
-	
+
 	/******************************************************************************
 	 * Display methods
 	 * 
 	 * 
 	 ******************************************************************************/
-	
 
 	public void displaySecondaryAccountsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
