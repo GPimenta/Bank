@@ -86,7 +86,7 @@ public class Application {
 				CreateNewCard();
 				break;
 			case SHOW_CUSTOMER:
-				customerService.editCustomerPersonalDetails();
+				editCustomerPersonalDetails();
 //				showCustomer();
 //				// Show costumer by name
 				break;
@@ -126,7 +126,44 @@ public class Application {
 		} while (option != 0);
 
 	}
+	/******************************************************************************
+	 * Edit customer personal details
+	 * 
+	 * @return
+	 ******************************************************************************/
 
+	private static void editCustomerPersonalDetails() {
+		Integer option;
+		do {
+
+			displayEditCustomerMenu();
+			option = scanner.nextInt();
+			switch (option) {
+			case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
+				customerService.editCustomerByName();
+				break;
+			case EDIT_CUSTOMER_BY_TAXID:
+				customerService.editCustomerByTaxID();
+				break;
+			case EDIT_CUSTOMER_BY_ID:
+				customerService.editCustomerByID();
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in EditCustomer");
+				break;
+			}
+		} while (option != 0);
+	}
+	
+	
+	
+	
+	
+	
 	/******************************************************************************
 	 * Create Customer
 	 * 
@@ -193,6 +230,15 @@ public class Application {
 		System.out.println("8 - Edit bank cards");
 		System.out.println("###########################################################################");
 
+	}
+	private static void displayEditCustomerMenu() {
+		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("Please choose the several methods to change the credentials of the customer");
+		System.out.println("0 - Return to Original Menu");
+		System.out.println("1 - By name and password");
+		System.out.println("2 - By TaxID");
+		System.out.println("3 - By ID");
+		System.out.println("###########################################################################");
 	}
 
 }

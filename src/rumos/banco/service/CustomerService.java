@@ -86,34 +86,7 @@ public class CustomerService {
 		return newCustomer;
 	}
 	
-	
 
-	public void editCustomerPersonalDetails() {
-		Integer option;
-		do {
-
-			displayEditCustomerMenu();
-			option = scanner.nextInt();
-			switch (option) {
-			case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
-				editCustomerByName();
-				break;
-			case EDIT_CUSTOMER_BY_TAXID:
-				editCustomerByTaxID();
-				break;
-			case EDIT_CUSTOMER_BY_ID:
-				editCustomerByID();
-				break;
-			case EXIT:
-				System.out.println(PREVIOUS_MENU);
-				break;
-
-			default:
-				System.err.println(INVALID_OPTION + " in EditCustomer");
-				break;
-			}
-		} while (option != 0);
-	}
 
 	public void editCustomerByName() {
 		System.out.println("Please write the name of the customer");
@@ -273,13 +246,5 @@ public class CustomerService {
 		System.out.println("###########################################################################");
 	}
 
-	private static void displayEditCustomerMenu() {
-		System.out.println("############################ " + TITLE + " ############################");
-		System.out.println("Please choose the several methods to change the credentials of the customer");
-		System.out.println("0 - Return to Original Menu");
-		System.out.println("1 - By name and password");
-		System.out.println("2 - By TaxID");
-		System.out.println("3 - By ID");
-		System.out.println("###########################################################################");
-	}
+
 }
