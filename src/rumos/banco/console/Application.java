@@ -76,6 +76,65 @@ public class Application {
 
 	public static void main(String[] args) {
 
+	}
+
+	private static void chooseProgram() {
+		do {
+			displayMenu();
+			option = scanner.nextInt();
+			switch (option) {
+
+			case 1:
+				chooseOnline();
+				// Use the online
+				break;
+			case 2:
+				chooseATM();
+				// Use the ATM
+				break;
+			case EXIT:
+				System.out.println(GOODBYE);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in chooseProgram");
+				break;
+			}
+		} while (option != 0);
+
+	}
+
+	private static void chooseATM() {
+		do {
+			displayMenu();
+			option = scanner.nextInt();
+			switch (option) {
+
+			case 1:
+				// Take, put and transfer money
+				break;
+			case 2:
+
+				// check account details and cards details
+				break;
+			case 3:
+
+				// check account history
+				break;
+
+			case EXIT:
+				System.out.println(GOODBYE);
+
+			default:
+				System.err.println(INVALID_OPTION + " in chooseATM");
+				break;
+			}
+		} while (option != 0);
+
+	}
+
+	private static void chooseOnline() {
+
 		do {
 			displayMenu();
 			option = scanner.nextInt();
@@ -121,12 +180,21 @@ public class Application {
 				System.out.println(GOODBYE);
 				break;
 			default:
-				System.err.println(INVALID_OPTION + " in DisplayMenu");
+				System.err.println(INVALID_OPTION + " in chooseOnline");
 				break;
 			}
 		} while (option != 0);
 
 	}
+	/******************************************************************************
+	 * Create new Client
+	 * 
+	 * @return
+	 ******************************************************************************/
+	public static void createFullCustomer() {
+		
+	}
+	
 
 	/******************************************************************************
 	 * Edit customer personal details
