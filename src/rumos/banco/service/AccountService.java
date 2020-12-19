@@ -58,15 +58,16 @@ public class AccountService {
 		System.out.println("Please set the password for your holder account");
 		newAccount.setPasswordAccount(scanner.next());
 
-		System.out.println("Please set the customer balance on its main account");
+		do {
+			System.out.println("Please set the customer balance on its main account");
+			Double moneyDeposit = scanner.nextDouble();
+			if (moneyDeposit > 50) {
+				newAccount.setAccountHolderBalance(moneyDeposit);
 
-		Double moneyDeposit = scanner.nextDouble();
-		if (moneyDeposit > 50) {
-			newAccount.setAccountHolderBalance(moneyDeposit);
-
-		} else {
-			System.err.println("In order to create an account its necessary to deposit >=50€\n");
-		}
+			} else {
+				System.err.println("In order to create an account its necessary to deposit >=50€\n");
+			}
+		} while (newAccount.getAccountHolderBalance() == null);
 
 		System.out.println("Please indicate how many secondary accounts do you want to have");
 		Integer count = scanner.nextInt();
@@ -79,44 +80,6 @@ public class AccountService {
 		}
 
 		return newAccount;
-	}
-
-	/******************************************************************************
-	 * Check secondaryAccounts
-	 * 
-	 * 
-	 ******************************************************************************/
-
-	public void editSecondaryAccounts() {
-		Account account = checkAccountNameAndPassword();
-		Integer choose;
-
-		if (account == null) {
-			return;
-		}
-
-		do {
-			displaySecondaryAccountsMenu();
-
-			choose = scanner.nextInt();
-
-			switch (choose) {
-			case 1:
-				addSecondaryAccount(account);
-				break;
-			case 2:
-				deleteSecondaryAccount(account);
-				break;
-			case EXIT:
-				System.out.println(PREVIOUS_MENU);
-				break;
-
-			default:
-				System.err.println(INVALID_OPTION + " in EditSecundaryAccounts");
-				break;
-			}
-
-		} while (choose != 0);
 	}
 
 	public void addSecondaryAccount(Account account) {
@@ -205,56 +168,6 @@ public class AccountService {
 		}
 		System.err.println("You do not have Secondary accounts to delete.");
 		return false;
-	}
-
-	/******************************************************************************
-	 * Money movement
-	 * 
-	 * 
-	 ******************************************************************************/
-
-	public void moneyManagement() {
-		Integer option;
-		Account account;
-
-		account = checkAccountNameAndPassword();
-
-		if (account == null) {
-			return;
-		}
-
-		do {
-			displayMoneyManagementMenu();
-			option = scanner.nextInt();
-			switch (option) {
-			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
-				depositMoneyOnHolderAccount(account);
-				break;
-			case DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT:
-				depositMoneyOnSecondaryAccount(account);
-				break;
-			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
-				withdrawMoneyOnHolderAccount(account);
-				break;
-			case WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT:
-				withdrawMoneyOnSecondaryAccount(account);
-				break;
-			case TRANSFER_MONEY:
-				transferMoney(account);
-				break;
-			case CHECK_ACCOUNT_HISTORY:
-				showAccountHistoryMovement(account);
-				break;
-			case EXIT:
-				System.out.println(PREVIOUS_MENU);
-				break;
-
-			default:
-				System.err.println(INVALID_OPTION + " in moneyManagement");
-				break;
-			}
-		} while (option != 0);
-
 	}
 
 	/******************************************************************************
@@ -467,34 +380,6 @@ public class AccountService {
 	public void displayAccount(int customerId) {
 		Account account = findCustomerAccount(customerId);
 		System.out.println(account.toString());
-	}
-
-	/******************************************************************************
-	 * Display methods
-	 * 
-	 * 
-	 ******************************************************************************/
-
-	public void displaySecondaryAccountsMenu() {
-		System.out.println("############################ " + TITLE + " #############################");
-		System.out.println("Please choose what action to take");
-		System.out.println("0 - Return to previous Menu");
-		System.out.println("1 - Create Secondary Account");
-		System.out.println("2 - Delete Secondary Account");
-		System.out.println("###########################################################################");
-	}
-
-	public void displayMoneyManagementMenu() {
-		System.out.println("############################ " + TITLE + " #############################");
-		System.out.println("Please choose what action to take");
-		System.out.println("0 - Return to previous Menu");
-		System.out.println("1 - Deposit money on your Holder Account");
-		System.out.println("2 - Deposit money on your Secondary Account");
-		System.out.println("3 - Withdraw money from your Holder Account");
-		System.out.println("4 - Withdraw money from your Secondary Account");
-		System.out.println("5 - Transfer money to another account");
-		System.out.println("6 - Show history account");
-		System.out.println("###########################################################################");
 	}
 
 }

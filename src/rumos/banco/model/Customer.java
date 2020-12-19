@@ -13,14 +13,6 @@ public class Customer {
 	private String email;
 	private LocalDate birthday;
 
-
-	
-	
-	
-	
-	
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -9,7 +9,7 @@ import rumos.banco.model.Customer;
 import rumos.banco.model.Customer_Old;
 
 public class CustomerService {
-	
+
 	/**
 	 * Quick texts
 	 */
@@ -30,14 +30,10 @@ public class CustomerService {
 	private static final String INVALID_ID = "Incorrect ID";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 
-	
-	
 	private static ArrayList<Customer> customers = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
-	
-	
-	
+
 	/******************************************************************************
 	 * Save Customer
 	 * 
@@ -47,51 +43,52 @@ public class CustomerService {
 		id++;
 		customer.setId(id);
 		customers.add(customer);
-		
+
 		return customer;
 	}
+
 	/******************************************************************************
 	 * Populate the Customers
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public  Customer populateCustomer() {
+	public Customer populateCustomer() {
 		System.out.println("Creating new client");
 		Customer newCustomer = new Customer();
-		
+
 		System.out.println("Please set Name");
 		newCustomer.setName(scanner.next());
-		
-		System.out.println("Please set TaxId");
-		String taxId = scanner.next();
-		if (!taxIDalreadyExists(taxId))
-			newCustomer.setTaxId(taxId);
-		else
-			System.out.println("taxID already exists");
-		
+
+		do {
+			System.out.println("Please set TaxId");
+			String taxId = scanner.next();
+			if (!taxIDalreadyExists(taxId))
+				newCustomer.setTaxId(taxId);
+			else
+				System.out.println("taxID already exists");
+		} while (newCustomer.getTaxId().equals(null));
+
 		System.out.println("Please set email");
 		newCustomer.setEmail(scanner.next());
 
-		System.out.print("Customer day of birth ");
-		Integer day = scanner.nextInt();
-		System.out.print("Customer month of birth ");
-		Integer month = scanner.nextInt();
-		System.out.print("Customer year of birth ");
-		Integer year = scanner.nextInt();
-		if ((Year.now().getValue() - year) >= 18)
-			newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
-		else
-			System.out.println("The customer is to young to open bank account");
-
+		do {
+			System.out.print("Customer day of birth ");
+			Integer day = scanner.nextInt();
+			System.out.print("Customer month of birth ");
+			Integer month = scanner.nextInt();
+			System.out.print("Customer year of birth ");
+			Integer year = scanner.nextInt();
+			if ((Year.now().getValue() - year) >= 18)
+				newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
+			else
+				System.out.println("The customer is to young to open bank account");
+		} while (newCustomer.getDateOfBirth() == null);
 		return newCustomer;
 	}
-	
-
 
 	public void editCustomerByName() {
 		System.out.println("Please write the name of the customer");
 		String name = scanner.next();
-
 
 		for (Customer customer : customers) {
 			if (customer.getName().equals(name)) {
@@ -167,7 +164,7 @@ public class CustomerService {
 		return customer;
 
 	}
-	
+
 	/******************************************************************************
 	 * Check if there is already an taxID
 	 * 
@@ -175,44 +172,45 @@ public class CustomerService {
 	 * @return
 	 ******************************************************************************/
 	public Boolean taxIDalreadyExists(String taxId) {
-		
+
 		for (Customer customer : customers) {
-			if(customer != null) {
-				if(taxId.equals(customer.getTaxId()))
+			if (customer != null) {
+				if (taxId.equals(customer.getTaxId()))
 					return true;
 			}
 		}
-		
+
 		return false;
 	}
+
 	/******************************************************************************
 	 * Show all customers
 	 * 
 	 *
 	 ******************************************************************************/
-	public void showCustomersDetails(){
-		for(Customer customer : customers) {
+	public void showCustomersDetails() {
+		for (Customer customer : customers) {
 			System.out.println("The customer: ");
 			System.out.println(customer.toString());
 		}
 	}
+
 	/******************************************************************************
 	 * Show customer using Name and TaxId
 	 * 
-	 *@return int Id customer
+	 * @return int Id customer
 	 ******************************************************************************/
 	public Integer findCustomerByNameAndTaxId() {
 		String name;
 		String taxId;
-		
+
 		System.out.println("Please indicate the name of the Customer");
 		name = scanner.next();
 		System.out.println("Please indicate the taxId of the Customer");
 		taxId = scanner.next();
-		
-		
+
 		for (Customer customer : customers) {
-			if(customer.getName().equals(name) && customer.getTaxId().equals(taxId)) {
+			if (customer.getName().equals(name) && customer.getTaxId().equals(taxId)) {
 				System.out.println(customer.toString());
 				return customer.getId();
 			}
@@ -220,14 +218,15 @@ public class CustomerService {
 		System.err.println("Customer not found");
 		return null;
 	}
+
 	/******************************************************************************
 	 * Show customer using Id customer
 	 * 
 	 *
 	 ******************************************************************************/
 	public Customer findCustomerById(int customerId) {
-		for(Customer customer : customers) {
-			if(customer.getId().equals(customerId)) {
+		for (Customer customer : customers) {
+			if (customer.getId().equals(customerId)) {
 				System.out.println(customer.toString());
 				return customer;
 			}
@@ -245,6 +244,5 @@ public class CustomerService {
 		System.out.println("3 - Email of the customer");
 		System.out.println("###########################################################################");
 	}
-
 
 }
