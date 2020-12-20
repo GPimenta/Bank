@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Account {
 
-	
+	private Integer id;
 	private Integer customerId;
 	private String passwordAccount;
 
@@ -15,6 +15,7 @@ public class Account {
 	private ArrayList<String> transactionHistory = new ArrayList<String>();
 	
 	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -22,11 +23,15 @@ public class Account {
 		result = prime * result + ((accountHolderBalance == null) ? 0 : accountHolderBalance.hashCode());
 		result = prime * result + ((accountHolderNumber == null) ? 0 : accountHolderNumber.hashCode());
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((passwordAccount == null) ? 0 : passwordAccount.hashCode());
 		result = prime * result + Arrays.hashCode(secondaryAccountNumber);
 		result = prime * result + ((transactionHistory == null) ? 0 : transactionHistory.hashCode());
 		return result;
 	}
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -51,6 +56,11 @@ public class Account {
 				return false;
 		} else if (!customerId.equals(other.customerId))
 			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (passwordAccount == null) {
 			if (other.passwordAccount != null)
 				return false;
@@ -65,11 +75,23 @@ public class Account {
 			return false;
 		return true;
 	}
+
+
+
 	@Override
 	public String toString() {
 		return "Account [customerId=" + customerId + ", passwordAccount=" + passwordAccount + ", accountHolderNumber="
 				+ accountHolderNumber + ", accountHolderBalance=" + accountHolderBalance + ", secondaryAccountNumber="
 				+ Arrays.toString(secondaryAccountNumber) + ", transactionHistory=" + transactionHistory + "]";
+	}
+	
+	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public Integer getCustomerId() {
 		return customerId;
