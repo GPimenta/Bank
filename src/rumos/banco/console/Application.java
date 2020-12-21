@@ -18,6 +18,7 @@ public class Application {
 	private static final int CREATE_NEW_CUSTOMER = 1;
 	private static final int CHOOSE_THE_PROGRAM = 2;
 	private static final int SHOW_ALL_CUSTOMERS = 3;
+	private static final int DELETE_CUSTOMER = 4;
 
 	private static final int GO_TO_ONLINE = 1;
 	private static final int GO_TO_ATM = 2;
@@ -25,7 +26,7 @@ public class Application {
 	private static final int EDIT_CUSTOMER_ACCOUNTS = 3;
 	private static final int TO_DECIDE_2 = 4;
 	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 5;
-	private static final int DELETE_CUSTOMER = 6;
+	
 
 	private static final int MANAGE_MONEY = 1;
 	private static final int EDIT_BANK_CARDS = 2;
@@ -102,6 +103,10 @@ public class Application {
 			case SHOW_ALL_CUSTOMERS:
 				showAllCustomersDetails();
 				// show all customer, account and cards
+				break;
+			case DELETE_CUSTOMER:
+				
+				// Delete all details of the customer
 				break;
 			case EXIT:
 				System.out.println(GOODBYE);

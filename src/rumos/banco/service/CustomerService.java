@@ -85,7 +85,36 @@ public class CustomerService {
 		} while (newCustomer.getDateOfBirth() == null);
 		return newCustomer;
 	}
-
+	/******************************************************************************
+	 * Edit Customers
+	 * 
+	 * @return
+	 ****************************************o**************************************/
+	public Integer deleteCustomerDetails() {
+		System.out.println("Please indicate the name of the customer");
+		String customerName;
+		customerName = scanner.next();
+		System.out.println("Plase indicate the taxId of the customer");
+		String taxId;
+		taxId = scanner.next();
+		
+		
+		for (Customer customer : customers) {
+			if(customer.getName().equalsIgnoreCase(customerName) && customer.getTaxId().equals(taxId)) {
+				customers.remove(customer);
+				return customer.getId();
+			}
+		}
+		System.err.println("No customer found");
+		return null;
+		
+	}
+	
+	/******************************************************************************
+	 * Edit Customers
+	 * 
+	 * @return
+	 ******************************************************************************/
 	public void editCustomerByName() {
 		System.out.println("Please write the name of the customer");
 		String name = scanner.next();
