@@ -76,8 +76,30 @@ public class CardService {
 
 		return newCard;
 	}
-
-
+	/******************************************************************************
+	 * Delete the Card
+	 * 
+	 * 
+	 ******************************************************************************/
+	
+	public void deleteCard(Integer costumerId) {
+		for (Card card : cards) {
+			if(card.getCustomerId().equals(costumerId)) {
+				System.out.println("Cards deleted");
+				cards.remove(card);
+				return;
+			}
+		}
+		System.err.println("Card not found");
+		return;
+	}
+	
+	
+	/******************************************************************************
+	 * Delete and create the Cards
+	 * 
+	 * 
+	 ******************************************************************************/
 
 	public void deleteDebitCard(Card card) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");

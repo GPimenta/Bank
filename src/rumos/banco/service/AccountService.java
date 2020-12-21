@@ -82,6 +82,23 @@ public class AccountService {
 		return newAccount;
 	}
 	/******************************************************************************
+	 * Delete Account
+	 * 
+	 * @return
+	 ******************************************************************************/
+	public void deleteAccount(Integer customerId) {
+		for (Account account : accounts) {
+			if(account.getCustomerId().equals(customerId)) {
+				System.out.println("Removing account");
+				accounts.remove(account);
+				return;
+			}
+		}
+		System.err.println("Account not found");
+		return;
+	}
+	
+	/******************************************************************************
 	 * Secondary Accounts
 	 * 
 	 * @return
