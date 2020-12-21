@@ -77,56 +77,7 @@ public class CardService {
 		return newCard;
 	}
 
-	/******************************************************************************
-	 * Bank Cards
-	 ******************************************************************************/
-	public void editBankCards(Integer customerId) {
-		Integer option;
-		Card card;
 
-		if (findCustomerCard(customerId) == null) {
-			return;
-		}
-
-		card = checkCardNumberAndPassword();
-
-		if (card == null) {
-			return;
-		}
-
-		do {
-
-			displayBankCardsMenu();
-
-			option = scanner.nextInt();
-
-			switch (option) {
-			case CREATE_DEBIT_CARD:
-				createDebitCard(card);
-				// Add Debit card
-				break;
-			case DELETE_DEBIT_CARD:
-				deleteDebitCard(card);
-				// Remove Debit card
-				break;
-			case CREATE_CREDIT_CARD:
-				createCreditCard(card);
-				// Add Credit Card
-				break;
-			case DELETE_CREDIT_CARD:
-				deleteCreditCard(card);
-				// Remove Credit Card
-				break;
-			case EXIT:
-				System.out.println(PREVIOUS_MENU);
-				break;
-
-			default:
-				System.err.println(INVALID_OPTION + " in EditBankCards");
-				break;
-			}
-		} while (option != 0);
-	}
 
 	public void deleteDebitCard(Card card) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");
@@ -333,22 +284,6 @@ public class CardService {
 
 	}
 
-	/******************************************************************************
-	 * Display menu
-	 * 
-	 * 
-	 *
-	 ******************************************************************************/
 
-	private static void displayBankCardsMenu() {
-		System.out.println("############################ " + TITLE + " #############################");
-		System.out.println("Please choose what action to take");
-		System.out.println("0 - Return to previous Menu");
-		System.out.println("1 - Create Debit Card");
-		System.out.println("2 - Delete Debit Card");
-		System.out.println("3 - Create Credit Card");
-		System.out.println("4 - Delete Credit Card");
-		System.out.println("###########################################################################");
-	}
 
 }

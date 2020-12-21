@@ -81,7 +81,11 @@ public class AccountService {
 
 		return newAccount;
 	}
-
+	/******************************************************************************
+	 * Secondary Accounts
+	 * 
+	 * @return
+	 ******************************************************************************/
 	public void addSecondaryAccount(Account account) {
 		Integer index = checkSecondaryAccounts(account);
 		String secondAccount;

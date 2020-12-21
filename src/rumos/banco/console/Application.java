@@ -14,14 +14,21 @@ import rumos.banco.service.CustomerService;
 
 public class Application {
 	private static final int EXIT = 0;
+
 	private static final int CREATE_NEW_CUSTOMER = 1;
-	private static final int SHOW_CUSTOMER = 2;
+	private static final int CHOOSE_THE_PROGRAM = 2;
+	private static final int SHOW_ALL_CUSTOMERS = 3;
+
+	private static final int GO_TO_ONLINE = 1;
+	private static final int GO_TO_ATM = 2;
+
 	private static final int EDIT_CUSTOMER_ACCOUNTS = 3;
 	private static final int TO_DECIDE_2 = 4;
 	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 5;
 	private static final int DELETE_CUSTOMER = 6;
-	private static final int MANAGE_MONEY = 7;
-	private static final int EDIT_BANK_CARDS = 8;
+
+	private static final int MANAGE_MONEY = 1;
+	private static final int EDIT_BANK_CARDS = 2;
 
 	private static final int SHOW_CUSTOMER_BY_NAME = 1;
 	private static final int SHOW_CUSTOMER_BY_TAXID = 2;
@@ -75,7 +82,36 @@ public class Application {
 	private static CardService cardService = new CardService();
 
 	public static void main(String[] args) {
+		initiation();
+	}
 
+	private static void initiation() {
+		do {
+			displayMenu();
+			option = scanner.nextInt();
+			switch (option) {
+
+			case CREATE_NEW_CUSTOMER:
+				createFullCustomer();
+				// Create customer, account and card
+				break;
+			case CHOOSE_THE_PROGRAM:
+				chooseProgram();
+				// Use the program
+				break;
+			case SHOW_ALL_CUSTOMERS:
+				showAllCustomersDetails();
+				// show all customer, account and cards
+				break;
+			case EXIT:
+				System.out.println(GOODBYE);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in Initiation");
+				break;
+			}
+		} while (option != 0);
 	}
 
 	private static void chooseProgram() {
@@ -84,11 +120,11 @@ public class Application {
 			option = scanner.nextInt();
 			switch (option) {
 
-			case 1:
+			case GO_TO_ONLINE:
 				chooseOnline();
 				// Use the online
 				break;
-			case 2:
+			case GO_TO_ATM:
 				chooseATM();
 				// Use the ATM
 				break;
@@ -110,12 +146,14 @@ public class Application {
 			option = scanner.nextInt();
 			switch (option) {
 
-			case 1:
-				// Take, put and transfer money
-				break;
-			case 2:
-
+			case MANAGE_MONEY:
+				editBankCards();
 				// check account details and cards details
+
+				break;
+			case EDIT_BANK_CARDS:
+				moneyManagement();
+				// Take, put and transfer money
 				break;
 			case 3:
 
@@ -123,7 +161,7 @@ public class Application {
 				break;
 
 			case EXIT:
-				System.out.println(GOODBYE);
+				System.out.println(PREVIOUS_MENU);
 
 			default:
 				System.err.println(INVALID_OPTION + " in chooseATM");
@@ -140,44 +178,27 @@ public class Application {
 			option = scanner.nextInt();
 
 			switch (option) {
-			case CREATE_NEW_CUSTOMER:
-				createNewCustomer();
-				createNewAccount();
-				CreateNewCard();
-				break;
-			case SHOW_CUSTOMER:
+			case 1:
 				editCustomerPersonalDetails();
-//				showCustomer();
-//				// Show costumer by name
+				// edit customer personal details
 				break;
-//			case EDIT_CUSTOMER_ACCOUNTS:
-//				editSecondaryAccounts();
-//				// Show costumer by taxId
-//				break;
-//			case TO_DECIDE_2:
-////				showAllCustomers();
-//				// Show all costumers
-//				break;
-//			case EDIT_CUSTOMER_PERSONAL_DETAILS:
-//				editCustomerPersonalDetails();
-//				// Edit customer by ID
-//				break;
-//			case DELETE_CUSTOMER:
-//				deleteCustomerById();
-//				// Delete customer by ID
-//				break;
-//			case MANAGE_MONEY:
-//				moneyManagement();
-//				// Deposit balance
-//				break;
-//			case EDIT_BANK_CARDS:
-//				cardService.editBankCards(1);
-//				
-//				// Edit cards
-//				break;
+			case 2:
+
+//				showCustomer();
+//				// Show costumer details
+				break;
+			case 3:
+				// Edit Account
+				break;
+			case 4:
+				// Show Account details
+				break;
+			case 5:
+				// Deposit and transfer money
+				break;
 
 			case EXIT:
-				System.out.println(GOODBYE);
+				System.out.println(PREVIOUS_MENU);
 				break;
 			default:
 				System.err.println(INVALID_OPTION + " in chooseOnline");
@@ -186,8 +207,6 @@ public class Application {
 		} while (option != 0);
 
 	}
-
-	
 
 	/******************************************************************************
 	 * Edit customer personal details
@@ -261,12 +280,64 @@ public class Application {
 	}
 
 	/******************************************************************************
+	 * Bank Cards
+	 ******************************************************************************/
+	private static void editBankCards() {
+		Integer option;
+		Card card;
+
+//		//Validade if the customer has any card
+//		if (findCustomerCard(customerId) == null) {
+//			return;
+//		}
+
+		card = cardService.checkCardNumberAndPassword();
+
+		if (card == null) {
+			return;
+		}
+
+		do {
+
+			displayBankCardsMenu();
+
+			option = scanner.nextInt();
+
+			switch (option) {
+			case CREATE_DEBIT_CARD:
+				cardService.createDebitCard(card);
+				// Add Debit card
+				break;
+			case DELETE_DEBIT_CARD:
+				cardService.deleteDebitCard(card);
+				// Remove Debit card
+				break;
+			case CREATE_CREDIT_CARD:
+				cardService.createCreditCard(card);
+				// Add Credit Card
+				break;
+			case DELETE_CREDIT_CARD:
+				cardService.deleteCreditCard(card);
+				// Remove Credit Card
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in EditBankCards");
+				break;
+			}
+		} while (option != 0);
+	}
+
+	/******************************************************************************
 	 * Money movement
 	 * 
 	 * 
 	 ******************************************************************************/
 
-	public void moneyManagement() {
+	private static void moneyManagement() {
 		Integer option;
 		Account account;
 
@@ -309,7 +380,7 @@ public class Application {
 		} while (option != 0);
 
 	}
-	
+
 	/******************************************************************************
 	 * Create full details Customer
 	 * 
@@ -371,6 +442,17 @@ public class Application {
 	}
 
 	/******************************************************************************
+	 * Show all customer
+	 * 
+	 * @return
+	 ******************************************************************************/
+	private static void showAllCustomersDetails() {
+		customerService.showCustomersDetails();
+		accountService.showAccountsDetails();
+		cardService.showCardsDetails();
+	}
+
+	/******************************************************************************
 	 * Display menus
 	 ******************************************************************************/
 	private static void displayMenu() {
@@ -406,6 +488,17 @@ public class Application {
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Create Secondary Account");
 		System.out.println("2 - Delete Secondary Account");
+		System.out.println("###########################################################################");
+	}
+
+	private static void displayBankCardsMenu() {
+		System.out.println("############################ " + TITLE + " #############################");
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Create Debit Card");
+		System.out.println("2 - Delete Debit Card");
+		System.out.println("3 - Create Credit Card");
+		System.out.println("4 - Delete Credit Card");
 		System.out.println("###########################################################################");
 	}
 
