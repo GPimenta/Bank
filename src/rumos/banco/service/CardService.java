@@ -82,9 +82,9 @@ public class CardService {
 	 * 
 	 ******************************************************************************/
 	
-	public void deleteCard(Integer costumerId) {
+	public void deleteCard(Integer customerId) {
 		for (Card card : cards) {
-			if(card.getCustomerId().equals(costumerId)) {
+			if(card.getCustomerId().equals(customerId)) {
 				System.out.println("Cards deleted");
 				cards.remove(card);
 				return;

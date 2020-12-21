@@ -105,6 +105,9 @@ public class Application {
 				// show all customer, account and cards
 				break;
 			case DELETE_CUSTOMER:
+				Integer customerId = customerService.deleteCustomerDetails();
+				accountService.deleteAccount(customerId);
+				cardService.deleteCard(customerId);
 				
 				// Delete all details of the customer
 				break;

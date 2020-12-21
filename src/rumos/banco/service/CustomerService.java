@@ -89,7 +89,7 @@ public class CustomerService {
 	 * Delete Customer
 	 * 
 	 * @return
-	 ****************************************o**************************************/
+	 ******************************************************************************/
 	public Integer deleteCustomerDetails() {
 		System.out.println("Please indicate the name of the customer");
 		String customerName;
