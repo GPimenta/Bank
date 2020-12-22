@@ -23,25 +23,25 @@ public class Application {
 	private static final int GO_TO_ONLINE = 1;
 	private static final int GO_TO_ATM = 2;
 
-	private static final int EDIT_CUSTOMER_ACCOUNTS = 3;
-	private static final int TO_DECIDE_2 = 4;
-	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 5;
-	
-
 	private static final int MANAGE_MONEY = 1;
 	private static final int EDIT_BANK_CARDS = 2;
+	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ATM = 3;
 
-	private static final int SHOW_CUSTOMER_BY_NAME = 1;
-	private static final int SHOW_CUSTOMER_BY_TAXID = 2;
-	private static final int SHOW_ALL_CUSTOMER = 3;
+	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 1;
+	private static final int SHOW_CUSTOMER_DETAILS = 2;
+	private static final int EDIT_ACCOUNT_DETAILS = 3;
+	private static final int SHOW_ACCOUNT_DETAILS = 4;
+	private static final int DEPOSIT_TRANSFER_MONEY = 5;
+	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE = 6;
 
+	private static final int ADD_SECONDARY_ACCOUNT = 1;
+	private static final int DELETE_SECONDARY_ACCOUNT = 2;
+	
+	
 	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
 	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
 	private static final int EDIT_CUSTOMER_BY_ID = 3;
 
-	private static final int CHANGE_NAME = 1;
-	private static final int CHANGE_PASSWORD = 2;
-	private static final int CHANGE_EMAIL = 3;
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
@@ -59,21 +59,9 @@ public class Application {
 	private static final String TITLE = "Rumos Digital Bank";
 	private static final String GOODBYE = "Thanks for using Rumos Digital Bank";
 	private static final String CUSTOMER_CREATED = "Customer created!";
-	private static final String CUSTOMER_DELETED = "Customer deleted!";
-	private static final String CUSTOMER_NOT_FOUND = "Customer not found!";
-	private static final String DATABASE_IS_FULL = "Database is full!";
-	private static final String DATABASE_IS_EMPTY = "Database is empty!";
-	private static final String TAXID_ALREADY_EXISTS = "Customer Tax Id already exists!";
 	private static final String INVALID_OPTION = "Invalid Option!";
-	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
-	private static final String INVALID_TAXID = "Incorrect TaxID";
-	private static final String INVALID_ID = "Incorrect ID";
-	private static final String NO_ADD_DEBIT_CARD = "You already have a Debit Card";
-	private static final String NO_ADD_CREDIT_CARD = "You already have a Credit Card";
-	private static final String NO_TAKE_DEBIT_CARD = "You do not have a Debit Card";
-	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
-	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
+
 
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer option;
@@ -88,7 +76,7 @@ public class Application {
 
 	private static void initiation() {
 		do {
-			displayMenu();
+			displayInitiation();
 			option = scanner.nextInt();
 			switch (option) {
 
@@ -124,7 +112,7 @@ public class Application {
 
 	private static void chooseProgram() {
 		do {
-			displayMenu();
+			displayChooseProgram();
 			option = scanner.nextInt();
 			switch (option) {
 
@@ -150,7 +138,7 @@ public class Application {
 
 	private static void chooseATM() {
 		do {
-			displayMenu();
+			displayATM();
 			option = scanner.nextInt();
 			switch (option) {
 
@@ -163,7 +151,7 @@ public class Application {
 				moneyManagement();
 				// Take, put and transfer money
 				break;
-			case 3:
+			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
 
 				// check account history
 				break;
@@ -182,26 +170,28 @@ public class Application {
 	private static void chooseOnline() {
 
 		do {
-			displayMenu();
+			displayOnline();
 			option = scanner.nextInt();
 
 			switch (option) {
-			case 1:
+			case EDIT_CUSTOMER_PERSONAL_DETAILS:
 				editCustomerPersonalDetails();
 				// edit customer personal details
 				break;
-			case 2:
-
+			case SHOW_CUSTOMER_DETAILS:
 //				showCustomer();
 //				// Show costumer details
 				break;
-			case 3:
+			case EDIT_ACCOUNT_DETAILS:
 				// Edit Account
 				break;
-			case 4:
+			case SHOW_ACCOUNT_DETAILS:
 				// Show Account details
 				break;
-			case 5:
+			case DEPOSIT_TRANSFER_MONEY:
+				// Deposit and transfer money
+				break;
+			case CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE:
 				// Deposit and transfer money
 				break;
 
@@ -269,10 +259,10 @@ public class Application {
 			choose = scanner.nextInt();
 
 			switch (choose) {
-			case 1:
+			case ADD_SECONDARY_ACCOUNT:
 				accountService.addSecondaryAccount(account);
 				break;
-			case 2:
+			case DELETE_SECONDARY_ACCOUNT:
 				accountService.deleteSecondaryAccount(account);
 				break;
 			case EXIT:
@@ -463,6 +453,51 @@ public class Application {
 	/******************************************************************************
 	 * Display menus
 	 ******************************************************************************/
+	private static void displayInitiation() {
+
+		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("\t\tPlease choose the action that u want take: ");
+		System.out.println("0 - Exit");
+		System.out.println("1 - Create new customer");
+		System.out.println("2 - Choose the program to execute");
+		System.out.println("3 - Show all customers");
+		System.out.println("###########################################################################");
+
+	}
+	private static void displayChooseProgram() {
+
+		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("\t\tPlease choose the action that u want take: ");
+		System.out.println("0 - Exit");
+		System.out.println("1 - Use program online");
+		System.out.println("2 - Use ATM");
+		System.out.println("###########################################################################");
+
+	}
+	private static void displayATM() {
+
+		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("\t\tPlease choose the action that u want take: ");
+		System.out.println("0 - Exit");
+		System.out.println("1 - Manage Money");
+		System.out.println("2 - Edit band cards");
+		System.out.println("3 - POSSIVELMENTE POR O HISTORIAL");
+		System.out.println("###########################################################################");
+
+	}
+	private static void displayOnline() {
+
+		System.out.println("############################ " + TITLE + " ############################");
+		System.out.println("\t\tPlease choose the action that u want take: ");
+		System.out.println("0 - Exit");
+		System.out.println("1 - Edit Customer Details");
+		System.out.println("2 - Show Customer");
+		System.out.println("3 - Edit Account");
+		System.out.println("3 - Show Account Details");
+		System.out.println("3 - Deposit and transfer money");
+		System.out.println("###########################################################################");
+
+	}
 	private static void displayMenu() {
 
 		System.out.println("###################### " + MOTD + " ######################");
