@@ -137,19 +137,26 @@ public class Application {
 	}
 
 	private static void chooseATM() {
+		Card card;
+		card = cardService.checkCardNumberAndPassword();
+		
+		if(card == null)
+			return;
+		
 		do {
+			
 			displayATM();
+			
 			option = scanner.nextInt();
 			switch (option) {
 
 			case MANAGE_MONEY:
-				editBankCards();
-				// check account details and cards details
-
+				moneyManagement();
+				// Take, put and transfer money		
 				break;
 			case EDIT_BANK_CARDS:
-				moneyManagement();
-				// Take, put and transfer money
+				editBankCards(card);
+				// check account details and cards details
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
 
@@ -280,20 +287,13 @@ public class Application {
 	/******************************************************************************
 	 * Bank Cards
 	 ******************************************************************************/
-	private static void editBankCards() {
+	private static void editBankCards(Card card) {
 		Integer option;
-		Card card;
 
 //		//Validade if the customer has any card
 //		if (findCustomerCard(customerId) == null) {
 //			return;
 //		}
-
-		card = cardService.checkCardNumberAndPassword();
-
-		if (card == null) {
-			return;
-		}
 
 		do {
 
