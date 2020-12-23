@@ -37,10 +37,14 @@ public class Application {
 	private static final int ADD_SECONDARY_ACCOUNT = 1;
 	private static final int DELETE_SECONDARY_ACCOUNT = 2;
 	
+	private static final int CHANGE_NAME = 1;
+	private static final int CHANGE_PASSWORD = 2;
+	private static final int CHANGE_EMAIL = 3;
 	
-	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
-	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
-	private static final int EDIT_CUSTOMER_BY_ID = 3;
+	
+//	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
+//	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
+//	private static final int EDIT_CUSTOMER_BY_ID = 3;
 
 
 	private static final int CREATE_DEBIT_CARD = 1;
@@ -186,7 +190,7 @@ public class Application {
 
 			switch (option) {
 			case EDIT_CUSTOMER_PERSONAL_DETAILS:
-				editCustomerPersonalDetails();
+				editCustomerDetails(account.getCustomerId());
 				// edit customer personal details
 				break;
 			case SHOW_CUSTOMER_DETAILS:
@@ -222,32 +226,73 @@ public class Application {
 	 * 
 	 * @return
 	 ******************************************************************************/
+//
+//	private static void editCustomerPersonalDetails(Integer customerId) {
+//		Integer option;
+//		do {
+//
+//			displayEditCustomerMenu();
+//			option = scanner.nextInt();
+//			switch (option) {
+//			case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
+//				customerService.editCustomerByName();
+//				break;
+//			case EDIT_CUSTOMER_BY_TAXID:
+//				customerService.editCustomerByTaxID();
+//				break;
+//			case EDIT_CUSTOMER_BY_ID:
+//				customerService.editCustomerByID();
+//				break;
+//			case EXIT:
+//				System.out.println(PREVIOUS_MENU);
+//				break;
+//
+//			default:
+//				System.err.println(INVALID_OPTION + " in EditCustomer");
+//				break;
+//			}
+//		} while (option != 0);
+//	}
 
-	private static void editCustomerPersonalDetails() {
-		Integer option;
+	
+	public static void editCustomerDetails(Integer customerId) {
+		Integer change;
+		Customer customer;
+		
+		customer = customerService.findCustomerById(customerId);
+		
 		do {
 
-			displayEditCustomerMenu();
-			option = scanner.nextInt();
-			switch (option) {
-			case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
-				customerService.editCustomerByName();
+			displayEditCustomerDetailsMenu();
+			change = scanner.nextInt();
+
+			switch (change) {
+			case CHANGE_NAME:
+				System.out.println("What is the new name?");
+				customer.setName(scanner.next());
+				// Change Name
 				break;
-			case EDIT_CUSTOMER_BY_TAXID:
-				customerService.editCustomerByTaxID();
+			case CHANGE_PASSWORD:
+				System.out.println("NOTHING HERE");
+//				customer.setPassword(scanner.next());
+				// Change password
 				break;
-			case EDIT_CUSTOMER_BY_ID:
-				customerService.editCustomerByID();
+			case CHANGE_EMAIL:
+				System.out.println("What is the new email?");
+				customer.setEmail(scanner.next());
+				// change email
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
-
 			default:
 				System.err.println(INVALID_OPTION + " in EditCustomer");
 				break;
 			}
-		} while (option != 0);
+		} while (change != 0);
+
+		return;
+
 	}
 
 	/******************************************************************************
@@ -562,5 +607,13 @@ public class Application {
 		System.out.println("6 - Show history account");
 		System.out.println("###########################################################################");
 	}
-
+	private static void displayEditCustomerDetailsMenu() {
+		System.out.println("############################ " + TITLE + " #############################");
+		System.out.println("What do you which to edit?");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Name of the customer");
+		System.out.println("2 - Password of the customer");
+		System.out.println("3 - Email of the customer");
+		System.out.println("###########################################################################");
+	}
 }

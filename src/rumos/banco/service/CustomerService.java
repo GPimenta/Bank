@@ -115,84 +115,49 @@ public class CustomerService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public void editCustomerByName() {
-		System.out.println("Please write the name of the customer");
-		String name = scanner.next();
+//	public void editCustomerByName() {
+//		System.out.println("Please write the name of the customer");
+//		String name = scanner.next();
+//
+//		for (Customer customer : customers) {
+//			if (customer.getName().equals(name)) {
+//				customer = editCustomerDetails(customer);
+//				return;
+//			}
+//		}
+//
+//		System.err.println(INVALID_NAME_OR_PASSWORD);
+//		return;
+//
+//	}
+//
+//	public void editCustomerByTaxID() {
+//		System.out.println("Please write the taxID of the customer, in order to edit it");
+//		String taxId = scanner.next();
+//
+//		for (Customer customer : customers) {
+//			if (customer.getTaxId().equals(taxId)) {
+//				customer = editCustomerDetails(customer);
+//				return;
+//			}
+//		}
+//		System.err.println(INVALID_TAXID);
+//		return;
+//	}
+//
+//	public void editCustomerByID() {
+//		System.out.println("Please write the ID of the customer, in order to edit it");
+//		Integer id = scanner.nextInt();
+//
+//		for (Customer customer : customers) {
+//			if (customer.getId().equals(id)) {
+//				customer = editCustomerDetails(customer);
+//			}
+//		}
+//		System.err.println(INVALID_ID);
+//		return;
+//	}
 
-		for (Customer customer : customers) {
-			if (customer.getName().equals(name)) {
-				customer = editCustomerDetails(customer);
-				return;
-			}
-		}
-
-		System.err.println(INVALID_NAME_OR_PASSWORD);
-		return;
-
-	}
-
-	public void editCustomerByTaxID() {
-		System.out.println("Please write the taxID of the customer, in order to edit it");
-		String taxId = scanner.next();
-
-		for (Customer customer : customers) {
-			if (customer.getTaxId().equals(taxId)) {
-				customer = editCustomerDetails(customer);
-				return;
-			}
-		}
-		System.err.println(INVALID_TAXID);
-		return;
-	}
-
-	public void editCustomerByID() {
-		System.out.println("Please write the ID of the customer, in order to edit it");
-		Integer id = scanner.nextInt();
-
-		for (Customer customer : customers) {
-			if (customer.getId().equals(id)) {
-				customer = editCustomerDetails(customer);
-			}
-		}
-		System.err.println(INVALID_ID);
-		return;
-	}
-
-	public Customer editCustomerDetails(Customer customer) {
-		Integer change;
-		do {
-
-			displayEditCustomerDetailsMenu();
-			change = scanner.nextInt();
-
-			switch (change) {
-			case CHANGE_NAME:
-				System.out.println("What is the new name?");
-				customer.setName(scanner.next());
-				// Change Name
-				break;
-			case CHANGE_PASSWORD:
-				System.out.println("NOTHING HERE");
-//				customer.setPassword(scanner.next());
-				// Change password
-				break;
-			case CHANGE_EMAIL:
-				System.out.println("What is the new email?");
-				customer.setEmail(scanner.next());
-				// change email
-				break;
-			case EXIT:
-				System.out.println(PREVIOUS_MENU);
-				break;
-			default:
-				System.err.println(INVALID_OPTION + " in EditCustomer");
-				break;
-			}
-		} while (change != 0);
-
-		return customer;
-
-	}
 
 	/******************************************************************************
 	 * Check if there is already an taxID
@@ -264,14 +229,6 @@ public class CustomerService {
 		return null;
 	}
 
-	private static void displayEditCustomerDetailsMenu() {
-		System.out.println("############################ " + TITLE + " #############################");
-		System.out.println("What do you which to edit?");
-		System.out.println("0 - Return to previous Menu");
-		System.out.println("1 - Name of the customer");
-		System.out.println("2 - Password of the customer");
-		System.out.println("3 - Email of the customer");
-		System.out.println("###########################################################################");
-	}
+
 
 }
