@@ -188,7 +188,18 @@ public class CustomerService {
 			System.out.println(customer.toString());
 		}
 	}
-
+	/******************************************************************************
+	 * Show all customers
+	 * 
+	 *
+	 ******************************************************************************/
+	public void showCustomer(Integer customerId) {
+		Customer customer = findCustomerById(customerId);
+		System.out.println(customer.toString());
+		return;
+	}
+	
+	
 	/******************************************************************************
 	 * Show customer using Name and TaxId
 	 * 

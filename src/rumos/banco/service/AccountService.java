@@ -354,7 +354,18 @@ public class AccountService {
 			System.out.println(account.toString());
 		}
 	}
-
+	/******************************************************************************
+	 * Print account
+	 * 
+	 * 
+	 ******************************************************************************/
+	public void showAccountDetails(Integer customerId) {
+		if(customerId == null)
+			return;
+		System.out.println(findCustomerAccount(customerId).toString());
+		return;
+	}
+	
 	/******************************************************************************
 	 * Account History movement
 	 *
@@ -382,15 +393,24 @@ public class AccountService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public Account findCustomerAccount(int customerId) {
+	public Account findCustomerAccount(Integer customerId) {
 		for (Account account : accounts) {
 			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Account found");
 				return account;
 			}
 		}
-		System.out.println("Customer does not have an account");
+		System.err.println("Customer does not have an account");
 		return null;
+	}
+	/******************************************************************************
+	 * Edit Account details
+	 * 
+	 * 
+	 ******************************************************************************/
+	public void editAccountPassword(Integer customerId) {
+		Account account =findCustomerAccount(customerId);
+		
 	}
 
 	/******************************************************************************
@@ -398,7 +418,7 @@ public class AccountService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void displayAccount(int customerId) {
+	public void displayAccount(Integer customerId) {
 		Account account = findCustomerAccount(customerId);
 		System.out.println(account.toString());
 	}

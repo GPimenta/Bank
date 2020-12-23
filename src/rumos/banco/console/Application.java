@@ -194,13 +194,15 @@ public class Application {
 				// edit customer personal details
 				break;
 			case SHOW_CUSTOMER_DETAILS:
-//				showCustomer();
+				customerService.showCustomer(account.getCustomerId());
 //				// Show costumer details
 				break;
 			case EDIT_ACCOUNT_DETAILS:
+				accountService.editAccountPassword(account.getCustomerId());
 				// Edit Account
 				break;
 			case SHOW_ACCOUNT_DETAILS:
+				accountService.showAccountDetails(account.getCustomerId());
 				// Show Account details
 				break;
 			case DEPOSIT_TRANSFER_MONEY:
@@ -271,11 +273,6 @@ public class Application {
 				System.out.println("What is the new name?");
 				customer.setName(scanner.next());
 				// Change Name
-				break;
-			case CHANGE_PASSWORD:
-				System.out.println("NOTHING HERE");
-//				customer.setPassword(scanner.next());
-				// Change password
 				break;
 			case CHANGE_EMAIL:
 				System.out.println("What is the new email?");
@@ -612,8 +609,7 @@ public class Application {
 		System.out.println("What do you which to edit?");
 		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Name of the customer");
-		System.out.println("2 - Password of the customer");
-		System.out.println("3 - Email of the customer");
+		System.out.println("2 - Email of the customer");
 		System.out.println("###########################################################################");
 	}
 }
