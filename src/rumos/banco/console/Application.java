@@ -151,11 +151,11 @@ public class Application {
 			switch (option) {
 
 			case MANAGE_MONEY:
-				moneyManagement();
+				moneyManagement(card.getCustomerId());
 				// Take, put and transfer money		
 				break;
 			case EDIT_BANK_CARDS:
-				editBankCards(card);
+				editBankCards(card.getCustomerId());
 				// check account details and cards details
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
@@ -287,13 +287,14 @@ public class Application {
 	/******************************************************************************
 	 * Bank Cards
 	 ******************************************************************************/
-	private static void editBankCards(Card card) {
+	private static void editBankCards(Integer customerId) {
 		Integer option;
-
+		Card card;
 //		//Validade if the customer has any card
 //		if (findCustomerCard(customerId) == null) {
 //			return;
 //		}
+		card = cardService.findCustomerCard(customerId);
 
 		do {
 
@@ -335,11 +336,11 @@ public class Application {
 	 * 
 	 ******************************************************************************/
 
-	private static void moneyManagement() {
+	private static void moneyManagement(Integer customerId) {
 		Integer option;
 		Account account;
 
-		account = accountService.checkAccountNameAndPassword();
+		account = accountService.findCustomerAccount(customerId);
 
 		if (account == null) {
 			return;
