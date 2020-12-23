@@ -175,7 +175,11 @@ public class Application {
 	}
 
 	private static void chooseOnline() {
-
+		Account account;
+		account = accountService.checkAccountNameAndPassword();
+		if(account == null)
+			return;
+		
 		do {
 			displayOnline();
 			option = scanner.nextInt();
