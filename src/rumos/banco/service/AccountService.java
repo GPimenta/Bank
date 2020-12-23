@@ -284,10 +284,14 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 
-	public void transferMoney(Account account) {
+	public void transferMoney(Integer customerId) {
 
 		Double amount;
 		String accountToTransfer;
+		Account account;
+		
+		account = findCustomerAccount(customerId);
+		if(account == null) return;
 
 		System.out.println("Please indicate the amount of money you wish to transfer");
 		amount = scanner.nextDouble();
@@ -361,7 +365,7 @@ public class AccountService {
 	 ******************************************************************************/
 	public void showAccountDetails(Integer customerId) {
 		if(customerId == null)
-			return;
+			return; 
 		System.out.println(findCustomerAccount(customerId).toString());
 		return;
 	}

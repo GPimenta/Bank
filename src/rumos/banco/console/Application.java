@@ -31,7 +31,7 @@ public class Application {
 	private static final int SHOW_CUSTOMER_DETAILS = 2;
 	private static final int EDIT_ACCOUNT_DETAILS = 3;
 	private static final int SHOW_ACCOUNT_DETAILS = 4;
-	private static final int DEPOSIT_TRANSFER_MONEY = 5;
+	private static final int ACCOUNT_TRANSFER_MONEY = 5;
 	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE = 6;
 
 	private static final int ADD_SECONDARY_ACCOUNT = 1;
@@ -205,10 +205,11 @@ public class Application {
 				accountService.showAccountDetails(account.getCustomerId());
 				// Show Account details
 				break;
-			case DEPOSIT_TRANSFER_MONEY:
-				// Deposit and transfer money
+			case ACCOUNT_TRANSFER_MONEY:
+				accountService.transferMoney(account.getCustomerId());
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE:
+				accountService.showAccountHistoryMovement(account);
 				// Deposit and transfer money
 				break;
 
@@ -409,7 +410,7 @@ public class Application {
 				accountService.withdrawMoneyOnSecondaryAccount(account);
 				break;
 			case TRANSFER_MONEY:
-				accountService.transferMoney(account);
+				accountService.transferMoney(account.getCustomerId());
 				break;
 			case CHECK_ACCOUNT_HISTORY:
 				accountService.showAccountHistoryMovement(account);
