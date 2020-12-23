@@ -33,13 +33,13 @@ public class Application {
 	private static final int SHOW_ACCOUNT_DETAILS = 4;
 	private static final int ACCOUNT_TRANSFER_MONEY = 5;
 	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE = 6;
+	private static final int EDIT_SECONDARY_ACCOUNTS = 7;
 
 	private static final int ADD_SECONDARY_ACCOUNT = 1;
 	private static final int DELETE_SECONDARY_ACCOUNT = 2;
 	
 	private static final int CHANGE_NAME = 1;
-	private static final int CHANGE_PASSWORD = 2;
-	private static final int CHANGE_EMAIL = 3;
+	private static final int CHANGE_EMAIL = 2;
 	
 	
 //	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
@@ -212,7 +212,10 @@ public class Application {
 				accountService.showAccountHistoryMovement(account);
 				// Deposit and transfer money
 				break;
-
+			case EDIT_SECONDARY_ACCOUNTS:
+				accountService.showAccountHistoryMovement(account);
+				// Deposit and transfer money
+				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
@@ -299,8 +302,8 @@ public class Application {
 	 * 
 	 ******************************************************************************/
 
-	private static void editSecondaryAccounts() {
-		Account account = accountService.checkAccountNameAndPassword();
+	private static void editSecondaryAccounts(Integer customerId) {
+		Account account = accountService.findCustomerAccount(customerId);
 		Integer choose;
 
 		if (account == null) {
