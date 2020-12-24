@@ -211,8 +211,9 @@ public class CardService {
 	public Card checkCardNumberAndPassword() {
 		Card card = new Card();
 		String choose;
-		System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
+		
 		do {
+			System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
 			choose = scanner.next().toLowerCase();
 			if (choose.equals("debit")) {
 				card = findDebitCard();
@@ -224,7 +225,6 @@ public class CardService {
 			}
 			System.err.println("Please write debit or credit");
 		} while (!(choose.equals("debit") || choose.equals("credit")));
-		System.err.println("Incorrect pin");
 		return null;
 	}
 

@@ -163,18 +163,19 @@ public class Application {
 				// check account details and cards details
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
-
+				accountService.showAccountHistoryMovement(card.getCustomerId());
 				// check account history
 				break;
 
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
-
+				break;
 			default:
 				System.err.println(INVALID_OPTION + " in chooseATM");
 				break;
 			}
 		} while (option != 0);
+		return;
 
 	}
 
@@ -209,11 +210,11 @@ public class Application {
 				accountService.transferMoney(account.getCustomerId());
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE:
-				accountService.showAccountHistoryMovement(account);
+				accountService.showAccountHistoryMovement(account.getCustomerId());
 				// Deposit and transfer money
 				break;
 			case EDIT_SECONDARY_ACCOUNTS:
-				accountService.showAccountHistoryMovement(account);
+				editSecondaryAccounts(account.getCustomerId());
 				// Deposit and transfer money
 				break;
 			case EXIT:
@@ -401,22 +402,22 @@ public class Application {
 			option = scanner.nextInt();
 			switch (option) {
 			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
-				accountService.depositMoneyOnHolderAccount(account);
+				accountService.depositMoneyOnHolderAccount(account.getCustomerId());
 				break;
 			case DEPOSIT_MONEY_ON_SECONDARY_ACCOUNT:
-				accountService.depositMoneyOnSecondaryAccount(account);
+				accountService.depositMoneyOnSecondaryAccount(account.getCustomerId());
 				break;
 			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
-				accountService.withdrawMoneyOnHolderAccount(account);
+				accountService.withdrawMoneyOnHolderAccount(account.getCustomerId());
 				break;
 			case WITHDRAW_MONEY_ON_SECONDARY_ACCOUNT:
-				accountService.withdrawMoneyOnSecondaryAccount(account);
+				accountService.withdrawMoneyOnSecondaryAccount(account.getCustomerId());
 				break;
 			case TRANSFER_MONEY:
 				accountService.transferMoney(account.getCustomerId());
 				break;
 			case CHECK_ACCOUNT_HISTORY:
-				accountService.showAccountHistoryMovement(account);
+				accountService.showAccountHistoryMovement(account.getCustomerId());
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
@@ -531,8 +532,8 @@ public class Application {
 		System.out.println("\t\tPlease choose the action that u want take: ");
 		System.out.println("0 - Exit");
 		System.out.println("1 - Manage Money");
-		System.out.println("2 - Edit band cards");
-		System.out.println("3 - POSSIVELMENTE POR O HISTORIAL");
+		System.out.println("2 - Edit bank cards");
+		System.out.println("3 - Show account history");
 		System.out.println("###########################################################################");
 
 	}

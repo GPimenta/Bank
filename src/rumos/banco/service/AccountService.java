@@ -197,7 +197,8 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 
-	public void depositMoneyOnHolderAccount(Account account) {
+	public void depositMoneyOnHolderAccount(Integer customerId) {
+		Account account = findCustomerAccount(customerId);
 
 		System.out.println("Please insert the amount to deposit in your account");
 		Double amount = scanner.nextDouble();
@@ -206,7 +207,9 @@ public class AccountService {
 		return;
 	}
 
-	public void depositMoneyOnSecondaryAccount(Account account) {
+	public void depositMoneyOnSecondaryAccount(Integer customerId) {
+		Account account = findCustomerAccount(customerId);
+		
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -215,7 +218,7 @@ public class AccountService {
 
 		for (Account getAccount : accounts) {
 			if (getAccount.getAccountHolderNumber().equals(secondaryAccount)) {
-				depositMoneyOnHolderAccount(getAccount);
+				depositMoneyOnHolderAccount(getAccount.getCustomerId());
 				return;
 			}
 		}
@@ -229,7 +232,8 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public void withdrawMoneyOnHolderAccount(Account account) {
+	public void withdrawMoneyOnHolderAccount(Integer customerId) {
+		Account account = findCustomerAccount(customerId);
 
 		System.out.println("Please indicate the amount of money you wish to take");
 		Double amount = scanner.nextDouble();
@@ -244,7 +248,9 @@ public class AccountService {
 		return;
 	}
 
-	public void withdrawMoneyOnSecondaryAccount(Account account) {
+	public void withdrawMoneyOnSecondaryAccount(Integer customerId) {
+		Account account = findCustomerAccount(customerId);
+		
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -253,7 +259,7 @@ public class AccountService {
 
 		for (Account getAccount : accounts) {
 			if (getAccount.getAccountHolderNumber().equals(secondaryAccount)) {
-				withdrawMoneyOnHolderAccount(getAccount);
+				withdrawMoneyOnHolderAccount(getAccount.getCustomerId());
 				return;
 			}
 		}
@@ -375,7 +381,8 @@ public class AccountService {
 	 *
 	 ******************************************************************************/
 
-	public void showAccountHistoryMovement(Account account) {
+	public void showAccountHistoryMovement(Integer customerId) {
+		Account account = findCustomerAccount(customerId);
 		for (String transactionHistory : account.getTransactionHistory()) {
 			System.out.println("The transaction history: " + transactionHistory);
 		}
