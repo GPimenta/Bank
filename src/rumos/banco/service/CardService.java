@@ -1,10 +1,10 @@
 package rumos.banco.service;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import rumos.banco.model.Card;
-import rumos.banco.model.Customer_Old;
 
 public class CardService {
 
@@ -260,12 +260,17 @@ public class CardService {
 		for (Card card : cards) {
 			if (card.getDebitCardNumber() != null && card.getDebitCardPin() != null) {
 				if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
+					if (card.isUsedDebit().equals(false)) {
+						card.setUsedDebit(true);
+						System.out.println(card.toString());
+						return card;
+					}
 					System.out.println(card.toString());
 					return card;
 				}
 			}
 		}
-		System.out.println(INVALID_NAME_OR_PASSWORD); 
+		System.out.println(INVALID_NAME_OR_PASSWORD);
 		return null;
 	}
 
@@ -307,6 +312,27 @@ public class CardService {
 		}
 		System.out.println("Customer do not have a card");
 		return null;
+
+	}
+
+	/******************************************************************************
+	 * Generate random pin for the customer card
+	 * 
+	 * 
+	 *
+	 ******************************************************************************/
+	public String generateRandomPinCard(Integer customerId) {
+		Card card; card = findCustomerCard(customerId);
+		String allNumbers = "0123456789";
+		StringBuilder newPin = new StringBuilder();
+		Random rnd = new Random();
+		while(newPin.length() < 4) {
+			int index = (int)(rnd.nextFloat() * allNumbers.length());
+			newPin.append(allNumbers.charAt(index));
+		}
+		return newPin.toString();
+		
+		
 
 	}
 

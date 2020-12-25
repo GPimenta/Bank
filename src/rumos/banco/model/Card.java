@@ -8,10 +8,14 @@ public class Card {
 	private Boolean debitCard = false;
 	private String debitCardNumber;
 	private String debitCardPin;
+	private Boolean usedDebit;
 
 	private Boolean creditCard = false;
 	private String creditCardNumber;
 	private String creditCardPin;
+	private Boolean usedCredit;
+
+
 
 	@Override
 	public int hashCode() {
@@ -25,6 +29,8 @@ public class Card {
 		result = prime * result + ((debitCardNumber == null) ? 0 : debitCardNumber.hashCode());
 		result = prime * result + ((debitCardPin == null) ? 0 : debitCardPin.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((usedCredit == null) ? 0 : usedCredit.hashCode());
+		result = prime * result + ((usedDebit == null) ? 0 : usedDebit.hashCode());
 		return result;
 	}
 
@@ -77,6 +83,16 @@ public class Card {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (usedCredit == null) {
+			if (other.usedCredit != null)
+				return false;
+		} else if (!usedCredit.equals(other.usedCredit))
+			return false;
+		if (usedDebit == null) {
+			if (other.usedDebit != null)
+				return false;
+		} else if (!usedDebit.equals(other.usedDebit))
+			return false;
 		return true;
 	}
 
@@ -85,6 +101,26 @@ public class Card {
 		return "Card [customerId=" + customerId + ", debitCard=" + debitCard + ", debitCardNumber=" + debitCardNumber
 				+ ", debitCardPin=" + debitCardPin + ", creditCard=" + creditCard + ", creditCardNumber="
 				+ creditCardNumber + ", creditCardPin=" + creditCardPin + "]";
+	}
+	
+	
+	
+	
+
+	public Boolean isUsedDebit() {
+		return usedDebit;
+	}
+
+	public void setUsedDebit(Boolean usedDebit) {
+		this.usedDebit = usedDebit;
+	}
+
+	public Boolean isUsedCredit() {
+		return usedCredit;
+	}
+
+	public void setUsedCredit(Boolean usedCredit) {
+		this.usedCredit = usedCredit;
 	}
 
 	public Integer getId() {
