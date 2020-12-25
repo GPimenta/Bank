@@ -232,7 +232,6 @@ public class CustomerService {
 	public Customer findCustomerById(int customerId) {
 		for (Customer customer : customers) {
 			if (customer.getId().equals(customerId)) {
-				System.out.println(customer.toString());
 				return customer;
 			}
 		}

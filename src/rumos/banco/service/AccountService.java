@@ -422,6 +422,10 @@ public class AccountService {
 	public void editAccountPassword(Integer customerId) {
 		Account account =findCustomerAccount(customerId);
 		
+		System.out.println("Please write the new password for account");
+		account.setPasswordAccount(scanner.next());
+		return;
+		
 	}
 
 	/******************************************************************************

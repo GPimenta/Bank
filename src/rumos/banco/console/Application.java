@@ -545,8 +545,8 @@ public class Application {
 		System.out.println("1 - Edit Customer Details");
 		System.out.println("2 - Show Customer");
 		System.out.println("3 - Edit Account");
-		System.out.println("3 - Show Account Details");
-		System.out.println("3 - Deposit and transfer money");
+		System.out.println("4 - Show Account Details");
+		System.out.println("5 - Transfer money");
 		System.out.println("###########################################################################");
 
 	}
