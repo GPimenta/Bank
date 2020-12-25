@@ -342,8 +342,7 @@ public class AccountService {
 		String password = scanner.next();
 
 		for (Account account : accounts) {
-			if (account == null)
-				break;
+			if (account == null) continue;
 			if (account.getAccountHolderNumber().equals(accountHolderNumber)
 					&& account.getPasswordAccount().equals(password)) {
 				return account;

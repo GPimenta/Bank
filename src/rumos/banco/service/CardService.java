@@ -76,15 +76,16 @@ public class CardService {
 
 		return newCard;
 	}
+
 	/******************************************************************************
 	 * Delete the Card
 	 * 
 	 * 
 	 ******************************************************************************/
-	
+
 	public void deleteCard(Integer customerId) {
 		for (Card card : cards) {
-			if(card.getCustomerId().equals(customerId)) {
+			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Cards deleted");
 				cards.remove(card);
 				return;
@@ -93,8 +94,7 @@ public class CardService {
 		System.err.println("Card not found");
 		return;
 	}
-	
-	
+
 	/******************************************************************************
 	 * Delete and create the Cards
 	 * 
@@ -211,7 +211,7 @@ public class CardService {
 	public Card checkCardNumberAndPassword() {
 		Card card = new Card();
 		String choose;
-		
+
 		do {
 			System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
 			choose = scanner.next().toLowerCase();
@@ -258,9 +258,11 @@ public class CardService {
 		cardPin = scanner.next();
 
 		for (Card card : cards) {
-			if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
-				System.out.println(card.toString());
-				return card;
+			if (card.getDebitCardNumber() != null && card.getDebitCardPin() != null) {
+				if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
+					System.out.println(card.toString());
+					return card;
+				}
 			}
 		}
 		System.out.println(INVALID_NAME_OR_PASSWORD);
@@ -277,9 +279,11 @@ public class CardService {
 		cardPin = scanner.next();
 
 		for (Card card : cards) {
-			if (card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
-				System.out.println(card.toString());
-				return card;
+			if (card.getCreditCardNumber() != null && card.getCreditCardPin() != null) {
+				if (card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
+					System.out.println(card.toString());
+					return card;
+				}
 			}
 		}
 		System.out.println(INVALID_NAME_OR_PASSWORD);
@@ -305,7 +309,5 @@ public class CardService {
 		return null;
 
 	}
-
-
 
 }

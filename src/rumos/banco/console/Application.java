@@ -68,7 +68,6 @@ public class Application {
 
 
 	private static Scanner scanner = new Scanner(System.in);
-	private static Integer option;
 	private static SecureRandom random = new SecureRandom();
 	private static CustomerService customerService = new CustomerService();
 	private static AccountService accountService = new AccountService();
@@ -79,6 +78,7 @@ public class Application {
 	}
 
 	private static void initiation() {
+		Integer option;
 		do {
 			displayInitiation();
 			option = scanner.nextInt();
@@ -115,6 +115,7 @@ public class Application {
 	}
 
 	private static void chooseProgram() {
+		Integer option;
 		do {
 			displayChooseProgram();
 			option = scanner.nextInt();
@@ -141,6 +142,7 @@ public class Application {
 	}
 
 	private static void chooseATM() {
+		Integer option;
 		Card card;
 		card = cardService.checkCardNumberAndPassword();
 		
@@ -175,11 +177,11 @@ public class Application {
 				break;
 			}
 		} while (option != 0);
-		return;
 
 	}
 
 	private static void chooseOnline() {
+		Integer option;
 		Account account;
 		account = accountService.checkAccountNameAndPassword();
 		if(account == null)
@@ -544,7 +546,7 @@ public class Application {
 		System.out.println("0 - Exit");
 		System.out.println("1 - Edit Customer Details");
 		System.out.println("2 - Show Customer");
-		System.out.println("3 - Edit Account");
+		System.out.println("3 - Change Password Account");
 		System.out.println("4 - Show Account Details");
 		System.out.println("5 - Transfer money");
 		System.out.println("###########################################################################");
