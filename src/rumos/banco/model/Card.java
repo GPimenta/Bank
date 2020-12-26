@@ -8,12 +8,12 @@ public class Card {
 	private Boolean debitCard = false;
 	private String debitCardNumber;
 	private String debitCardPin;
-	private Boolean usedDebit;
+	private Boolean usedDebit = false;
 
 	private Boolean creditCard = false;
 	private String creditCardNumber;
 	private String creditCardPin;
-	private Boolean usedCredit;
+	private Boolean usedCredit = false;
 
 
 

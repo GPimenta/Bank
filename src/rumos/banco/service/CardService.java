@@ -217,6 +217,7 @@ public class CardService {
 			choose = scanner.next().toLowerCase();
 			if (choose.equals("debit")) {
 				card = findDebitCard();
+				return card;
 			}
 			if (choose.equals("credit")) {
 				card = findCreditCard();
