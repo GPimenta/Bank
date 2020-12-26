@@ -217,7 +217,6 @@ public class CardService {
 			choose = scanner.next().toLowerCase();
 			if (choose.equals("debit")) {
 				card = findDebitCard();
-				return card;
 			}
 			if (choose.equals("credit")) {
 				card = findCreditCard();
@@ -262,6 +261,7 @@ public class CardService {
 				if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
 					if (card.isUsedDebit().equals(false)) {
 						card.setUsedDebit(true);
+						card.setDebitCardPin(generateRandomPinCard(card.getCustomerId()));
 						System.out.println(card.toString());
 						return card;
 					}
@@ -286,6 +286,12 @@ public class CardService {
 		for (Card card : cards) {
 			if (card.getCreditCardNumber() != null && card.getCreditCardPin() != null) {
 				if (card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
+					if (card.isUsedCredit().equals(false)) {
+						card.setUsedCredit(true);
+						card.setCreditCardPin(generateRandomPinCard(card.getCustomerId()));
+						System.out.println(card.toString());
+						return card;
+					}
 					System.out.println(card.toString());
 					return card;
 				}
@@ -322,17 +328,18 @@ public class CardService {
 	 *
 	 ******************************************************************************/
 	public String generateRandomPinCard(Integer customerId) {
-		Card card; card = findCustomerCard(customerId);
+		Card card;
+		card = findCustomerCard(customerId);
+
 		String allNumbers = "0123456789";
 		StringBuilder newPin = new StringBuilder();
 		Random rnd = new Random();
-		while(newPin.length() < 4) {
-			int index = (int)(rnd.nextFloat() * allNumbers.length());
+		while (newPin.length() < 4) {
+			int index = (int) (rnd.nextFloat() * allNumbers.length());
 			newPin.append(allNumbers.charAt(index));
 		}
+		System.out.println(newPin.toString());
 		return newPin.toString();
-		
-		
 
 	}
 
