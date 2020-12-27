@@ -81,6 +81,7 @@ public class AccountService {
 
 		return newAccount;
 	}
+
 	/******************************************************************************
 	 * Delete Account
 	 * 
@@ -88,7 +89,7 @@ public class AccountService {
 	 ******************************************************************************/
 	public void deleteAccount(Integer customerId) {
 		for (Account account : accounts) {
-			if(account.getCustomerId().equals(customerId)) {
+			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Removing account");
 				accounts.remove(account);
 				return;
@@ -97,7 +98,7 @@ public class AccountService {
 		System.err.println("Account not found");
 		return;
 	}
-	
+
 	/******************************************************************************
 	 * Secondary Accounts
 	 * 
@@ -209,7 +210,7 @@ public class AccountService {
 
 	public void depositMoneyOnSecondaryAccount(Integer customerId) {
 		Account account = findCustomerAccount(customerId);
-		
+
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -237,10 +238,16 @@ public class AccountService {
 
 		System.out.println("Please indicate the amount of money you wish to take");
 		Double amount = scanner.nextDouble();
+		String decision;
 
 		if ((account.getAccountHolderBalance() - Math.abs(amount)) < 0D) {
-			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
-			return;
+			System.out.println(NO_MONEY_TO_REMOVE);
+			System.out.println("Do you wish to use the cash advance? y/n");
+			decision = scanner.next();
+			if(decision.equals("y")) {
+				withdrawMoneyFromCashAdvance(customerId, amount);
+				return;
+			}
 		}
 		account.setAccountHolderBalance(account.getAccountHolderBalance() - Math.abs(amount));
 		addTAccountHistoryMovement(account, "-" + amount.toString());
@@ -250,7 +257,7 @@ public class AccountService {
 
 	public void withdrawMoneyOnSecondaryAccount(Integer customerId) {
 		Account account = findCustomerAccount(customerId);
-		
+
 		String secondaryAccount = checkSecondaryAccount(account);
 		String decision;
 
@@ -295,9 +302,10 @@ public class AccountService {
 		Double amount;
 		String accountToTransfer;
 		Account account;
-		
+
 		account = findCustomerAccount(customerId);
-		if(account == null) return;
+		if (account == null)
+			return;
 
 		System.out.println("Please indicate the amount of money you wish to transfer");
 		amount = scanner.nextDouble();
@@ -342,7 +350,8 @@ public class AccountService {
 		String password = scanner.next();
 
 		for (Account account : accounts) {
-			if (account == null) continue;
+			if (account == null)
+				continue;
 			if (account.getAccountHolderNumber().equals(accountHolderNumber)
 					&& account.getPasswordAccount().equals(password)) {
 				return account;
@@ -363,18 +372,19 @@ public class AccountService {
 			System.out.println(account.toString());
 		}
 	}
+
 	/******************************************************************************
 	 * Print account
 	 * 
 	 * 
 	 ******************************************************************************/
 	public void showAccountDetails(Integer customerId) {
-		if(customerId == null)
-			return; 
+		if (customerId == null)
+			return;
 		System.out.println(findCustomerAccount(customerId).toString());
 		return;
 	}
-	
+
 	/******************************************************************************
 	 * Account History movement
 	 *
@@ -413,18 +423,19 @@ public class AccountService {
 		System.err.println("Customer does not have an account");
 		return null;
 	}
+
 	/******************************************************************************
 	 * Edit Account details
 	 * 
 	 * 
 	 ******************************************************************************/
 	public void editAccountPassword(Integer customerId) {
-		Account account =findCustomerAccount(customerId);
-		
+		Account account = findCustomerAccount(customerId);
+
 		System.out.println("Please write the new password for account");
 		account.setPasswordAccount(scanner.next());
 		return;
-		
+
 	}
 
 	/******************************************************************************
@@ -436,25 +447,37 @@ public class AccountService {
 		Account account = findCustomerAccount(customerId);
 		System.out.println(account.toString());
 	}
+
 	/******************************************************************************
 	 * Withdraw money from Cash Advance
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void withdrawMoneyFromCashAdvance(Integer customerId) {
+	public void withdrawMoneyFromCashAdvance(Integer customerId, Double amount) {
 		Account account = findCustomerAccount(customerId);
-		
-		if(account.getCheckEligability()) {
-			//take money
+
+		if (account.getCheckEligability()) {
+			checkCashAdvance(account, amount);
+			return;
 		}
+		System.err.println("You have spent all the money of the cash-advance");
+		return;
 	}
+
 	/******************************************************************************
-	 *Check Cash Advance
+	 * Check Cash Advance
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void checkCashAdvance(Integer money, Customer customer) {
-		
-	}
+	public void checkCashAdvance(Account account, Double amount) {
+		if (account.getCashAdvanceQuantity() - amount > 0) {
+			account.setCashAdvanceQuantity(account.getCashAdvanceQuantity() - amount);
+			System.out.println(account.getCashAdvanceQuantity().toString());
+			return;
+		}
+		account.setCheckEligability(false);
+		System.err.printf("\nYou cannot spend %d, you only have %d", amount, account.getAccountHolderBalance());
+		return;
 
+	}
 }
