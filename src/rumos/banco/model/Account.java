@@ -14,7 +14,13 @@ public class Account {
 	private String[] secondaryAccountNumber = { "", "", "", "" };
 	private ArrayList<String> transactionHistory = new ArrayList<String>();
 	
+	private Boolean checkEligability = true;
+	private Double cashAdvanceQuantity = 250.0;
 	
+
+
+
+
 
 	@Override
 	public int hashCode() {
@@ -22,6 +28,8 @@ public class Account {
 		int result = 1;
 		result = prime * result + ((accountHolderBalance == null) ? 0 : accountHolderBalance.hashCode());
 		result = prime * result + ((accountHolderNumber == null) ? 0 : accountHolderNumber.hashCode());
+		result = prime * result + ((cashAdvanceQuantity == null) ? 0 : cashAdvanceQuantity.hashCode());
+		result = prime * result + ((checkEligability == null) ? 0 : checkEligability.hashCode());
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((passwordAccount == null) ? 0 : passwordAccount.hashCode());
@@ -51,6 +59,16 @@ public class Account {
 				return false;
 		} else if (!accountHolderNumber.equals(other.accountHolderNumber))
 			return false;
+		if (cashAdvanceQuantity == null) {
+			if (other.cashAdvanceQuantity != null)
+				return false;
+		} else if (!cashAdvanceQuantity.equals(other.cashAdvanceQuantity))
+			return false;
+		if (checkEligability == null) {
+			if (other.checkEligability != null)
+				return false;
+		} else if (!checkEligability.equals(other.checkEligability))
+			return false;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
@@ -77,16 +95,41 @@ public class Account {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "Account [customerId=" + customerId + ", passwordAccount=" + passwordAccount + ", accountHolderNumber="
-				+ accountHolderNumber + ", accountHolderBalance=" + accountHolderBalance + ", secondaryAccountNumber="
-				+ Arrays.toString(secondaryAccountNumber) + ", transactionHistory=" + transactionHistory + "]";
+		return "Account [id=" + id + ", customerId=" + customerId + ", passwordAccount=" + passwordAccount
+				+ ", accountHolderNumber=" + accountHolderNumber + ", accountHolderBalance=" + accountHolderBalance
+				+ ", secondaryAccountNumber=" + Arrays.toString(secondaryAccountNumber) + ", transactionHistory="
+				+ transactionHistory + ", checkEligability=" + checkEligability + ", cashAdvanceQuantity="
+				+ cashAdvanceQuantity + "]";
 	}
-	
-	
-	
+
+
+
+	public Boolean getCheckEligability() {
+		return checkEligability;
+	}
+
+
+
+	public void setCheckEligability(Boolean checkEligability) {
+		this.checkEligability = checkEligability;
+	}
+
+
+
+	public Double getCashAdvanceQuantity() {
+		return cashAdvanceQuantity;
+	}
+
+
+
+	public void setCashAdvanceQuantity(Double cashAdvanceQuantity) {
+		this.cashAdvanceQuantity = cashAdvanceQuantity;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}

@@ -436,5 +436,25 @@ public class AccountService {
 		Account account = findCustomerAccount(customerId);
 		System.out.println(account.toString());
 	}
+	/******************************************************************************
+	 * Withdraw money from Cash Advance
+	 * 
+	 * 
+	 ******************************************************************************/
+	public void withdrawMoneyFromCashAdvance(Integer customerId) {
+		Account account = findCustomerAccount(customerId);
+		
+		if(account.getCheckEligability()) {
+			//take money
+		}
+	}
+	/******************************************************************************
+	 *Check Cash Advance
+	 * 
+	 * 
+	 ******************************************************************************/
+	public void checkCashAdvance(Integer money, Customer customer) {
+		
+	}
 
 }
