@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import rumos.banco.model.Customer;
-import rumos.banco.old.Customer_Old;
 
 public class CustomerService {
 
