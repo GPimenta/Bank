@@ -14,7 +14,7 @@ public class Account {
 	private String[] secondaryAccountNumber = { "", "", "", "" };
 	private ArrayList<String> transactionHistory = new ArrayList<String>();
 	
-	private Boolean checkEligability = true;
+	private Boolean checkCashAdvanceEligability = true;
 	private Double cashAdvanceQuantity = 250.0;
 	
 
@@ -29,7 +29,7 @@ public class Account {
 		result = prime * result + ((accountHolderBalance == null) ? 0 : accountHolderBalance.hashCode());
 		result = prime * result + ((accountHolderNumber == null) ? 0 : accountHolderNumber.hashCode());
 		result = prime * result + ((cashAdvanceQuantity == null) ? 0 : cashAdvanceQuantity.hashCode());
-		result = prime * result + ((checkEligability == null) ? 0 : checkEligability.hashCode());
+		result = prime * result + ((checkCashAdvanceEligability == null) ? 0 : checkCashAdvanceEligability.hashCode());
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((passwordAccount == null) ? 0 : passwordAccount.hashCode());
@@ -64,10 +64,10 @@ public class Account {
 				return false;
 		} else if (!cashAdvanceQuantity.equals(other.cashAdvanceQuantity))
 			return false;
-		if (checkEligability == null) {
-			if (other.checkEligability != null)
+		if (checkCashAdvanceEligability == null) {
+			if (other.checkCashAdvanceEligability != null)
 				return false;
-		} else if (!checkEligability.equals(other.checkEligability))
+		} else if (!checkCashAdvanceEligability.equals(other.checkCashAdvanceEligability))
 			return false;
 		if (customerId == null) {
 			if (other.customerId != null)
@@ -100,20 +100,20 @@ public class Account {
 		return "Account [id=" + id + ", customerId=" + customerId + ", passwordAccount=" + passwordAccount
 				+ ", accountHolderNumber=" + accountHolderNumber + ", accountHolderBalance=" + accountHolderBalance
 				+ ", secondaryAccountNumber=" + Arrays.toString(secondaryAccountNumber) + ", transactionHistory="
-				+ transactionHistory + ", checkEligability=" + checkEligability + ", cashAdvanceQuantity="
+				+ transactionHistory + ", checkEligability=" + checkCashAdvanceEligability + ", cashAdvanceQuantity="
 				+ cashAdvanceQuantity + "]";
 	}
 
 
 
 	public Boolean getCheckEligability() {
-		return checkEligability;
+		return checkCashAdvanceEligability;
 	}
 
 
 
 	public void setCheckEligability(Boolean checkEligability) {
-		this.checkEligability = checkEligability;
+		this.checkCashAdvanceEligability = checkEligability;
 	}
 
 
