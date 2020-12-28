@@ -27,60 +27,75 @@ public class CardService {
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 
-	private static ArrayList<Card> cards = new ArrayList<>();
+	private static ArrayList<DebitCard> debitCards = new ArrayList<>();
+	private static ArrayList<CreditCard> creditCards = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
 
 	/******************************************************************************
-	 * Save Card
+	 * Save Cards
 	 * 
 	 * 
 	 ******************************************************************************/
-	public Card save(Card card) {
+	public DebitCard save(DebitCard debitCard) {
 		id++;
-		card.setCustomerId(id);
-		cards.add(card);
+		debitCard.setCustomerId(id);
+		debitCards.add(debitCard);
 
-		return card;
+		return debitCard;
 	}
+	public CreditCard save(CreditCard creditCard) {
+		id++;
+		creditCard.setCustomerId(id);
+		creditCards.add(creditCard);
 
+		return creditCard;
+	}
 	/******************************************************************************
 	 * Populate the Cards
 	 * 
 	 * 
 	 ******************************************************************************/
-	public Card populateCard() {
-		Card newCard = new Card();
-		
+	public DebitCard populateDebitCard() {	
 		DebitCard newDebitCard = new DebitCard();
 		CreditCard newCreditCard = new CreditCard();
+		String cardNumber;
+		String pinCard;
+		
+		
 
 		System.out.println("Do you which to have a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
-			newCard.setDebitCard(true);
 			System.out.println("Please indicate the debit card number");
-			String cardNumber = scanner.next();
-			newCard.setDebitCardNumber(cardNumber);
+			cardNumber = scanner.next();
+			newDebitCard.setDebitCardNumber(cardNumber);
 			System.out.println("Please indicate the pin of the debit card number");
-			String pinCard = scanner.next();
-			newCard.setDebitCardPin(pinCard);
-		} else
-			newCard.setDebitCard(false);
+			pinCard = scanner.next();
+			newDebitCard.setDebitCardPin(pinCard);
+		}
+
+		return newDebitCard;
+	}
+	public CreditCard populateCreditCard() {	
+		CreditCard newCreditCard = new CreditCard();
+		String cardNumber;
+		String pinCard;
+	
 
 		System.out.println("Do you which to have a Credit Card? y/n");
 		if (scanner.next().equals("y")) {
-			newCard.setCreditCard(true);
 			System.out.println("Please indicate the credit card number");
-			String cardNumber = scanner.next();
-			newCard.setCreditCardNumber(cardNumber);
+			cardNumber = scanner.next();
+			newCreditCard.setCreditCardNumber(cardNumber);
 			System.out.println("Please indicate the pin of the credit card number");
-			String pinCard = scanner.next();
-			newCard.setCreditCardPin(pinCard);
-		} else
-			newCard.setCreditCard(false);
+			pinCard = scanner.next();
+			newCreditCard.setCreditCardPin(pinCard);
+		}
 
-		return newCard;
+		return newCreditCard;
 	}
+	
+		
 
 	/******************************************************************************
 	 * Delete the Card
@@ -88,30 +103,41 @@ public class CardService {
 	 * 
 	 ******************************************************************************/
 
-	public void deleteCard(Integer customerId) {
-		for (Card card : cards) {
+	public void deleteDebitCard(Integer customerId) {
+		for (Card card : debitCards) {
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Cards deleted");
-				cards.remove(card);
+				debitCards.remove(card);
 				return;
 			}
 		}
 		System.err.println("Card not found");
 		return;
 	}
-
+	public void deleteCreditCard(Integer customerId) {
+		for (Card card : creditCards) {
+			if (card.getCustomerId().equals(customerId)) {
+				System.out.println("Cards deleted");
+				creditCards.remove(card);
+				return;
+			}
+		}
+		System.err.println("Card not found");
+		return;
+	}
 	/******************************************************************************
 	 * Delete and create the Cards
 	 * 
 	 * 
 	 ******************************************************************************/
 
-	public void deleteDebitCard(Card card) {
+	public void deleteDebitCard(DebitCard debitCard) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (card.isDebitCard()) {
-				card.setDebitCard(false);
-				deleteDebitCardDetails(card);
+			if (!debitCard.getDebitCardNumber().equals(null)) {
+				debitCard.setDebitCardNumber(null);
+				debitCard.setDebitCardPin(null);
+				deleteDebitCardDetails(debitCard);
 				System.out.println("Debit card removed");
 				return;
 			} else {
@@ -123,12 +149,13 @@ public class CardService {
 		return;
 	}
 
-	public void deleteCreditCard(Card card) {
+	public void deleteCreditCard(CreditCard creditCard) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (card.isCreditCard()) {
-				card.setCreditCard(false);
-				deleteCreditCardDetails(card);
+			if (!creditCard.getCreditCardNumber().equals(null)) {
+				creditCard.setCreditCardNumber(null);
+				creditCard.setCreditCardPin(null);
+				deleteCreditCardDetails(creditCard);
 				System.out.println("Credit card removed");
 				return;
 			} else {
@@ -140,12 +167,11 @@ public class CardService {
 		return;
 	}
 
-	public void createDebitCard(Card card) {
+	public void createDebitCard(DebitCard debitCard) {
 		System.out.println("Do you whish to create a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (!card.isDebitCard()) {
-				card.setDebitCard(true);
-				createDebitCardDetails(card);
+			if (debitCard.getDebitCardNumber().isBlank()) {
+				createDebitCardDetails(debitCard);
 				return;
 			} else {
 				System.err.println(NO_ADD_DEBIT_CARD);
@@ -156,12 +182,11 @@ public class CardService {
 		return;
 	}
 
-	public void createCreditCard(Card card) {
+	public void createCreditCard(CreditCard creditCard) {
 		System.out.println("Do you whish to create a Credit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (!card.isCreditCard()) {
-				card.setCreditCard(true);
-				createCreditCardDetails(card);
+			if (creditCard.getCreditCardNumber().isBlank()) {
+				createCreditCardDetails(creditCard);
 				return;
 			} else {
 				System.err.println(NO_ADD_CREDIT_CARD);
@@ -172,39 +197,39 @@ public class CardService {
 		return;
 	}
 
-	public void createDebitCardDetails(Card card) {
+	public void createDebitCardDetails(DebitCard debitCard) {
 		System.out.println("Creating the details of the debit card");
 		System.out.println("Please indicate the number of the debit card");
 		String cardNumber = scanner.next();
-		card.setDebitCardNumber(cardNumber);
+		debitCard.setDebitCardNumber(cardNumber);
 		System.out.println("Please indicate the pin number of the debit card");
 		String pinCard = scanner.next();
-		card.setDebitCardPin(pinCard);
+		debitCard.setDebitCardPin(pinCard);
 	}
 
-	public void createCreditCardDetails(Card card) {
+	public void createCreditCardDetails(CreditCard creditCard) {
 		System.out.println("Creating the details of the credit card");
 		System.out.println("Please indicate the number of the credit card");
 		String cardNumber = scanner.next();
-		card.setCreditCardNumber(cardNumber);
+		creditCard.setCreditCardNumber(cardNumber);
 		System.out.println("Please indicate the pin number of the credit card");
 		String pinCard = scanner.next();
-		card.setCreditCardPin(pinCard);
+		creditCard.setCreditCardPin(pinCard);
 	}
 
-	public void deleteDebitCardDetails(Card card) {
+	public void deleteDebitCardDetails(DebitCard debitCard) {
 		System.out.println("Deleting the details of the debit card");
-		card.setDebitCardNumber(null);
+		debitCard.setDebitCardNumber(null);
 		System.out.println("Debit card number deleted");
-		card.setDebitCardPin(null);
+		debitCard.setDebitCardPin(null);
 		System.out.println("Debit card pin number deleted");
 	}
 
-	public void deleteCreditCardDetails(Card card) {
+	public void deleteCreditCardDetails(CreditCard creditCard) {
 		System.out.println("Deleting the details of the credit card");
-		card.setCreditCardNumber(null);
+		creditCard.setCreditCardNumber(null);
 		System.out.println("Credit card number deleted");
-		card.setCreditCardPin(null);
+		creditCard.setCreditCardPin(null);
 		System.out.println("Credit card pin number deleted");
 	}
 
@@ -240,12 +265,19 @@ public class CardService {
 	 *
 	 ******************************************************************************/
 
-	public void showCardsDetails() {
-		for (Card card : cards) {
+	public void showDebitCardsDetails() {
+		for (DebitCard card : debitCards) {
 			System.out.println("The Cards: ");
 			System.out.println(card.toString());
 		}
 	}
+	public void showCardsDetails() {
+		for (CreditCard card : creditCards) {
+			System.out.println("The Cards: ");
+			System.out.println(card.toString());
+		}
+	}
+
 
 	/******************************************************************************
 	 * Find cards
@@ -262,7 +294,7 @@ public class CardService {
 		System.out.println("Please indicate the pin");
 		cardPin = scanner.next();
 
-		for (Card card : cards) {
+		for (DebitCard card : debitCards) {
 			if (card.getDebitCardNumber() != null && card.getDebitCardPin() != null) {
 				if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
 					if (card.isUsedDebit().equals(false)) {
