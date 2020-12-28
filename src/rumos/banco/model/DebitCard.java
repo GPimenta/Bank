@@ -1,5 +1,5 @@
 package rumos.banco.model;
 
-public class DebitCard {
+public class DebitCard extends Card {
 
 }
