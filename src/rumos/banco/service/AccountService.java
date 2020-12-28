@@ -474,7 +474,7 @@ public class AccountService {
 	public void checkCashAdvance(Account account, Double amount) {
 		if (account.getCashAdvanceQuantity() - amount > 0) {
 			account.setCashAdvanceQuantity(account.getCashAdvanceQuantity() - amount);
-			System.out.println(account.getCashAdvanceQuantity().toString());
+			System.out.println("The amount of money on the cash-advance is: " + account.getCashAdvanceQuantity().toString());
 			return;
 		}
 		account.setCheckEligability(false);
