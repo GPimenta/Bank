@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 import rumos.banco.model.Card;
+import rumos.banco.model.CreditCard;
+import rumos.banco.model.DebitCard;
 
 public class CardService {
 
@@ -49,6 +51,9 @@ public class CardService {
 	 ******************************************************************************/
 	public Card populateCard() {
 		Card newCard = new Card();
+		
+		DebitCard newDebitCard = new DebitCard();
+		CreditCard newCreditCard = new CreditCard();
 
 		System.out.println("Do you which to have a Debit Card? y/n");
 		if (scanner.next().equals("y")) {

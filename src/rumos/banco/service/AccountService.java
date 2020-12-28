@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import rumos.banco.model.Account;
 import rumos.banco.model.Customer;
-import rumos.banco.model.Customer_Old;
+import rumos.banco.old.Customer_Old;
 
 public class AccountService {
 	private static final int EXIT = 0;
