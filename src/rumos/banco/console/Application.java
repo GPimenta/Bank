@@ -24,28 +24,26 @@ public class Application {
 	private static final int GO_TO_ATM = 2;
 
 	private static final int MANAGE_MONEY = 1;
-	private static final int EDIT_BANK_CARDS = 2;
-	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ATM = 3;
+	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ATM = 2;
 
 	private static final int EDIT_CUSTOMER_PERSONAL_DETAILS = 1;
 	private static final int SHOW_CUSTOMER_DETAILS = 2;
-	private static final int EDIT_ACCOUNT_DETAILS = 3;
+	private static final int EDIT_ACCOUNT_PASSWORD = 3;
 	private static final int SHOW_ACCOUNT_DETAILS = 4;
 	private static final int ACCOUNT_TRANSFER_MONEY = 5;
 	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE = 6;
 	private static final int EDIT_SECONDARY_ACCOUNTS = 7;
+	private static final int EDIT_BANK_CARDS = 8;
 
 	private static final int ADD_SECONDARY_ACCOUNT = 1;
 	private static final int DELETE_SECONDARY_ACCOUNT = 2;
-	
+
 	private static final int CHANGE_NAME = 1;
 	private static final int CHANGE_EMAIL = 2;
-	
-	
+
 //	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
 //	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
 //	private static final int EDIT_CUSTOMER_BY_ID = 3;
-
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
@@ -65,7 +63,6 @@ public class Application {
 	private static final String CUSTOMER_CREATED = "Customer created!";
 	private static final String INVALID_OPTION = "Invalid Option!";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
-
 
 	private static Scanner scanner = new Scanner(System.in);
 	private static SecureRandom random = new SecureRandom();
@@ -100,7 +97,7 @@ public class Application {
 				Integer customerId = customerService.deleteCustomerDetails();
 				accountService.deleteAccount(customerId);
 				cardService.deleteCard(customerId);
-				
+
 				// Delete all details of the customer
 				break;
 			case EXIT:
@@ -145,24 +142,20 @@ public class Application {
 		Integer option;
 		Card card;
 		card = cardService.checkCardNumberAndPassword();
-		
-		if(card == null)
+
+		if (card == null)
 			return;
-		
+
 		do {
-			
+
 			displayATM();
-			
+
 			option = scanner.nextInt();
 			switch (option) {
 
 			case MANAGE_MONEY:
 				moneyManagement(card.getCustomerId());
-				// Take, put and transfer money		
-				break;
-			case EDIT_BANK_CARDS:
-				editBankCards(card.getCustomerId());
-				// check account details and cards details
+				// Take, put and transfer money
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
 				accountService.showAccountHistoryMovement(card.getCustomerId());
@@ -184,9 +177,9 @@ public class Application {
 		Integer option;
 		Account account;
 		account = accountService.checkAccountNameAndPassword();
-		if(account == null)
+		if (account == null)
 			return;
-		
+
 		do {
 			displayOnline();
 			option = scanner.nextInt();
@@ -200,7 +193,7 @@ public class Application {
 				customerService.showCustomer(account.getCustomerId());
 //				// Show costumer details
 				break;
-			case EDIT_ACCOUNT_DETAILS:
+			case EDIT_ACCOUNT_PASSWORD:
 				accountService.editAccountPassword(account.getCustomerId());
 				// Edit Account
 				break;
@@ -218,6 +211,10 @@ public class Application {
 			case EDIT_SECONDARY_ACCOUNTS:
 				editSecondaryAccounts(account.getCustomerId());
 				// Deposit and transfer money
+				break;
+			case EDIT_BANK_CARDS:
+				editBankCards(account.getCustomerId());
+				// Edit cards
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
@@ -263,13 +260,12 @@ public class Application {
 //		} while (option != 0);
 //	}
 
-	
 	public static void editCustomerDetails(Integer customerId) {
 		Integer change;
 		Customer customer;
-		
+
 		customer = customerService.findCustomerById(customerId);
-		
+
 		do {
 
 			displayEditCustomerDetailsMenu();
@@ -518,6 +514,7 @@ public class Application {
 		System.out.println("###########################################################################");
 
 	}
+
 	private static void displayChooseProgram() {
 
 		System.out.println("############################ " + TITLE + " ############################");
@@ -528,17 +525,17 @@ public class Application {
 		System.out.println("###########################################################################");
 
 	}
+
 	private static void displayATM() {
 
 		System.out.println("############################ " + TITLE + " ############################");
 		System.out.println("\t\tPlease choose the action that u want take: ");
 		System.out.println("0 - Exit");
 		System.out.println("1 - Manage Money");
-		System.out.println("2 - Edit bank cards");
-		System.out.println("3 - Show account history");
+		System.out.println("2 - Show account history");
 		System.out.println("###########################################################################");
-
 	}
+
 	private static void displayOnline() {
 
 		System.out.println("############################ " + TITLE + " ############################");
@@ -549,34 +546,11 @@ public class Application {
 		System.out.println("3 - Change Password Account");
 		System.out.println("4 - Show Account Details");
 		System.out.println("5 - Transfer money");
+		System.out.println("6 - Check movement history online");
+		System.out.println("7 - Edit secondary accounts");
+		System.out.println("8 - Edit Bank cards");
 		System.out.println("###########################################################################");
 
-	}
-	private static void displayMenu() {
-
-		System.out.println("###################### " + MOTD + " ######################");
-		System.out.println("\t\tPlease choose the action that u want take: ");
-		System.out.println("0 - Exit");
-		System.out.println("1 - Create new customer");
-		System.out.println("2 - Show customer methods");
-		System.out.println("3 - Edit customer accounts");
-		System.out.println("4 - TO DECIDE");
-		System.out.println("5 - Edit customer personal details");
-		System.out.println("6 - Delete customer by Id");
-		System.out.println("7 - Manage money on account");
-		System.out.println("8 - Edit bank cards");
-		System.out.println("###########################################################################");
-
-	}
-
-	private static void displayEditCustomerMenu() {
-		System.out.println("############################ " + TITLE + " ############################");
-		System.out.println("Please choose the several methods to change the credentials of the customer");
-		System.out.println("0 - Return to Original Menu");
-		System.out.println("1 - By name and password");
-		System.out.println("2 - By TaxID");
-		System.out.println("3 - By ID");
-		System.out.println("###########################################################################");
 	}
 
 	private static void displaySecondaryAccountsMenu() {
@@ -611,6 +585,7 @@ public class Application {
 		System.out.println("6 - Show history account");
 		System.out.println("###########################################################################");
 	}
+
 	private static void displayEditCustomerDetailsMenu() {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("What do you which to edit?");

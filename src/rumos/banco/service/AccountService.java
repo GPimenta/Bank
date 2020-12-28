@@ -245,7 +245,9 @@ public class AccountService {
 			System.out.println("Do you wish to use the cash advance? y/n");
 			decision = scanner.next();
 			if(decision.equals("y")) {
-				withdrawMoneyFromCashAdvance(customerId, amount);
+				withdrawMoneyFromCashAdvance(customerId, Math.abs(amount)-account.getAccountHolderBalance());
+				account.setAccountHolderBalance(0.0);
+				addTAccountHistoryMovement(account, "-" + amount.toString());
 				return;
 			}
 		}
@@ -476,7 +478,7 @@ public class AccountService {
 			return;
 		}
 		account.setCheckEligability(false);
-		System.err.printf("\nYou cannot spend %d, you only have %d", amount, account.getAccountHolderBalance());
+		System.err.printf("\nYou cannot spend %f, you only have %f\n", amount, account.getAccountHolderBalance());
 		return;
 
 	}
