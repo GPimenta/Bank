@@ -267,13 +267,13 @@ public class CardService {
 
 	public void showDebitCardsDetails() {
 		for (DebitCard card : debitCards) {
-			System.out.println("The Cards: ");
+			System.out.println("The DebitCards: ");
 			System.out.println(card.toString());
 		}
 	}
-	public void showCardsDetails() {
+	public void showCreditCardsDetails() {
 		for (CreditCard card : creditCards) {
-			System.out.println("The Cards: ");
+			System.out.println("The CreditCards: ");
 			System.out.println(card.toString());
 		}
 	}
@@ -285,7 +285,7 @@ public class CardService {
 	 * 
 	 *
 	 ******************************************************************************/
-	public Card findDebitCard() {
+	public DebitCard findDebitCard() {
 		String cardNumber;
 		String cardPin;
 
@@ -294,17 +294,17 @@ public class CardService {
 		System.out.println("Please indicate the pin");
 		cardPin = scanner.next();
 
-		for (DebitCard card : debitCards) {
-			if (card.getDebitCardNumber() != null && card.getDebitCardPin() != null) {
-				if (card.getDebitCardNumber().equals(cardNumber) && card.getDebitCardPin().equals(cardPin)) {
-					if (card.isUsedDebit().equals(false)) {
-						card.setUsedDebit(true);
-						card.setDebitCardPin(generateRandomPinCard(card.getCustomerId()));
-						System.out.println(card.toString());
-						return card;
+		for (DebitCard debitCard : debitCards) {
+			if (debitCard.getDebitCardNumber() != null && debitCard.getDebitCardPin() != null) {
+				if (debitCard.getDebitCardNumber().equals(cardNumber) && debitCard.getDebitCardPin().equals(cardPin)) {
+					if (debitCard.getUsedDebit().equals(false)) {
+						debitCard.setUsedDebit(true);
+						debitCard.setDebitCardPin(generateRandomPinCard(debitCard.getCustomerId()));
+						System.out.println(debitCard.toString());
+						return debitCard;
 					}
-					System.out.println(card.toString());
-					return card;
+					System.out.println(debitCard.toString());
+					return debitCard;
 				}
 			}
 		}
@@ -312,7 +312,7 @@ public class CardService {
 		return null;
 	}
 
-	public Card findCreditCard() {
+	public CreditCard findCreditCard() {
 		String cardNumber;
 		String cardPin;
 
@@ -321,17 +321,17 @@ public class CardService {
 		System.out.println("Please indicate the pin");
 		cardPin = scanner.next();
 
-		for (Card card : cards) {
-			if (card.getCreditCardNumber() != null && card.getCreditCardPin() != null) {
-				if (card.getCreditCardNumber().equals(cardNumber) && card.getCreditCardPin().equals(cardPin)) {
-					if (card.isUsedCredit().equals(false)) {
-						card.setUsedCredit(true);
-						card.setCreditCardPin(generateRandomPinCard(card.getCustomerId()));
-						System.out.println(card.toString());
-						return card;
+		for (CreditCard creditCard : creditCards) {
+			if (creditCard.getCreditCardNumber() != null && creditCard.getCreditCardPin() != null) {
+				if (creditCard.getCreditCardNumber().equals(cardNumber) && creditCard.getCreditCardPin().equals(cardPin)) {
+					if (creditCard.getUsedCredit().equals(false)) {
+						creditCard.setUsedCredit(true);
+						creditCard.setCreditCardPin(generateRandomPinCard(creditCard.getCustomerId()));
+						System.out.println(creditCard.toString());
+						return creditCard;
 					}
-					System.out.println(card.toString());
-					return card;
+					System.out.println(creditCard.toString());
+					return creditCard;
 				}
 			}
 		}
@@ -346,9 +346,21 @@ public class CardService {
 	 *
 	 ******************************************************************************/
 
-	public Card findCustomerCard(Integer customerId) {
+	public DebitCard findCustomerDebitCard(Integer customerId) {
 
-		for (Card card : cards) {
+		for (DebitCard card : debitCards) {
+			if (card.getCustomerId().equals(customerId)) {
+				System.out.println("Card found");
+				return card;
+			}
+		}
+		System.out.println("Customer do not have a card");
+		return null;
+
+	}
+	public CreditCard findCustomerCreditCard(Integer customerId) {
+
+		for (CreditCard card : creditCards) {
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Card found");
 				return card;
@@ -366,8 +378,8 @@ public class CardService {
 	 *
 	 ******************************************************************************/
 	public String generateRandomPinCard(Integer customerId) {
-		Card card;
-		card = findCustomerCard(customerId);
+//		Card card;
+//		card = findCustomerCard(customerId);
 
 		String allNumbers = "0123456789";
 		StringBuilder newPin = new StringBuilder();

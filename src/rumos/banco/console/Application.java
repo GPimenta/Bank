@@ -1,13 +1,13 @@
 package rumos.banco.console;
 
 import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.time.Year;
 import java.util.Scanner;
 
 import rumos.banco.model.Account;
 import rumos.banco.model.Card;
+import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
+import rumos.banco.model.DebitCard;
 import rumos.banco.service.AccountService;
 import rumos.banco.service.CardService;
 import rumos.banco.service.CustomerService;
@@ -96,7 +96,8 @@ public class Application {
 			case DELETE_CUSTOMER:
 				Integer customerId = customerService.deleteCustomerDetails();
 				accountService.deleteAccount(customerId);
-				cardService.deleteCard(customerId);
+				cardService.deleteDebitCard(customerId);
+				cardService.deleteCreditCard(customerId);
 
 				// Delete all details of the customer
 				break;
@@ -227,38 +228,6 @@ public class Application {
 
 	}
 
-	/******************************************************************************
-	 * Edit customer personal details
-	 * 
-	 * @return
-	 ******************************************************************************/
-//
-//	private static void editCustomerPersonalDetails(Integer customerId) {
-//		Integer option;
-//		do {
-//
-//			displayEditCustomerMenu();
-//			option = scanner.nextInt();
-//			switch (option) {
-//			case EDIT_CUSTOMER_BY_NAME_AND_PASSWORD:
-//				customerService.editCustomerByName();
-//				break;
-//			case EDIT_CUSTOMER_BY_TAXID:
-//				customerService.editCustomerByTaxID();
-//				break;
-//			case EDIT_CUSTOMER_BY_ID:
-//				customerService.editCustomerByID();
-//				break;
-//			case EXIT:
-//				System.out.println(PREVIOUS_MENU);
-//				break;
-//
-//			default:
-//				System.err.println(INVALID_OPTION + " in EditCustomer");
-//				break;
-//			}
-//		} while (option != 0);
-//	}
 
 	public static void editCustomerDetails(Integer customerId) {
 		Integer change;
@@ -338,12 +307,19 @@ public class Application {
 	 ******************************************************************************/
 	private static void editBankCards(Integer customerId) {
 		Integer option;
-		Card card;
-//		//Validade if the customer has any card
-//		if (findCustomerCard(customerId) == null) {
-//			return;
-//		}
-		card = cardService.findCustomerCard(customerId);
+		DebitCard debitCard = null;
+		CreditCard creditCard = null;
+//		Nao deveria ser necessario perguntar se está a usar credito ou debito
+		//Deverá ser necessario a lista Card e identificar de alguma forma o credito e o debito
+		System.out.println("Please tell what card are you goind to use: debit/credit");
+		String cardOption = scanner.next().toLowerCase();
+		
+		if(cardOption.equals("debit")){
+		debitCard = cardService.findCustomerDebitCard(customerId);
+		}
+		if(cardOption.equals("credit")){
+		creditCard = cardService.findCustomerCreditCard(customerId);
+		}
 
 		do {
 
@@ -352,22 +328,15 @@ public class Application {
 			option = scanner.nextInt();
 
 			switch (option) {
-			case CREATE_DEBIT_CARD:
-				cardService.createDebitCard(card);
+			case 1:
+				editBankDebitCards(debitCard);
 				// Add Debit card
 				break;
-			case DELETE_DEBIT_CARD:
-				cardService.deleteDebitCard(card);
+			case 2:
+				editBankCreditCards(creditCard);
 				// Remove Debit card
 				break;
-			case CREATE_CREDIT_CARD:
-				cardService.createCreditCard(card);
-				// Add Credit Card
-				break;
-			case DELETE_CREDIT_CARD:
-				cardService.deleteCreditCard(card);
-				// Remove Credit Card
-				break;
+
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
@@ -378,7 +347,65 @@ public class Application {
 			}
 		} while (option != 0);
 	}
+	
+	
+	private static void editBankDebitCards(DebitCard debitCard) {
+		Integer option;
 
+		do {
+
+			displayBankCardsMenu();
+
+			option = scanner.nextInt();
+
+			switch (option) {
+			case CREATE_DEBIT_CARD:
+				cardService.createDebitCard(debitCard);
+				// Add Debit card
+				break;
+			case DELETE_DEBIT_CARD:
+				cardService.deleteDebitCard(debitCard);
+				// Remove Debit card
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in editBankDebitCards");
+				break;
+			}
+		} while (option != 0);
+	}
+
+	private static void editBankCreditCards(CreditCard creditCard) {
+		Integer option;
+
+		do {
+
+			displayBankCardsMenu();
+
+			option = scanner.nextInt();
+
+			switch (option) {
+			case CREATE_DEBIT_CARD:
+				cardService.createCreditCard(creditCard);
+				// Add Debit card
+				break;
+			case DELETE_DEBIT_CARD:
+				cardService.deleteCreditCard(creditCard);
+				// Remove Debit card
+				break;
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+
+			default:
+				System.err.println(INVALID_OPTION + " in editBankCreditCards");
+				break;
+			}
+		} while (option != 0);
+	}
 	/******************************************************************************
 	 * Money movement
 	 * 
@@ -481,12 +508,17 @@ public class Application {
 	 ******************************************************************************/
 
 	private static void CreateNewCard() {
-		Card card = new Card();
-		card = cardService.populateCard();
+		DebitCard debitCard = new DebitCard();
+		CreditCard creditCard = new CreditCard();
+		
+		debitCard = cardService.populateDebitCard();
+		creditCard = cardService.populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
-		cardService.save(card);
+		cardService.save(debitCard);
+		cardService.save(creditCard);
 
-		cardService.showCardsDetails();
+		cardService.showDebitCardsDetails();
+		cardService.showCreditCardsDetails();
 	}
 
 	/******************************************************************************
@@ -497,7 +529,8 @@ public class Application {
 	private static void showAllCustomersDetails() {
 		customerService.showCustomersDetails();
 		accountService.showAccountsDetails();
-		cardService.showCardsDetails();
+		cardService.showDebitCardsDetails();
+		cardService.showCreditCardsDetails();
 	}
 
 	/******************************************************************************
