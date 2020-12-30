@@ -41,9 +41,8 @@ public class Application {
 	private static final int CHANGE_NAME = 1;
 	private static final int CHANGE_EMAIL = 2;
 
-//	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
-//	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
-//	private static final int EDIT_CUSTOMER_BY_ID = 3;
+	private static final int EDIT_DEBIT_CARDS = 1;
+	private static final int EDIT_CREDIT_CARDS = 2;
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
@@ -228,7 +227,6 @@ public class Application {
 
 	}
 
-
 	public static void editCustomerDetails(Integer customerId) {
 		Integer change;
 		Customer customer;
@@ -310,15 +308,22 @@ public class Application {
 		DebitCard debitCard = null;
 		CreditCard creditCard = null;
 //		Nao deveria ser necessario perguntar se está a usar credito ou debito
-		//Deverá ser necessario a lista Card e identificar de alguma forma o credito e o debito
+		// Deverá ser necessario a lista Card e identificar de alguma forma o credito e
+		// o debito
 		System.out.println("Please tell what card are you goind to use: debit/credit");
 		String cardOption = scanner.next().toLowerCase();
-		
-		if(cardOption.equals("debit")){
-		debitCard = cardService.findCustomerDebitCard(customerId);
+
+		if (cardOption.equals("debit")) {
+			debitCard = cardService.findCustomerDebitCard(customerId);
+			if (debitCard == null) {
+				return;
+			}
 		}
-		if(cardOption.equals("credit")){
-		creditCard = cardService.findCustomerCreditCard(customerId);
+		if (cardOption.equals("credit")) {
+			creditCard = cardService.findCustomerCreditCard(customerId);
+			if(creditCard == null) {
+				return;
+			}
 		}
 
 		do {
@@ -328,11 +333,11 @@ public class Application {
 			option = scanner.nextInt();
 
 			switch (option) {
-			case 1:
+			case EDIT_DEBIT_CARDS:
 				editBankDebitCards(debitCard);
 				// Add Debit card
 				break;
-			case 2:
+			case EDIT_CREDIT_CARDS:
 				editBankCreditCards(creditCard);
 				// Remove Debit card
 				break;
@@ -347,14 +352,13 @@ public class Application {
 			}
 		} while (option != 0);
 	}
-	
-	
+
 	private static void editBankDebitCards(DebitCard debitCard) {
 		Integer option;
 
 		do {
 
-			displayBankCardsMenu();
+			displayBankDebitCards();
 
 			option = scanner.nextInt();
 
@@ -383,16 +387,16 @@ public class Application {
 
 		do {
 
-			displayBankCardsMenu();
+			displayBankCreditCards();
 
 			option = scanner.nextInt();
 
 			switch (option) {
-			case CREATE_DEBIT_CARD:
+			case CREATE_CREDIT_CARD:
 				cardService.createCreditCard(creditCard);
 				// Add Debit card
 				break;
-			case DELETE_DEBIT_CARD:
+			case DELETE_CREDIT_CARD:
 				cardService.deleteCreditCard(creditCard);
 				// Remove Debit card
 				break;
@@ -406,6 +410,7 @@ public class Application {
 			}
 		} while (option != 0);
 	}
+
 	/******************************************************************************
 	 * Money movement
 	 * 
@@ -510,7 +515,7 @@ public class Application {
 	private static void CreateNewCard() {
 		DebitCard debitCard = new DebitCard();
 		CreditCard creditCard = new CreditCard();
-		
+
 		debitCard = cardService.populateDebitCard();
 		creditCard = cardService.populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
@@ -599,10 +604,26 @@ public class Application {
 		System.out.println("############################ " + TITLE + " #############################");
 		System.out.println("Please choose what action to take");
 		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Edit Debit Card");
+		System.out.println("2 - Edit Credit Card");
+		System.out.println("###########################################################################");
+	}
+
+	private static void displayBankDebitCards() {
+		System.out.println("############################ " + TITLE + " #############################");
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
 		System.out.println("1 - Create Debit Card");
 		System.out.println("2 - Delete Debit Card");
-		System.out.println("3 - Create Credit Card");
-		System.out.println("4 - Delete Credit Card");
+		System.out.println("###########################################################################");
+	}
+
+	private static void displayBankCreditCards() {
+		System.out.println("############################ " + TITLE + " #############################");
+		System.out.println("Please choose what action to take");
+		System.out.println("0 - Return to previous Menu");
+		System.out.println("1 - Create Credit Card");
+		System.out.println("2 - Delete Credit Card");
 		System.out.println("###########################################################################");
 	}
 

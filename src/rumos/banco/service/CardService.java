@@ -152,7 +152,7 @@ public class CardService {
 	public void deleteCreditCard(CreditCard creditCard) {
 		System.out.println("Do you whish to delete a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (!creditCard.getCreditCardNumber().equals(null)) {
+			if (creditCard.getCreditCardNumber() != null) {
 				creditCard.setCreditCardNumber(null);
 				creditCard.setCreditCardPin(null);
 				deleteCreditCardDetails(creditCard);
@@ -170,7 +170,7 @@ public class CardService {
 	public void createDebitCard(DebitCard debitCard) {
 		System.out.println("Do you whish to create a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (debitCard.getDebitCardNumber().isBlank()) {
+			if (debitCard.getDebitCardNumber() == null) {
 				createDebitCardDetails(debitCard);
 				return;
 			} else {
@@ -185,7 +185,7 @@ public class CardService {
 	public void createCreditCard(CreditCard creditCard) {
 		System.out.println("Do you whish to create a Credit Card? y/n");
 		if (scanner.next().equals("y")) {
-			if (creditCard.getCreditCardNumber().isBlank()) {
+			if (creditCard.getCreditCardNumber() == null) {
 				createCreditCardDetails(creditCard);
 				return;
 			} else {
