@@ -4,7 +4,7 @@ public class CreditCard extends Card {
 
 	private String creditCardNumber;
 	private String creditCardPin;
-	private Boolean usedCredit = false;
+	private Boolean usedCredit = false;//criar localdate para validaçaõ da ultima utilizaçao do cartao. UTC-universal time clocl
 	private Boolean checkCashAdvanceEligability = true;
 	
 	@Override

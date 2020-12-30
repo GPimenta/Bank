@@ -12,7 +12,7 @@ public class Account {
 	private String accountHolderNumber; // 5 digits
 	private Double accountHolderBalance;
 	private String[] secondaryAccountNumber = { "", "", "", "" };
-	private ArrayList<String> transactionHistory = new ArrayList<String>();
+	private ArrayList<String> transactionHistory = new ArrayList<String>();//criar classe de transações 
 	
 	private Boolean checkCashAdvanceEligability = true;
 	private Double cashAdvanceQuantity = 250.0;

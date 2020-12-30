@@ -8,9 +8,12 @@ import rumos.banco.model.Card;
 import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
 import rumos.banco.model.DebitCard;
+import rumos.banco.repository.ICustomerRepository;
+import rumos.banco.repository.InMemCustomerRepository;
 import rumos.banco.service.AccountService;
 import rumos.banco.service.CardService;
 import rumos.banco.service.CustomerService;
+import rumos.banco.service.NewCustomerService;
 
 public class Application {
 	private static final int EXIT = 0;
@@ -647,4 +650,12 @@ public class Application {
 		System.out.println("2 - Email of the customer");
 		System.out.println("###########################################################################");
 	}
+	
+	
+//	private static void example() {
+//		ICustomerRepository customerRepository = new InMemCustomerRepository();
+//		NewCustomerService service = new NewCustomerService(customerRepository);
+//		
+//		service.
+//	}
 }

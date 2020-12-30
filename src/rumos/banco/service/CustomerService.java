@@ -9,26 +9,6 @@ import rumos.banco.model.Customer;
 
 public class CustomerService {
 
-	/**
-	 * Quick texts
-	 */
-	private static final int EXIT = 0;
-
-	private static final int EDIT_CUSTOMER_BY_NAME_AND_PASSWORD = 1;
-	private static final int EDIT_CUSTOMER_BY_TAXID = 2;
-	private static final int EDIT_CUSTOMER_BY_ID = 3;
-
-	private static final int CHANGE_NAME = 1;
-	private static final int CHANGE_PASSWORD = 2;
-	private static final int CHANGE_EMAIL = 3;
-
-	private static final String TITLE = "Rumos Digital Bank";
-	private static final String INVALID_OPTION = "Invalid Option!";
-	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
-	private static final String INVALID_TAXID = "Incorrect TaxID";
-	private static final String INVALID_ID = "Incorrect ID";
-	private static final String PREVIOUS_MENU = "Returning to previous Menu";
-
 	private static ArrayList<Customer> customers = new ArrayList<>();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Integer id = 0;
@@ -50,6 +30,7 @@ public class CustomerService {
 	 * Populate the Customers
 	 * 
 	 * @return
+	 * TODO Por na camada console!!!!!!!!!!!!!!!!!!!!!!!
 	 ******************************************************************************/
 	public Customer populateCustomer() {
 		System.out.println("Creating new client");
