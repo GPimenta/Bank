@@ -37,19 +37,15 @@ public class CardService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public DebitCard save(DebitCard debitCard) {
+	public void save(DebitCard debitCard, CreditCard creditCard) {
 		id++;
 		debitCard.setCustomerId(id);
 		debitCards.add(debitCard);
-
-		return debitCard;
-	}
-	public CreditCard save(CreditCard creditCard) {
-		id++;
+		
 		creditCard.setCustomerId(id);
 		creditCards.add(creditCard);
 
-		return creditCard;
+		return;
 	}
 	/******************************************************************************
 	 * Populate the Cards

@@ -519,8 +519,7 @@ public class Application {
 		debitCard = cardService.populateDebitCard();
 		creditCard = cardService.populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
-		cardService.save(debitCard);
-		cardService.save(creditCard);
+		cardService.save(debitCard, creditCard);
 
 		cardService.showDebitCardsDetails();
 		cardService.showCreditCardsDetails();
