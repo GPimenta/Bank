@@ -10,20 +10,11 @@ import rumos.banco.model.DebitCard;
 
 public class CardService {
 
-	private static final int EXIT = 0;
-
-	private static final int CREATE_DEBIT_CARD = 1;
-	private static final int DELETE_DEBIT_CARD = 2;
-	private static final int CREATE_CREDIT_CARD = 3;
-	private static final int DELETE_CREDIT_CARD = 4;
-
-	private static final String TITLE = "Rumos Digital Bank";
 
 	private static final String NO_ADD_DEBIT_CARD = "You already have a Debit Card";
 	private static final String NO_ADD_CREDIT_CARD = "You already have a Credit Card";
 	private static final String NO_TAKE_DEBIT_CARD = "You do not have a Debit Card";
 	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
-	private static final String INVALID_OPTION = "Invalid Option!";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 
@@ -47,51 +38,7 @@ public class CardService {
 
 		return;
 	}
-	/******************************************************************************
-	 * Populate the Cards
-	 * 
-	 * 
-	 ******************************************************************************/
-	public DebitCard populateDebitCard() {	
-		DebitCard newDebitCard = new DebitCard();
-		CreditCard newCreditCard = new CreditCard();
-		String cardNumber;
-		String pinCard;
-		
-		
 
-		System.out.println("Do you which to have a Debit Card? y/n");
-		if (scanner.next().equals("y")) {
-			System.out.println("Please indicate the debit card number");
-			cardNumber = scanner.next();
-			newDebitCard.setDebitCardNumber(cardNumber);
-			System.out.println("Please indicate the pin of the debit card number");
-			pinCard = scanner.next();
-			newDebitCard.setDebitCardPin(pinCard);
-		}
-
-		return newDebitCard;
-	}
-	public CreditCard populateCreditCard() {	
-		CreditCard newCreditCard = new CreditCard();
-		String cardNumber;
-		String pinCard;
-	
-
-		System.out.println("Do you which to have a Credit Card? y/n");
-		if (scanner.next().equals("y")) {
-			System.out.println("Please indicate the credit card number");
-			cardNumber = scanner.next();
-			newCreditCard.setCreditCardNumber(cardNumber);
-			System.out.println("Please indicate the pin of the credit card number");
-			pinCard = scanner.next();
-			newCreditCard.setCreditCardPin(pinCard);
-		}
-
-		return newCreditCard;
-	}
-	
-		
 
 	/******************************************************************************
 	 * Delete the Card

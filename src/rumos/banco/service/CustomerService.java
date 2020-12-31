@@ -26,45 +26,7 @@ public class CustomerService {
 		return customer;
 	}
 
-	/******************************************************************************
-	 * Populate the Customers
-	 * 
-	 * @return
-	 * TODO Por na camada console!!!!!!!!!!!!!!!!!!!!!!!
-	 ******************************************************************************/
-	public Customer populateCustomer() {
-		System.out.println("Creating new client");
-		Customer newCustomer = new Customer();
 
-		System.out.println("Please set Name");
-		newCustomer.setName(scanner.next());
-
-		do {
-			System.out.println("Please set TaxId");
-			String taxId = scanner.next();
-			if (!taxIDalreadyExists(taxId))
-				newCustomer.setTaxId(taxId);
-			else
-				System.out.println("taxID already exists");
-		} while (newCustomer.getTaxId().equals(null));
-
-		System.out.println("Please set email");
-		newCustomer.setEmail(scanner.next());
-
-		do {
-			System.out.print("Customer day of birth ");
-			Integer day = scanner.nextInt();
-			System.out.print("Customer month of birth ");
-			Integer month = scanner.nextInt();
-			System.out.print("Customer year of birth ");
-			Integer year = scanner.nextInt();
-			if ((Year.now().getValue() - year) >= 18)
-				newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
-			else
-				System.out.println("The customer is to young to open bank account");
-		} while (newCustomer.getDateOfBirth() == null);
-		return newCustomer;
-	}
 	/******************************************************************************
 	 * Delete Customer
 	 * 
@@ -74,7 +36,7 @@ public class CustomerService {
 		System.out.println("Please indicate the name of the customer");
 		String customerName;
 		customerName = scanner.next();
-		System.out.println("Plase indicate the taxId of the customer");
+		System.out.println("Please indicate the taxId of the customer");
 		String taxId;
 		taxId = scanner.next();
 		
@@ -90,53 +52,7 @@ public class CustomerService {
 		
 	}
 	
-	/******************************************************************************
-	 * Edit Customers
-	 * 
-	 * @return
-	 ******************************************************************************/
-//	public void editCustomerByName() {
-//		System.out.println("Please write the name of the customer");
-//		String name = scanner.next();
-//
-//		for (Customer customer : customers) {
-//			if (customer.getName().equals(name)) {
-//				customer = editCustomerDetails(customer);
-//				return;
-//			}
-//		}
-//
-//		System.err.println(INVALID_NAME_OR_PASSWORD);
-//		return;
-//
-//	}
-//
-//	public void editCustomerByTaxID() {
-//		System.out.println("Please write the taxID of the customer, in order to edit it");
-//		String taxId = scanner.next();
-//
-//		for (Customer customer : customers) {
-//			if (customer.getTaxId().equals(taxId)) {
-//				customer = editCustomerDetails(customer);
-//				return;
-//			}
-//		}
-//		System.err.println(INVALID_TAXID);
-//		return;
-//	}
-//
-//	public void editCustomerByID() {
-//		System.out.println("Please write the ID of the customer, in order to edit it");
-//		Integer id = scanner.nextInt();
-//
-//		for (Customer customer : customers) {
-//			if (customer.getId().equals(id)) {
-//				customer = editCustomerDetails(customer);
-//			}
-//		}
-//		System.err.println(INVALID_ID);
-//		return;
-//	}
+
 
 
 	/******************************************************************************

@@ -1,6 +1,8 @@
 package rumos.banco.console;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.Scanner;
 
 import rumos.banco.model.Account;
@@ -324,7 +326,7 @@ public class Application {
 		}
 		if (cardOption.equals("credit")) {
 			creditCard = cardService.findCustomerCreditCard(customerId);
-			if(creditCard == null) {
+			if (creditCard == null) {
 				return;
 			}
 		}
@@ -484,7 +486,7 @@ public class Application {
 	private static void createNewCustomer() {
 		Customer customer = new Customer();
 
-		customer = customerService.populateCustomer();
+		customer = populateCustomer();
 		System.out.println(CUSTOMER_CREATED);
 		customerService.save(customer);
 
@@ -501,7 +503,7 @@ public class Application {
 	private static void createNewAccount() {
 		Account account = new Account();
 
-		account = accountService.populateAccount();
+		account = populateAccount();
 		System.out.println(CUSTOMER_CREATED);
 		accountService.save(account);
 
@@ -519,8 +521,8 @@ public class Application {
 		DebitCard debitCard = new DebitCard();
 		CreditCard creditCard = new CreditCard();
 
-		debitCard = cardService.populateDebitCard();
-		creditCard = cardService.populateCreditCard();
+		debitCard = populateDebitCard();
+		creditCard = populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
 		cardService.save(debitCard, creditCard);
 
@@ -538,6 +540,127 @@ public class Application {
 		accountService.showAccountsDetails();
 		cardService.showDebitCardsDetails();
 		cardService.showCreditCardsDetails();
+	}
+
+	/******************************************************************************
+	 * Populate the Customers
+	 * 
+	 * @return TODO Por na camada console!!!!!!!!!!!!!!!!!!!!!!!
+	 ******************************************************************************/
+	public static Customer populateCustomer() {
+		System.out.println("Creating new client");
+		Customer newCustomer = new Customer();
+
+		System.out.println("Please set Name");
+		newCustomer.setName(scanner.next());
+
+		do {
+			System.out.println("Please set TaxId");
+			String taxId = scanner.next();
+			if (!customerService.taxIDalreadyExists(taxId))
+				newCustomer.setTaxId(taxId);
+			else
+				System.out.println("taxID already exists");
+		} while (newCustomer.getTaxId().equals(null));
+
+		System.out.println("Please set email");
+		newCustomer.setEmail(scanner.next());
+
+		do {
+			System.out.print("Customer day of birth ");
+			Integer day = scanner.nextInt();
+			System.out.print("Customer month of birth ");
+			Integer month = scanner.nextInt();
+			System.out.print("Customer year of birth ");
+			Integer year = scanner.nextInt();
+			if ((Year.now().getValue() - year) >= 18)
+				newCustomer.setDateOfBirth(LocalDate.of(year, month, day));
+			else
+				System.out.println("The customer is to young to open bank account");
+		} while (newCustomer.getDateOfBirth() == null);
+		return newCustomer;
+	}
+
+	/******************************************************************************
+	 * Populate the Cards
+	 * 
+	 * 
+	 ******************************************************************************/
+	public static DebitCard populateDebitCard() {
+		DebitCard newDebitCard = new DebitCard();
+		CreditCard newCreditCard = new CreditCard();
+		String cardNumber;
+		String pinCard;
+
+		System.out.println("Do you which to have a Debit Card? y/n");
+		if (scanner.next().equals("y")) {
+			System.out.println("Please indicate the debit card number");
+			cardNumber = scanner.next();
+			newDebitCard.setDebitCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the debit card number");
+			pinCard = scanner.next();
+			newDebitCard.setDebitCardPin(pinCard);
+		}
+
+		return newDebitCard;
+	}
+
+	public static CreditCard populateCreditCard() {
+		CreditCard newCreditCard = new CreditCard();
+		String cardNumber;
+		String pinCard;
+
+		System.out.println("Do you which to have a Credit Card? y/n");
+		if (scanner.next().equals("y")) {
+			System.out.println("Please indicate the credit card number");
+			cardNumber = scanner.next();
+			newCreditCard.setCreditCardNumber(cardNumber);
+			System.out.println("Please indicate the pin of the credit card number");
+			pinCard = scanner.next();
+			newCreditCard.setCreditCardPin(pinCard);
+		}
+
+		return newCreditCard;
+	}
+
+	/******************************************************************************
+	 * Populate the Accounts
+	 * 
+	 * @return
+	 ******************************************************************************/
+
+	public static Account populateAccount() {
+		System.out.println("Creating new account");
+		Account newAccount = new Account();
+
+		System.out.println("Please set the number of the account (5 digits)");
+		newAccount.setAccountHolderNumber(scanner.next());
+
+		System.out.println("Please set the password for your holder account");
+		newAccount.setPasswordAccount(scanner.next());
+
+		do {
+			System.out.println("Please set the customer balance on its main account");
+			Double moneyDeposit = scanner.nextDouble();
+			if (moneyDeposit > 50) {
+				newAccount.setAccountHolderBalance(moneyDeposit);
+
+			} else {
+				System.err.println("In order to create an account its necessary to deposit >=50€\n");
+			}
+		} while (newAccount.getAccountHolderBalance() == null);
+
+		System.out.println("Please indicate how many secondary accounts do you want to have");
+		Integer count = scanner.nextInt();
+		String secondaryAccount;
+		for (int i = 0; i < count; i++) {
+			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
+					i + 1);
+			secondaryAccount = scanner.next();
+			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
+		}
+
+		return newAccount;
 	}
 
 	/******************************************************************************
@@ -650,8 +773,7 @@ public class Application {
 		System.out.println("2 - Email of the customer");
 		System.out.println("###########################################################################");
 	}
-	
-	
+
 //	private static void example() {
 //		ICustomerRepository customerRepository = new InMemCustomerRepository();
 //		NewCustomerService service = new NewCustomerService(customerRepository);

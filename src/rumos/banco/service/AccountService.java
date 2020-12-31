@@ -8,19 +8,8 @@ import rumos.banco.model.Account;
 import rumos.banco.model.Customer;
 
 public class AccountService {
-	private static final int EXIT = 0;
 
-	private static final int DEPOSIT_MONEY_ON_HOLDER_ACCOUNT = 1;
-	private static final int DEPOSIT_MONEY_ON_SECUNDARY_ACCOUNT = 2;
-	private static final int WITHDRAW_MONEY_ON_HOLDER_ACCOUNT = 3;
-	private static final int WITHDRAW_MONEY_ON_SECUNDARY_ACCOUNT = 4;
-	private static final int TRANSFER_MONEY = 5;
-	private static final int CHECK_ACCOUNT_HISTORY = 6;
-
-	private static final String TITLE = "Rumos Digital Bank";
-	private static final String INVALID_OPTION = "Invalid Option!";
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
-	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
 
 	private static ArrayList<Account> accounts = new ArrayList<>();
@@ -39,46 +28,6 @@ public class AccountService {
 		accounts.add(account);
 
 		return account;
-	}
-
-	/******************************************************************************
-	 * Populate the Accounts
-	 * 
-	 * @return
-	 ******************************************************************************/
-
-	public Account populateAccount() {
-		System.out.println("Creating new account");
-		Account newAccount = new Account();
-
-		System.out.println("Please set the number of the account (5 digits)");
-		newAccount.setAccountHolderNumber(scanner.next());
-
-		System.out.println("Please set the password for your holder account");
-		newAccount.setPasswordAccount(scanner.next());
-
-		do {
-			System.out.println("Please set the customer balance on its main account");
-			Double moneyDeposit = scanner.nextDouble();
-			if (moneyDeposit > 50) {
-				newAccount.setAccountHolderBalance(moneyDeposit);
-
-			} else {
-				System.err.println("In order to create an account its necessary to deposit >=50€\n");
-			}
-		} while (newAccount.getAccountHolderBalance() == null);
-
-		System.out.println("Please indicate how many secondary accounts do you want to have");
-		Integer count = scanner.nextInt();
-		String secondaryAccount;
-		for (int i = 0; i < count; i++) {
-			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
-					i + 1);
-			secondaryAccount = scanner.next();
-			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
-		}
-
-		return newAccount;
 	}
 
 	/******************************************************************************
@@ -243,8 +192,8 @@ public class AccountService {
 			System.out.println(NO_MONEY_TO_REMOVE);
 			System.out.println("Do you wish to use the cash advance? y/n");
 			decision = scanner.next();
-			if(decision.equals("y")) {
-				withdrawMoneyFromCashAdvance(customerId, Math.abs(amount)-account.getAccountHolderBalance());
+			if (decision.equals("y")) {
+				withdrawMoneyFromCashAdvance(customerId, Math.abs(amount) - account.getAccountHolderBalance());
 				account.setAccountHolderBalance(0.0);
 				addTAccountHistoryMovement(account, "-" + amount.toString());
 				return;
@@ -473,7 +422,8 @@ public class AccountService {
 	public void checkCashAdvance(Account account, Double amount) {
 		if (account.getCashAdvanceQuantity() - amount > 0) {
 			account.setCashAdvanceQuantity(account.getCashAdvanceQuantity() - amount);
-			System.out.println("The amount of money on the cash-advance is: " + account.getCashAdvanceQuantity().toString());
+			System.out.println(
+					"The amount of money on the cash-advance is: " + account.getCashAdvanceQuantity().toString());
 			return;
 		}
 		account.setCheckEligability(false);

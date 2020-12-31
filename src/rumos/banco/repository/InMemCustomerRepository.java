@@ -5,15 +5,20 @@ import java.util.Collection;
 
 import rumos.banco.model.Customer;
 
-public class InMemCustomerRepository implements ICustomerRepository{
-	
-private static ArrayList<Customer> customers = new ArrayList<>();
-private static Integer id = 0;
+public class InMemCustomerRepository implements ICustomerRepository {
+
+	private static ArrayList<Customer> customers = new ArrayList<>();
+	private static Integer id = 0;
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
+
+		for (Customer customer : customers) {
+			if (customer.getId().equals(id)) {
+				customers.remove(customer);
+			}
+		}
+
 	}
 
 	@Override
@@ -29,7 +34,7 @@ private static Integer id = 0;
 			result.add(customer);
 		}
 		return result;
-		
+
 //		return Collections.unmodifiableCollection(customers);
 
 	}
@@ -38,21 +43,20 @@ private static Integer id = 0;
 	public void create(Customer customer) {
 		customer.setId(++id);
 		customers.add(customer);
-		
+
 	}
 
 	@Override
 	public void getById(Integer Id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(Customer customer) {
+		customers.add(customer); 
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
 
 }
