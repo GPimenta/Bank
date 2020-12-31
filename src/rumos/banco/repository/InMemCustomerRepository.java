@@ -2,6 +2,7 @@ package rumos.banco.repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import rumos.banco.model.Customer;
 
@@ -47,9 +48,13 @@ public class InMemCustomerRepository implements ICustomerRepository {
 	}
 
 	@Override
-	public void getById(Integer Id) {
-		// TODO Auto-generated method stub
-
+	public Optional<Customer> getById(Integer id) {
+		for (Customer customer : customers) {
+			if(customer.getId().equals(id)) {
+				return Optional.of(customer);
+			}
+		}
+		return Optional.empty();
 	}
 
 	@Override
