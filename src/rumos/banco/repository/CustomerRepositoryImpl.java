@@ -13,7 +13,6 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
 
 	@Override
 	public void deleteById(Integer id) {
-
 		for (Customer customer : customers) {
 			if (customer.getId().equals(id)) {
 				customers.remove(customer);
