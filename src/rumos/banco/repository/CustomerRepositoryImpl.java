@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import rumos.banco.model.Customer;
 
-public class InMemCustomerRepository implements ICustomerRepository {
+public class CustomerRepositoryImpl implements ICustomerRepository {
 
 	private static ArrayList<Customer> customers = new ArrayList<>();
 	private static Integer id = 0;

@@ -11,7 +11,7 @@ import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
 import rumos.banco.model.DebitCard;
 import rumos.banco.repository.ICustomerRepository;
-import rumos.banco.repository.InMemCustomerRepository;
+import rumos.banco.repository.CustomerRepositoryImpl;
 import rumos.banco.service.AccountService;
 import rumos.banco.service.CardService;
 import rumos.banco.service.CustomerService;
