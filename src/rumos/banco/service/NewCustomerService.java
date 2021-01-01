@@ -10,6 +10,8 @@ public class NewCustomerService {
 
 	private ICustomerRepository repository;
 
+	//TODO pq é necessario ter este construtor?
+	//TODO nao usamos static na classe service nem na classe model, pq so fazemos static na lista q se encontra no repositorio??
 	public NewCustomerService(ICustomerRepository repository) {
 		this.repository = repository;
 	}

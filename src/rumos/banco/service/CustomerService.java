@@ -1,29 +1,38 @@
 package rumos.banco.service;
 
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collection;
+import java.util.Optional;
 
 import rumos.banco.model.Customer;
+import rumos.banco.repository.ICustomerRepository;
 
 public class CustomerService {
 
-	private static ArrayList<Customer> customers = new ArrayList<>();
-	private static Scanner scanner = new Scanner(System.in);
-	private static Integer id = 0;
+	private ICustomerRepository repository;
+	
+	/******************************************************************************
+	 * Save Customer
+	 * 
+	 * @return
+	 ******************************************************************************/
+	
+	public CustomerService(ICustomerRepository repository) {
+		this.repository = repository;
+				
+	}
+	
 
 	/******************************************************************************
 	 * Save Customer
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public Customer save(Customer customer) {
-		id++;
-		customer.setId(id);
-		customers.add(customer);
 
-		return customer;
+	public void create(Customer customer) {
+		if(customer == null) {
+			throw new IllegalArgumentException("Failed to create customer - Invalid customer object");
+		}
+		repository.create(customer);
 	}
 
 
@@ -32,17 +41,12 @@ public class CustomerService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public Integer deleteCustomerDetails() {
-		System.out.println("Please indicate the name of the customer");
-		String customerName;
-		customerName = scanner.next();
-		System.out.println("Please indicate the taxId of the customer");
-		String taxId;
-		taxId = scanner.next();
-		
+	public Integer deleteCustomerDetails(String name, String taxId) {
+
+		Collection<Customer> customers = repository.getAll();
 		
 		for (Customer customer : customers) {
-			if(customer.getName().equalsIgnoreCase(customerName) && customer.getTaxId().equals(taxId)) {
+			if(customer.getName().equalsIgnoreCase(name) && customer.getTaxId().equals(taxId)) {
 				customers.remove(customer);
 				return customer.getId();
 			}
@@ -62,6 +66,7 @@ public class CustomerService {
 	 * @return
 	 ******************************************************************************/
 	public Boolean taxIDalreadyExists(String taxId) {
+		Collection<Customer> customers = repository.getAll();
 
 		for (Customer customer : customers) {
 			if (customer != null) {
@@ -79,6 +84,8 @@ public class CustomerService {
 	 *
 	 ******************************************************************************/
 	public void showCustomersDetails() {
+		Collection<Customer> customers = repository.getAll();
+		
 		for (Customer customer : customers) {
 			System.out.println("The customer: ");
 			System.out.println(customer.toString());
@@ -90,7 +97,8 @@ public class CustomerService {
 	 *
 	 ******************************************************************************/
 	public void showCustomer(Integer customerId) {
-		Customer customer = findCustomerById(customerId);
+		
+		Optional<Customer> customer = repository.getById(customerId);
 		System.out.println(customer.toString());
 		return;
 	}
@@ -101,15 +109,10 @@ public class CustomerService {
 	 * 
 	 * @return int Id customer
 	 ******************************************************************************/
-	public Integer findCustomerByNameAndTaxId() {
-		String name;
-		String taxId;
+	public Integer findCustomerByNameAndTaxId(String name, String taxId) {
 
-		System.out.println("Please indicate the name of the Customer");
-		name = scanner.next();
-		System.out.println("Please indicate the taxId of the Customer");
-		taxId = scanner.next();
-
+		Collection<Customer> customers = repository.getAll();
+		
 		for (Customer customer : customers) {
 			if (customer.getName().equals(name) && customer.getTaxId().equals(taxId)) {
 				System.out.println(customer.toString());
@@ -125,7 +128,9 @@ public class CustomerService {
 	 * 
 	 *
 	 ******************************************************************************/
-	public Customer findCustomerById(int customerId) {
+	public Customer findCustomerById(Integer customerId) {
+		
+		Optional<Customer> customer = repository.getById(customerId);
 		for (Customer customer : customers) {
 			if (customer.getId().equals(customerId)) {
 				return customer;
