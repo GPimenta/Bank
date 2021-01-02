@@ -126,17 +126,14 @@ public class CustomerService {
 	/******************************************************************************
 	 * Show customer using Id customer
 	 * 
-	 *
+	 *TODO ISTO INVIABILIZA o OPTIONAL, NAO SEI COMO FAZER
 	 ******************************************************************************/
-	public Customer findCustomerById(Integer customerId) {
+	public Customer getCustomerById(Integer customerId) {
 		
 		Optional<Customer> customer = repository.getById(customerId);
-		for (Customer customer : customers) {
-			if (customer.getId().equals(customerId)) {
-				return customer;
-			}
+		if(customer.isPresent()) {
+			return customer.get();
 		}
-		System.err.println("Customer not found");
 		return null;
 	}
 

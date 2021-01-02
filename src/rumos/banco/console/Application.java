@@ -236,7 +236,7 @@ public class Application {
 		Integer change;
 		Customer customer;
 
-		customer = customerService.findCustomerById(customerId);
+		customer = customerService.getCustomerById(customerId);
 
 		do {
 
