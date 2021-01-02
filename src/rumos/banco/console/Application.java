@@ -11,7 +11,7 @@ import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
 import rumos.banco.model.DebitCard;
 import rumos.banco.repository.ICustomerRepository;
-import rumos.banco.repository.CustomerRepositoryImpl;
+import rumos.banco.repository.InMemCustomerRepositoryImpl;
 import rumos.banco.service.AccountService;
 import rumos.banco.service.CardService;
 import rumos.banco.service.CustomerService;
@@ -70,7 +70,8 @@ public class Application {
 
 	private static Scanner scanner = new Scanner(System.in);
 	private static SecureRandom random = new SecureRandom();
-	private static CustomerService customerService = new CustomerService();
+	private static ICustomerRepository repository = new InMemCustomerRepositoryImpl();
+	private static CustomerService customerService = new CustomerService(repository);
 	private static AccountService accountService = new AccountService();
 	private static CardService cardService = new CardService();
 
@@ -98,7 +99,7 @@ public class Application {
 				// show all customer, account and cards
 				break;
 			case DELETE_CUSTOMER:
-				Integer customerId = customerService.deleteCustomerDetails();
+				Integer customerId = customerService.deleteCustomerDetails("1","1");
 				accountService.deleteAccount(customerId);
 				cardService.deleteDebitCard(customerId);
 				cardService.deleteCreditCard(customerId);
@@ -488,7 +489,7 @@ public class Application {
 
 		customer = populateCustomer();
 		System.out.println(CUSTOMER_CREATED);
-		customerService.save(customer);
+		customerService.create(customer);
 
 		customerService.showCustomersDetails();
 

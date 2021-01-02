@@ -130,9 +130,9 @@ public class CustomerService {
 	 ******************************************************************************/
 	public Customer getCustomerById(Integer customerId) {
 		
-		Optional<Customer> customer = repository.getById(customerId);
-		if(customer.isPresent()) {
-			return customer.get();
+		Optional<Customer> customerOpt = repository.getById(customerId);
+		if(customerOpt != null && customerOpt.isPresent()) {
+			return customerOpt.get();
 		}
 		return null;
 	}
