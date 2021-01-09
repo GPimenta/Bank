@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import rumos.banco.model.Account;
 
-public class AccountRepositoryImpl implements IAccountRepository{
+public class InMemAccountRepositoryImpl implements IAccountRepository{
 
 	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Integer id = 0;

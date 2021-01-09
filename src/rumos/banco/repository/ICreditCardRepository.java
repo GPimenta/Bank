@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import rumos.banco.model.Card;
 
-public interface ICardRepository {
+public interface ICreditCardRepository {
 	Optional<Card> getById(Integer id);
 
 	Collection<Card> getAll();

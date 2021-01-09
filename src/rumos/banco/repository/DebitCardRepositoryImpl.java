@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import rumos.banco.model.Card;
 
-public class DebitCardRepositoryImpl implements ICardRepository {
+public class DebitCardRepositoryImpl implements IDebitCardRepository {
 	
 	private static ArrayList<Card> cards = new ArrayList<>();
 	private static Integer id = 0;
