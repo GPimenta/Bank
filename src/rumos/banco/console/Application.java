@@ -13,7 +13,7 @@ import rumos.banco.model.DebitCard;
 import rumos.banco.repository.ICustomerRepository;
 import rumos.banco.repository.InMemCustomerRepositoryImpl;
 import rumos.banco.service.AccountService;
-import rumos.banco.service.CardService;
+import rumos.banco.service.DebitCardService;
 import rumos.banco.service.CustomerService;
 import rumos.banco.service.NewCustomerService;
 
@@ -73,7 +73,7 @@ public class Application {
 	private static ICustomerRepository repository = new InMemCustomerRepositoryImpl();
 	private static CustomerService customerService = new CustomerService(repository);
 	private static AccountService accountService = new AccountService();
-	private static CardService cardService = new CardService();
+	private static DebitCardService cardService = new DebitCardService();
 
 	public static void main(String[] args) {
 		initiation();
@@ -101,7 +101,7 @@ public class Application {
 			case DELETE_CUSTOMER:
 				Integer customerId = customerService.deleteCustomerDetails("1","1");
 				accountService.deleteAccount(customerId);
-				cardService.deleteDebitCard(customerId);
+				cardService.deleteDebitCardTesting(customerId);
 				cardService.deleteCreditCard(customerId);
 
 				// Delete all details of the customer

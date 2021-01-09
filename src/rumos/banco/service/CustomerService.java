@@ -11,7 +11,7 @@ public class CustomerService {
 	private ICustomerRepository repository;
 	
 	/******************************************************************************
-	 * Save Customer
+	 * Constructor
 	 * 
 	 * @return
 	 ******************************************************************************/

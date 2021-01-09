@@ -3,17 +3,17 @@ package rumos.banco.repository;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.Card;
+import rumos.banco.model.CreditCard;
 
 public interface ICreditCardRepository {
-	Optional<Card> getById(Integer id);
+	Optional<CreditCard> getById(Integer id);
 
-	Collection<Card> getAll();
+	Collection<CreditCard> getAll();
 
-	void create(Card card);
+	void create(CreditCard card);
 
 	void deleteById(Integer id);
 
-	void update(Card card);
+	void update(CreditCard card);
 
 }

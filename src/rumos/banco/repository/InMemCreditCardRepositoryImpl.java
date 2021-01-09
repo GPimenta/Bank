@@ -4,52 +4,52 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.Card;
+import rumos.banco.model.CreditCard;
 
 public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 	
-	private static ArrayList<Card> cards = new ArrayList<>();
+	private static ArrayList<CreditCard> creditCards = new ArrayList<>();
 	private static Integer id = 0;
 
 	@Override
-	public Optional<Card> getById(Integer id) {
-		for(Card card : cards) {
-			if(card.getId().equals(id)) {
-				return Optional.of(card);
+	public Optional<CreditCard> getById(Integer id) {
+		for(CreditCard creditCards : creditCards) {
+			if(creditCards.getId().equals(id)) {
+				return Optional.of(creditCards);
 			}
 		}
 		return Optional.empty();
 	}
 
 	@Override
-	public Collection<Card> getAll() {
-		ArrayList<Card> result = new ArrayList<Card>();
-		for (Card card : cards) {
-			result.add(card);
+	public Collection<CreditCard> getAll() {
+		ArrayList<CreditCard> result = new ArrayList<CreditCard>();
+		for (CreditCard creditCard : creditCards) {
+			result.add(creditCard);
 		}
 		return result;
 	}
 
 	@Override
-	public void create(Card card) {
-		card.setId(++id);
-		cards.add(card);
+	public void create(CreditCard creditCard) {
+		creditCard.setId(++id);
+		creditCards.add(creditCard);
 		
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		for(Card card : cards) {
-			if(card.getId().equals(id)) {
-				cards.remove(card);
+		for(CreditCard creditCard : creditCards) {
+			if(creditCard.getId().equals(id)) {
+				creditCards.remove(creditCard);
 			}
 		}
 		
 	}
 
 	@Override
-	public void update(Card card) {
-		cards.add(card);
+	public void update(CreditCard creditCard) {
+		creditCards.add(creditCard);
 		
 	}
 

@@ -4,16 +4,17 @@ import java.util.Collection;
 import java.util.Optional;
 
 import rumos.banco.model.Card;
+import rumos.banco.model.DebitCard;
 
 public interface IDebitCardRepository {
-	Optional<Card> getById(Integer id);
+	Optional<DebitCard> getById(Integer id);
 
-	Collection<Card> getAll();
+	Collection<DebitCard> getAll();
 
-	void create(Card card);
+	void create(DebitCard debitCard);
 
 	void deleteById(Integer id);
 
-	void update(Card card);
+	void update(DebitCard debitCard);
 
 }
