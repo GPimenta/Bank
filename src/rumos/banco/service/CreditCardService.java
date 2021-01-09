@@ -11,15 +11,15 @@ import rumos.banco.repository.ICreditCardRepository;
 
 public class CreditCardService {
 
-
 	private static final String NO_ADD_DEBIT_CARD = "You already have a Debit Card";
 	private static final String NO_ADD_CREDIT_CARD = "You already have a Credit Card";
 	private static final String NO_TAKE_DEBIT_CARD = "You do not have a Debit Card";
 	private static final String NO_TAKE_CREDIT_CARD = "You do not have a Credit Card";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
-	
+
 	private ICreditCardRepository repository;
+
 	/******************************************************************************
 	 * Constructor
 	 * 
@@ -35,12 +35,11 @@ public class CreditCardService {
 	 * 
 	 ******************************************************************************/
 	public void create(CreditCard card) {
-		if(card == null) {
+		if (card == null) {
 			throw new IllegalArgumentException("Failed to create CreditCard - Invalid creditCard Object");
 		}
 		repository.create(card);
 	}
-
 
 	/******************************************************************************
 	 * Delete the Card
@@ -49,114 +48,53 @@ public class CreditCardService {
 	 ******************************************************************************/
 
 	public void deleteCreditCard(Integer customerId) {
-		for (Card card : creditCards) {
+		for (CreditCard card : repository.getAll()) {
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Cards deleted");
-				creditCards.remove(card);
+				repository.getAll().remove(card);
 				return;
 			}
 		}
 		System.err.println("Card not found");
 		return;
 	}
+
 	/******************************************************************************
 	 * Delete and create the Cards
 	 * 
 	 * 
 	 ******************************************************************************/
 
-	public void deleteDebitCard(DebitCard debitCard) {
-		System.out.println("Do you whish to delete a Debit Card? y/n");
-		if (scanner.next().equals("y")) {
-			if (!debitCard.getDebitCardNumber().equals(null)) {
-				debitCard.setDebitCardNumber(null);
-				debitCard.setDebitCardPin(null);
-				deleteDebitCardDetails(debitCard);
-				System.out.println("Debit card removed");
-				return;
-			} else {
-				System.err.println(NO_TAKE_DEBIT_CARD);
-				return;
-			}
-		}
-		System.out.println(PREVIOUS_MENU);
-		return;
-	}
-
 	public void deleteCreditCard(CreditCard creditCard) {
-		System.out.println("Do you whish to delete a Debit Card? y/n");
-		if (scanner.next().equals("y")) {
-			if (creditCard.getCreditCardNumber() != null) {
-				creditCard.setCreditCardNumber(null);
-				creditCard.setCreditCardPin(null);
-				deleteCreditCardDetails(creditCard);
-				System.out.println("Credit card removed");
-				return;
-			} else {
-				System.err.println(NO_TAKE_CREDIT_CARD);
-				return;
-			}
+//		System.out.println("Do you whish to delete a Debit Card? y/n");
+//		if (scanner.next().equals("y")) {
+		if (creditCard.getCreditCardNumber() != null) {
+			repository.deleteById(creditCard.getCustomerId());
+			deleteCreditCardDetails(creditCard);
+			System.out.println("Credit card removed");
+			return;
+		} else {
+			System.err.println(NO_TAKE_CREDIT_CARD);
+			return;
 		}
-		System.out.println(PREVIOUS_MENU);
-		return;
 	}
 
-	public void createDebitCard(DebitCard debitCard) {
-		System.out.println("Do you whish to create a Debit Card? y/n");
-		if (scanner.next().equals("y")) {
-			if (debitCard.getDebitCardNumber() == null) {
-				createDebitCardDetails(debitCard);
-				return;
-			} else {
-				System.err.println(NO_ADD_DEBIT_CARD);
-				return;
-			}
+	public void createCreditCard(CreditCard creditCard, String cardNumber, String pinCard) {
+//		System.out.println("Do you whish to create a Credit Card? y/n");
+//		if (scanner.next().equals("y")) {
+		if (creditCard.getCreditCardNumber() == null) {
+			createCreditCardDetails(creditCard,  cardNumber,  pinCard);
+			return;
+		} else {
+			System.err.println(NO_ADD_CREDIT_CARD);
+			return;
 		}
-		System.out.println(PREVIOUS_MENU);
-		return;
 	}
 
-	public void createCreditCard(CreditCard creditCard) {
-		System.out.println("Do you whish to create a Credit Card? y/n");
-		if (scanner.next().equals("y")) {
-			if (creditCard.getCreditCardNumber() == null) {
-				createCreditCardDetails(creditCard);
-				return;
-			} else {
-				System.err.println(NO_ADD_CREDIT_CARD);
-				return;
-			}
-		}
-		System.out.println(PREVIOUS_MENU);
-		return;
-	}
-
-	public void createDebitCardDetails(DebitCard debitCard) {
-		System.out.println("Creating the details of the debit card");
-		System.out.println("Please indicate the number of the debit card");
-		String cardNumber = scanner.next();
-		debitCard.setDebitCardNumber(cardNumber);
-		System.out.println("Please indicate the pin number of the debit card");
-		String pinCard = scanner.next();
-		debitCard.setDebitCardPin(pinCard);
-	}
-
-	public void createCreditCardDetails(CreditCard creditCard) {
-		System.out.println("Creating the details of the credit card");
-		System.out.println("Please indicate the number of the credit card");
-		String cardNumber = scanner.next();
+	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard) {
 		creditCard.setCreditCardNumber(cardNumber);
-		System.out.println("Please indicate the pin number of the credit card");
-		String pinCard = scanner.next();
 		creditCard.setCreditCardPin(pinCard);
-	}
-
-	public void deleteDebitCardDetails(DebitCard debitCard) {
-		System.out.println("Deleting the details of the debit card");
-		debitCard.setDebitCardNumber(null);
-		System.out.println("Debit card number deleted");
-		debitCard.setDebitCardPin(null);
-		System.out.println("Debit card pin number deleted");
+		repository.update(creditCard);
 	}
 
 	public void deleteCreditCardDetails(CreditCard creditCard) {
@@ -172,24 +110,11 @@ public class CreditCardService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public Card checkCardNumberAndPassword() {
-		Card card = new Card();
-		String choose;
+	public CreditCard checkCardNumberAndPassword(String cardNumber, String cardPin) {
+		CreditCard card = new CreditCard();
 
-		do {
-			System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
-			choose = scanner.next().toLowerCase();
-			if (choose.equals("debit")) {
-				card = findDebitCard();
-				return card;
-			}
-			if (choose.equals("credit")) {
-				card = findCreditCard();
-				return card;
-			}
-			System.err.println("Please write debit or credit");
-		} while (!(choose.equals("debit") || choose.equals("credit")));
-		return null;
+		card = findCreditCard(cardNumber, cardPin);
+		return card;
 	}
 
 	/******************************************************************************
@@ -199,19 +124,12 @@ public class CreditCardService {
 	 *
 	 ******************************************************************************/
 
-	public void showDebitCardsDetails() {
-		for (DebitCard card : debitCards) {
-			System.out.println("The DebitCards: ");
-			System.out.println(card.toString());
-		}
-	}
 	public void showCreditCardsDetails() {
-		for (CreditCard card : creditCards) {
+		for (CreditCard card : repository.getAll()) {
 			System.out.println("The CreditCards: ");
 			System.out.println(card.toString());
 		}
 	}
-
 
 	/******************************************************************************
 	 * Find cards
@@ -219,45 +137,13 @@ public class CreditCardService {
 	 * 
 	 *
 	 ******************************************************************************/
-	public DebitCard findDebitCard() {
-		String cardNumber;
-		String cardPin;
 
-		System.out.println("Please indicate the debit card number");
-		cardNumber = scanner.next();
-		System.out.println("Please indicate the pin");
-		cardPin = scanner.next();
+	public CreditCard findCreditCard(String cardNumber, String cardPin) {
 
-		for (DebitCard debitCard : debitCards) {
-			if (debitCard.getDebitCardNumber() != null && debitCard.getDebitCardPin() != null) {
-				if (debitCard.getDebitCardNumber().equals(cardNumber) && debitCard.getDebitCardPin().equals(cardPin)) {
-					if (debitCard.getUsedDebit().equals(false)) {
-						debitCard.setUsedDebit(true);
-						debitCard.setDebitCardPin(generateRandomPinCard(debitCard.getCustomerId()));
-						System.out.println(debitCard.toString());
-						return debitCard;
-					}
-					System.out.println(debitCard.toString());
-					return debitCard;
-				}
-			}
-		}
-		System.out.println(INVALID_NAME_OR_PASSWORD);
-		return null;
-	}
-
-	public CreditCard findCreditCard() {
-		String cardNumber;
-		String cardPin;
-
-		System.out.println("Please indicate the credit card number");
-		cardNumber = scanner.next();
-		System.out.println("Please indicate the pin");
-		cardPin = scanner.next();
-
-		for (CreditCard creditCard : creditCards) {
+		for (CreditCard creditCard : repository.getAll()) {
 			if (creditCard.getCreditCardNumber() != null && creditCard.getCreditCardPin() != null) {
-				if (creditCard.getCreditCardNumber().equals(cardNumber) && creditCard.getCreditCardPin().equals(cardPin)) {
+				if (creditCard.getCreditCardNumber().equals(cardNumber)
+						&& creditCard.getCreditCardPin().equals(cardPin)) {
 					if (creditCard.getUsedCredit().equals(false)) {
 						creditCard.setUsedCredit(true);
 						creditCard.setCreditCardPin(generateRandomPinCard(creditCard.getCustomerId()));
@@ -280,21 +166,10 @@ public class CreditCardService {
 	 *
 	 ******************************************************************************/
 
-	public DebitCard findCustomerDebitCard(Integer customerId) {
 
-		for (DebitCard card : debitCards) {
-			if (card.getCustomerId().equals(customerId)) {
-				System.out.println("Card found");
-				return card;
-			}
-		}
-		System.out.println("Customer do not have a card");
-		return null;
-
-	}
 	public CreditCard findCustomerCreditCard(Integer customerId) {
 
-		for (CreditCard card : creditCards) {
+		for (CreditCard card : repository.getAll()) {
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Card found");
 				return card;
