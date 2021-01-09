@@ -1,6 +1,5 @@
 package rumos.banco.console;
 
-import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.Scanner;
@@ -10,12 +9,16 @@ import rumos.banco.model.Card;
 import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
 import rumos.banco.model.DebitCard;
+import rumos.banco.repository.ICreditCardRepository;
 import rumos.banco.repository.ICustomerRepository;
+import rumos.banco.repository.IDebitCardRepository;
+import rumos.banco.repository.InMemCreditCardRepositoryImpl;
 import rumos.banco.repository.InMemCustomerRepositoryImpl;
+import rumos.banco.repository.InMemDebitCardRepositoryImpl;
 import rumos.banco.service.AccountService;
-import rumos.banco.service.DebitCardService;
+import rumos.banco.service.CreditCardService;
 import rumos.banco.service.CustomerService;
-import rumos.banco.service.NewCustomerService;
+import rumos.banco.service.DebitCardService;
 
 public class Application {
 	private static final int EXIT = 0;
@@ -69,11 +72,16 @@ public class Application {
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 
 	private static Scanner scanner = new Scanner(System.in);
-	private static SecureRandom random = new SecureRandom();
-	private static ICustomerRepository repository = new InMemCustomerRepositoryImpl();
-	private static CustomerService customerService = new CustomerService(repository);
+	
+	private static ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
+	private static IDebitCardRepository debitRepository = new InMemDebitCardRepositoryImpl();
+	private static ICreditCardRepository creditRepository = new InMemCreditCardRepositoryImpl();
+	
+	private static CustomerService customerService = new CustomerService(customerRepository);
+	private static DebitCardService debitCardService = new DebitCardService(debitRepository);
+	private static CreditCardService creditCardService = new CreditCardService(creditRepository);
 	private static AccountService accountService = new AccountService();
-	private static DebitCardService cardService = new DebitCardService();
+
 
 	public static void main(String[] args) {
 		initiation();
@@ -99,10 +107,13 @@ public class Application {
 				// show all customer, account and cards
 				break;
 			case DELETE_CUSTOMER:
+				System.out.println("Please indicate the name of the client");
+				String name = scanner.next();
+				System.out.println("Please indicate the taxId");
 				Integer customerId = customerService.deleteCustomerDetails("1","1");
 				accountService.deleteAccount(customerId);
-				cardService.deleteDebitCardTesting(customerId);
-				cardService.deleteCreditCard(customerId);
+				debitCardService.deleteDebitCardTesting(customerId);
+				creditCardService.deleteCreditCard(customerId);
 
 				// Delete all details of the customer
 				break;
@@ -146,10 +157,13 @@ public class Application {
 
 	private static void chooseATM() {
 		Integer option;
-		Card card;
-		card = cardService.checkCardNumberAndPassword();
+		DebitCard debitCard;
+		DebitCard debitCard;
+		
+		
+		debitCard = DebitCardService.checkCardNumberAndPassword();
 
-		if (card == null)
+		if (debitCard == null)
 			return;
 
 		do {
@@ -160,11 +174,11 @@ public class Application {
 			switch (option) {
 
 			case MANAGE_MONEY:
-				moneyManagement(card.getCustomerId());
+				moneyManagement(debitCard.getCustomerId());
 				// Take, put and transfer money
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
-				accountService.showAccountHistoryMovement(card.getCustomerId());
+				accountService.showAccountHistoryMovement(debitCard.getCustomerId());
 				// check account history
 				break;
 
