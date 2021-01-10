@@ -32,7 +32,8 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 
 	@Override
 	public void create(CreditCard creditCard) {
-		creditCard.setId(++id);
+//		creditCard.setId(++id);
+		creditCard.setCustomerId(++id);
 		creditCards.add(creditCard);
 		
 	}

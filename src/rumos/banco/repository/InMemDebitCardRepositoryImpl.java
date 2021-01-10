@@ -33,7 +33,8 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 
 	@Override
 	public void create(DebitCard card) {
-		card.setId(++id);
+//		card.setId(++id);
+		card.setCustomerId(++id);
 		DebitCards.add(card);
 		
 	}

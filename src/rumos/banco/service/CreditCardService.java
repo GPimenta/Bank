@@ -83,7 +83,7 @@ public class CreditCardService {
 //		System.out.println("Do you whish to create a Credit Card? y/n");
 //		if (scanner.next().equals("y")) {
 		if (creditCard.getCreditCardNumber() == null) {
-			createCreditCardDetails(creditCard,  cardNumber,  pinCard);
+			createCreditCardDetails(creditCard, cardNumber, pinCard);
 			return;
 		} else {
 			System.err.println(NO_ADD_CREDIT_CARD);
@@ -166,10 +166,12 @@ public class CreditCardService {
 	 *
 	 ******************************************************************************/
 
-
 	public CreditCard findCustomerCreditCard(Integer customerId) {
 
 		for (CreditCard card : repository.getAll()) {
+			if (card.getCreditCardNumber() == null) {
+				continue;
+			}
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Card found");
 				return card;

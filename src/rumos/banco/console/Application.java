@@ -54,8 +54,9 @@ public class Application {
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
-	private static final int CREATE_CREDIT_CARD = 3;
-	private static final int DELETE_CREDIT_CARD = 4;
+	
+	private static final int CREATE_CREDIT_CARD = 1;
+	private static final int DELETE_CREDIT_CARD = 2;
 
 	private static final int DEPOSIT_MONEY_ON_HOLDER_ACCOUNT = 1;
 	private static final int DEPOSIT_MONEY_ON_SECONDARY_ACCOUNT = 2;

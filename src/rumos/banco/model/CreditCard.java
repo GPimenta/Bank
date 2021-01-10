@@ -4,9 +4,10 @@ public class CreditCard extends Card {
 
 	private String creditCardNumber;
 	private String creditCardPin;
-	private Boolean usedCredit = false;//criar localdate para validaçaõ da ultima utilizaçao do cartao. UTC-universal time clocl
+	private Boolean usedCredit = false;// criar localdate para validaçaõ da ultima utilizaçao do cartao. UTC-universal
+										// time clocl
 	private Boolean checkCashAdvanceEligability = true;
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -17,6 +18,7 @@ public class CreditCard extends Card {
 		result = prime * result + ((usedCredit == null) ? 0 : usedCredit.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -48,36 +50,43 @@ public class CreditCard extends Card {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "CreditCard [creditCardNumber=" + creditCardNumber + ", creditCardPin=" + creditCardPin + ", usedCredit="
+		return "CreditCard [customerId= "+ getCustomerId() +" creditCardNumber=" + creditCardNumber + ", creditCardPin=" + creditCardPin + ", usedCredit="
 				+ usedCredit + ", checkCashAdvanceEligability=" + checkCashAdvanceEligability + "]";
 	}
+
 	public String getCreditCardNumber() {
 		return creditCardNumber;
 	}
+
 	public void setCreditCardNumber(String creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
 	}
+
 	public String getCreditCardPin() {
 		return creditCardPin;
 	}
+
 	public void setCreditCardPin(String creditCardPin) {
 		this.creditCardPin = creditCardPin;
 	}
+
 	public Boolean getUsedCredit() {
 		return usedCredit;
 	}
+
 	public void setUsedCredit(Boolean usedCredit) {
 		this.usedCredit = usedCredit;
 	}
+
 	public Boolean getCheckCashAdvanceEligability() {
 		return checkCashAdvanceEligability;
 	}
+
 	public void setCheckCashAdvanceEligability(Boolean checkCashAdvanceEligability) {
 		this.checkCashAdvanceEligability = checkCashAdvanceEligability;
 	}
-
-
 
 }

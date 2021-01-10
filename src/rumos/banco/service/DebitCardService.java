@@ -157,10 +157,11 @@ public class DebitCardService {
 	public DebitCard findCustomerDebitCard(Integer customerId) {
 
 		for (DebitCard card : repository.getAll()) {
-			if (card.getDebitCardNumber() == null) {
-				continue;
-			}
 			if (card.getCustomerId().equals(customerId)) {
+				if(card.getDebitCardNumber() == null) {
+					System.out.println("Customer do not have a card");
+					return card;
+				}
 				System.out.println("Card found");
 				return card;
 			}

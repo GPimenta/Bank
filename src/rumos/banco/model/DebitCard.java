@@ -5,7 +5,7 @@ public class DebitCard extends Card {
 	private String debitCardNumber;
 	private String debitCardPin;
 	private Boolean usedDebit = false;
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -15,6 +15,7 @@ public class DebitCard extends Card {
 		result = prime * result + ((usedDebit == null) ? 0 : usedDebit.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -41,30 +42,35 @@ public class DebitCard extends Card {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "DebitCard [debitCardNumber=" + debitCardNumber + ", debitCardPin=" + debitCardPin + ", usedDebit="
+		return "DebitCard [customerId = "+ getCustomerId() + " debitCardNumber=" + debitCardNumber + ", debitCardPin=" + debitCardPin + ", usedDebit="
 				+ usedDebit + "]";
 	}
+
 	public String getDebitCardNumber() {
 		return debitCardNumber;
 	}
+
 	public void setDebitCardNumber(String debitCardNumber) {
 		this.debitCardNumber = debitCardNumber;
 	}
+
 	public String getDebitCardPin() {
 		return debitCardPin;
 	}
+
 	public void setDebitCardPin(String debitCardPin) {
 		this.debitCardPin = debitCardPin;
 	}
+
 	public Boolean getUsedDebit() {
 		return usedDebit;
 	}
+
 	public void setUsedDebit(Boolean usedDebit) {
 		this.usedDebit = usedDebit;
 	}
-
-	
 
 }
