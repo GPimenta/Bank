@@ -110,7 +110,8 @@ public class Application {
 				System.out.println("Please indicate the name of the client");
 				String name = scanner.next();
 				System.out.println("Please indicate the taxId");
-				Integer customerId = customerService.deleteCustomerDetails("1","1");
+				String taxId = scanner.next();
+				Integer customerId = customerService.deleteCustomerDetails(name,taxId);
 				accountService.deleteAccount(customerId);
 				debitCardService.deleteDebitCardTesting(customerId);
 				creditCardService.deleteCreditCard(customerId);
@@ -378,9 +379,7 @@ public class Application {
 		Integer option;
 		DebitCard debitCard = null;
 		CreditCard creditCard = null;
-//		Nao deveria ser necessario perguntar se está a usar credito ou debito
-		// Deverá ser necessario a lista Card e identificar de alguma forma o credito e
-		// o debito
+
 		System.out.println("Please tell what card are you goind to use: debit/credit");
 		String cardOption = scanner.next().toLowerCase();
 
@@ -436,9 +435,9 @@ public class Application {
 
 			switch (option) {
 			case CREATE_DEBIT_CARD:
-				System.out.println("Please indicate your Card Number");
+				System.out.println("Please indicate the Card Number");
 				cardNumber = scanner.next();
-				System.out.println("Please indicate your Card Pin");
+				System.out.println("Please indicate the Card Pin");
 				cardPin = scanner.next();
 				debitCardService.createDebitCard(debitCard, cardNumber, cardPin);
 				// Add Debit card
@@ -470,9 +469,9 @@ public class Application {
 
 			switch (option) {
 			case CREATE_CREDIT_CARD:
-				System.out.println("Please indicate your Card Number");
+				System.out.println("Please indicate the Card Number");
 				cardNumber = scanner.next();
-				System.out.println("Please indicate your Card Pin");
+				System.out.println("Please indicate the Card Pin");
 				cardPin = scanner.next();
 				creditCardService.createCreditCard(creditCard, cardNumber, cardPin);
 				// Add Debit card
@@ -665,7 +664,6 @@ public class Application {
 	 ******************************************************************************/
 	public static DebitCard populateDebitCard() {
 		DebitCard newDebitCard = new DebitCard();
-		CreditCard newCreditCard = new CreditCard();
 		String cardNumber;
 		String pinCard;
 

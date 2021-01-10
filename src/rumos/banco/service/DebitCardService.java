@@ -157,6 +157,7 @@ public class DebitCardService {
 	public DebitCard findCustomerDebitCard(Integer customerId) {
 
 		for (DebitCard card : repository.getAll()) {
+			if(card.equals(null)) continue;
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Card found");
 				return card;
