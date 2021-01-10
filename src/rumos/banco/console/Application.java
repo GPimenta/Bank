@@ -5,7 +5,6 @@ import java.time.Year;
 import java.util.Scanner;
 
 import rumos.banco.model.Account;
-import rumos.banco.model.Card;
 import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
 import rumos.banco.model.DebitCard;
@@ -29,7 +28,8 @@ public class Application {
 	private static final int DELETE_CUSTOMER = 4;
 
 	private static final int GO_TO_ONLINE = 1;
-	private static final int GO_TO_ATM = 2;
+	private static final int GO_TO_ATM_DEBIT_CARD = 2;
+	private static final int GO_TO_ATM_CREDIT_CARD = 3;
 
 	private static final int MANAGE_MONEY = 1;
 	private static final int CHECK_ACCOUNT_HISTORY_THROUGH_ATM = 2;
@@ -139,8 +139,12 @@ public class Application {
 				chooseOnline();
 				// Use the online
 				break;
-			case GO_TO_ATM:
-				chooseATM();
+			case GO_TO_ATM_DEBIT_CARD:
+				chooseATM_DebitCard();
+				// Use the ATM
+				break;
+			case GO_TO_ATM_CREDIT_CARD:
+				chooseATM_CreditCard();
 				// Use the ATM
 				break;
 			case EXIT:
@@ -155,13 +159,17 @@ public class Application {
 
 	}
 
-	private static void chooseATM() {
+	private static void chooseATM_DebitCard() {
 		Integer option;
 		DebitCard debitCard;
-		DebitCard debitCard;
+		String cardNumber, cardPin;
+
+		System.out.println("Please indicate your Card Number");
+		cardNumber = scanner.next();
+		System.out.println("Please indicate your Card Pin");
+		cardPin = scanner.next();
 		
-		
-		debitCard = DebitCardService.checkCardNumberAndPassword();
+		debitCard = debitCardService.checkCardNumberAndPassword(cardNumber, cardPin);
 
 		if (debitCard == null)
 			return;
@@ -179,6 +187,49 @@ public class Application {
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
 				accountService.showAccountHistoryMovement(debitCard.getCustomerId());
+				// check account history
+				break;
+
+			case EXIT:
+				System.out.println(PREVIOUS_MENU);
+				break;
+			default:
+				System.err.println(INVALID_OPTION + " in chooseATM");
+				break;
+			}
+		} while (option != 0);
+
+	}
+	private static void chooseATM_CreditCard() {
+		Integer option;
+		CreditCard creditCard;
+		String cardNumber, cardPin;
+
+		System.out.println("Please indicate your Card Number");
+		cardNumber = scanner.next();
+		System.out.println("Please indicate your Card Pin");
+		cardPin = scanner.next();
+		
+		
+		
+		creditCard = creditCardService.checkCardNumberAndPassword(cardNumber, cardPin);
+
+		if (creditCard == null)
+			return;
+
+		do {
+
+			displayATM();
+
+			option = scanner.nextInt();
+			switch (option) {
+
+			case MANAGE_MONEY:
+				moneyManagement(creditCard.getCustomerId());
+				// Take, put and transfer money
+				break;
+			case CHECK_ACCOUNT_HISTORY_THROUGH_ATM:
+				accountService.showAccountHistoryMovement(creditCard.getCustomerId());
 				// check account history
 				break;
 
@@ -334,13 +385,13 @@ public class Application {
 		String cardOption = scanner.next().toLowerCase();
 
 		if (cardOption.equals("debit")) {
-			debitCard = cardService.findCustomerDebitCard(customerId);
+			debitCard = debitCardService.findCustomerDebitCard(customerId);
 			if (debitCard == null) {
 				return;
 			}
 		}
 		if (cardOption.equals("credit")) {
-			creditCard = cardService.findCustomerCreditCard(customerId);
+			creditCard = creditCardService.findCustomerCreditCard(customerId);
 			if (creditCard == null) {
 				return;
 			}
@@ -375,6 +426,7 @@ public class Application {
 
 	private static void editBankDebitCards(DebitCard debitCard) {
 		Integer option;
+		String cardNumber, cardPin;
 
 		do {
 
@@ -384,11 +436,15 @@ public class Application {
 
 			switch (option) {
 			case CREATE_DEBIT_CARD:
-				cardService.createDebitCard(debitCard);
+				System.out.println("Please indicate your Card Number");
+				cardNumber = scanner.next();
+				System.out.println("Please indicate your Card Pin");
+				cardPin = scanner.next();
+				debitCardService.createDebitCard(debitCard, cardNumber, cardPin);
 				// Add Debit card
 				break;
 			case DELETE_DEBIT_CARD:
-				cardService.deleteDebitCard(debitCard);
+				debitCardService.deleteDebitCard(debitCard);
 				// Remove Debit card
 				break;
 			case EXIT:
@@ -404,6 +460,7 @@ public class Application {
 
 	private static void editBankCreditCards(CreditCard creditCard) {
 		Integer option;
+		String cardNumber, cardPin;
 
 		do {
 
@@ -413,11 +470,15 @@ public class Application {
 
 			switch (option) {
 			case CREATE_CREDIT_CARD:
-				cardService.createCreditCard(creditCard);
+				System.out.println("Please indicate your Card Number");
+				cardNumber = scanner.next();
+				System.out.println("Please indicate your Card Pin");
+				cardPin = scanner.next();
+				creditCardService.createCreditCard(creditCard, cardNumber, cardPin);
 				// Add Debit card
 				break;
 			case DELETE_CREDIT_CARD:
-				cardService.deleteCreditCard(creditCard);
+				creditCardService.deleteCreditCard(creditCard);
 				// Remove Debit card
 				break;
 			case EXIT:
@@ -539,10 +600,11 @@ public class Application {
 		debitCard = populateDebitCard();
 		creditCard = populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
-		cardService.save(debitCard, creditCard);
+		debitCardService.create(debitCard);
+		creditCardService.create(creditCard);
 
-		cardService.showDebitCardsDetails();
-		cardService.showCreditCardsDetails();
+		debitCardService.showDebitCardsDetails();
+		creditCardService.showCreditCardsDetails();
 	}
 
 	/******************************************************************************
@@ -553,8 +615,8 @@ public class Application {
 	private static void showAllCustomersDetails() {
 		customerService.showCustomersDetails();
 		accountService.showAccountsDetails();
-		cardService.showDebitCardsDetails();
-		cardService.showCreditCardsDetails();
+		debitCardService.showDebitCardsDetails();
+		creditCardService.showCreditCardsDetails();
 	}
 
 	/******************************************************************************
@@ -699,7 +761,8 @@ public class Application {
 		System.out.println("\t\tPlease choose the action that u want take: ");
 		System.out.println("0 - Exit");
 		System.out.println("1 - Use program online");
-		System.out.println("2 - Use ATM");
+		System.out.println("2 - Use ATM with DebitCard");
+		System.out.println("3 - Use ATM with CreditCard");
 		System.out.println("###########################################################################");
 
 	}

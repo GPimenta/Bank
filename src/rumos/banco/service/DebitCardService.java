@@ -54,14 +54,23 @@ public class DebitCardService {
 	}
 
 	/******************************************************************************
-	 * Delete and create the Cards
+	 * Delete an existing card or create an unexisting Cards
 	 * 
 	 * 
 	 ******************************************************************************/
+	public void createDebitCard(DebitCard debitCard, String cardNumber, String pinCard) {
+
+		if (debitCard.getDebitCardNumber() == null) {
+			createDebitCardDetails(debitCard, cardNumber, pinCard);
+			return;
+		} else {
+			System.err.println(NO_ADD_DEBIT_CARD);
+			return;
+		}
+	}
 
 	public void deleteDebitCard(DebitCard debitCard) {
-//		System.out.println("Do you whish to delete a Debit Card? y/n");
-//		if (scanner.next().equals("y")) {
+
 		if (!debitCard.getDebitCardNumber().equals(null)) {
 			repository.deleteById(debitCard.getCustomerId());
 			System.out.println("Debit card removed");
@@ -72,23 +81,9 @@ public class DebitCardService {
 		}
 	}
 
-	public void createDebitCard(DebitCard debitCard, String cardNumber, String pinCard) {
-//		System.out.println("Do you whish to create a Debit Card? y/n");
-//		if (scanner.next().equals("y")) {
-		if (debitCard.getDebitCardNumber() == null) {
-			createDebitCardDetails(debitCard, cardNumber, pinCard);
-			return;
-		} else {
-			System.err.println(NO_ADD_DEBIT_CARD);
-			return;
-		}
-	}
-
 	public void createDebitCardDetails(DebitCard debitCard, String cardNumber, String pinCard) {
-//		System.out.println("Creating the details of the debit card");
-//		System.out.println("Please indicate the number of the debit card");
+
 		debitCard.setDebitCardNumber(cardNumber);
-//		System.out.println("Please indicate the pin number of the debit card");
 		debitCard.setDebitCardPin(pinCard);
 		repository.update(debitCard);
 	}
@@ -108,8 +103,6 @@ public class DebitCardService {
 	 ******************************************************************************/
 	public DebitCard checkCardNumberAndPassword(String cardNumber, String cardPin) {
 		DebitCard card = new DebitCard();
-
-//			System.out.println("Please choose what card are you going to use to enter, debit or credit card ");
 		card = findDebitCard(cardNumber, cardPin);
 		return card;
 	}
@@ -173,7 +166,6 @@ public class DebitCardService {
 		return null;
 
 	}
-
 
 	/******************************************************************************
 	 * Generate random pin for the customer card
