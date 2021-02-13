@@ -13,6 +13,8 @@ public interface ICreditCardRepository {
 	void create(CreditCard card);
 
 	void deleteById(Integer id);
+	
+	void deleteByCustomerId(Integer customerId);
 
 	void update(CreditCard card);
 

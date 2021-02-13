@@ -64,7 +64,18 @@ public class CreditCardService {
 	 * 
 	 * 
 	 ******************************************************************************/
-
+	public void createCreditCard(CreditCard creditCard, String cardNumber, String pinCard) {
+//		System.out.println("Do you whish to create a Credit Card? y/n");
+//		if (scanner.next().equals("y")) {
+		if (creditCard.getCreditCardNumber() == null) {
+			createCreditCardDetails(creditCard, cardNumber, pinCard);
+			return;
+		} else {
+			System.err.println(NO_ADD_CREDIT_CARD);
+			return;
+		}
+	}
+	
 	public void deleteCreditCard(CreditCard creditCard) {
 //		System.out.println("Do you whish to delete a Debit Card? y/n");
 //		if (scanner.next().equals("y")) {
@@ -79,17 +90,7 @@ public class CreditCardService {
 		}
 	}
 
-	public void createCreditCard(CreditCard creditCard, String cardNumber, String pinCard) {
-//		System.out.println("Do you whish to create a Credit Card? y/n");
-//		if (scanner.next().equals("y")) {
-		if (creditCard.getCreditCardNumber() == null) {
-			createCreditCardDetails(creditCard, cardNumber, pinCard);
-			return;
-		} else {
-			System.err.println(NO_ADD_CREDIT_CARD);
-			return;
-		}
-	}
+
 
 	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard) {
 		creditCard.setCreditCardNumber(cardNumber);

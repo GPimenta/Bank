@@ -14,6 +14,8 @@ public interface IDebitCardRepository {
 	void create(DebitCard debitCard);
 
 	void deleteById(Integer id);
+	
+	void deleteByCustomerId(Integer customerId);
 
 	void update(DebitCard debitCard);
 

@@ -8,14 +8,14 @@ import rumos.banco.model.Card;
 import rumos.banco.model.DebitCard;
 
 public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
-	
-	private static ArrayList<DebitCard> DebitCards = new ArrayList<>();
+
+	private static ArrayList<DebitCard> debitCards = new ArrayList<>();
 	private static Integer id = 0;
 
 	@Override
 	public Optional<DebitCard> getById(Integer id) {
-		for(DebitCard debitCard : DebitCards) {
-			if(debitCard.getId().equals(id)) {
+		for (DebitCard debitCard : debitCards) {
+			if (debitCard.getId().equals(id)) {
 				return Optional.of(debitCard);
 			}
 		}
@@ -25,7 +25,7 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 	@Override
 	public Collection<DebitCard> getAll() {
 		ArrayList<DebitCard> result = new ArrayList<DebitCard>();
-		for (DebitCard debitCard : DebitCards) {
+		for (DebitCard debitCard : debitCards) {
 			result.add(debitCard);
 		}
 		return result;
@@ -33,26 +33,35 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 
 	@Override
 	public void create(DebitCard card) {
-//		card.setId(++id);
-		card.setCustomerId(++id);
-		DebitCards.add(card);
-		
+		card.setId(++id);
+		card.setCustomerId(id);
+		debitCards.add(card);
+
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		for(DebitCard debitCard : DebitCards) {
-			if(debitCard.getId().equals(id)) {
-				DebitCards.remove(debitCard);
+		for (DebitCard debitCard : debitCards) {
+			if (debitCard.getId().equals(id)) {
+				debitCards.remove(debitCard);
 			}
 		}
-		
+	}
+	
+	@Override
+	public void deleteByCustomerId(Integer customerId) {
+		for(DebitCard debitCard : debitCards) {
+			if(debitCard.getCustomerId().equals(customerId)) {
+				debitCards.remove(debitCard);
+			}
+		}
 	}
 
 	@Override
 	public void update(DebitCard card) {
-		DebitCards.add(card);
-		
+		card.setId(++id);
+		debitCards.add(card);
+
 	}
 
 }

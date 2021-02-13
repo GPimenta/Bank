@@ -71,7 +71,7 @@ public class DebitCardService {
 
 	public void deleteDebitCard(DebitCard debitCard) {
 
-		if (!debitCard.getDebitCardNumber().equals(null)) {
+		if (debitCard.getDebitCardNumber() != null) {
 			repository.deleteById(debitCard.getCustomerId());
 			System.out.println("Debit card removed");
 			return;
