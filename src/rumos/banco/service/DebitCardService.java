@@ -32,6 +32,10 @@ public class DebitCardService {
 		if (card == null) {
 			throw new IllegalArgumentException("Failed to create DebitCard - Invalid debitCard object");
 		}
+//		if(card.getDebitCardNumber().equals(null)) {
+//			return;
+//			
+//		}
 		repository.create(card);
 	}
 

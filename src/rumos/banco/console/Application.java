@@ -68,7 +68,17 @@ public class Application {
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String TITLE = "Rumos Digital Bank";
 	private static final String GOODBYE = "Thanks for using Rumos Digital Bank";
+	
 	private static final String CUSTOMER_CREATED = "Customer created!";
+	private static final String ACCOUNT_CREATED = "Account created!";
+	private static final String DEBIT_CARD_CREATED = "Debit created!";
+	private static final String CREDIT_CARD_CREATED = "Customer created!";
+	
+	private static final String CUSTOMER_NOT_CREATED = "Customer not created!";
+	private static final String ACCOUNT_NOT_CREATED = "Account not created!";
+	private static final String DEBIT_CARD_NOT_CREATED = "Debit Card not created!";
+	private static final String CREDIT_CARD_NOT_CREATED = "Credit Card not created!";
+	
 	private static final String INVALID_OPTION = "Invalid Option!";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 
@@ -596,7 +606,7 @@ public class Application {
 		Account account = new Account();
 
 		account = populateAccount();
-		System.out.println(CUSTOMER_CREATED);
+		System.out.println(ACCOUNT_CREATED);
 		accountService.save(account);
 
 		accountService.showAccountsDetails();
@@ -614,6 +624,9 @@ public class Application {
 		CreditCard creditCard = new CreditCard();
 
 		debitCard = populateDebitCard();
+		if(debitCard.getDebitCardNumber().equals(null)) {
+			System.out.println(CUSTOMER_CREATED);
+		}
 		creditCard = populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
 		debitCardService.create(debitCard);
