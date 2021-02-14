@@ -625,12 +625,17 @@ public class Application {
 
 		debitCard = populateDebitCard();
 		if(debitCard.getDebitCardNumber().equals(null)) {
-			System.out.println(CUSTOMER_CREATED);
+			System.out.println(DEBIT_CARD_NOT_CREATED);
+		}
+		if(creditCard.getCreditCardNumber().equals(null)) {
+			System.out.println(CREDIT_CARD_NOT_CREATED);
 		}
 		creditCard = populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
 		debitCardService.create(debitCard);
+		System.out.println(CUSTOMER_CREATED);
 		creditCardService.create(creditCard);
+		System.out.println(CUSTOMER_CREATED);
 
 		debitCardService.showDebitCardsDetails();
 		creditCardService.showCreditCardsDetails();
