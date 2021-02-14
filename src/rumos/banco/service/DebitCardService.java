@@ -58,10 +58,10 @@ public class DebitCardService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void createDebitCard(DebitCard debitCard, String cardNumber, String pinCard) {
+	public void createDebitCard(DebitCard debitCard, String cardNumber, String pinCard, Integer customerId) {
 
 		if (debitCard.getDebitCardNumber() == null) {
-			createDebitCardDetails(debitCard, cardNumber, pinCard);
+			createDebitCardDetails(debitCard, cardNumber, pinCard, customerId);
 			return;
 		} else {
 			System.err.println(NO_ADD_DEBIT_CARD);
@@ -81,10 +81,11 @@ public class DebitCardService {
 		}
 	}
 
-	public void createDebitCardDetails(DebitCard debitCard, String cardNumber, String pinCard) {
+	public void createDebitCardDetails(DebitCard debitCard, String cardNumber, String pinCard, Integer customerId) {
 
 		debitCard.setDebitCardNumber(cardNumber);
 		debitCard.setDebitCardPin(pinCard);
+		debitCard.setCustomerId(customerId);
 		repository.update(debitCard);
 	}
 
@@ -160,7 +161,7 @@ public class DebitCardService {
 			if (card.getCustomerId().equals(customerId)) {
 				if(card.getDebitCardNumber() == null) {
 					System.out.println("Customer do not have a card");
-					return card;
+					return null;
 				}
 				System.out.println("Card found");
 				return card;

@@ -381,21 +381,21 @@ public class Application {
 		DebitCard debitCard = null;
 		CreditCard creditCard = null;
 
-		System.out.println("Please tell what card are you goind to use: debit/credit");
+		System.out.println("Please indicate what card do you wish to use the services: debit/credit");
 		String cardOption = scanner.next().toLowerCase();
 
-		if (cardOption.equals("debit")) {
-			debitCard = debitCardService.findCustomerDebitCard(customerId);
-			if (debitCard == null) {
-				return;
-			}
-		}
-		if (cardOption.equals("credit")) {
-			creditCard = creditCardService.findCustomerCreditCard(customerId);
-			if (creditCard == null) {
-				return;
-			}
-		}
+//		if (cardOption.equals("debit")) {
+//			debitCard = debitCardService.findCustomerDebitCard(customerId);
+//			if (debitCard == null) {
+//				return;
+//			}
+//		}
+//		if (cardOption.equals("credit")) {
+//			creditCard = creditCardService.findCustomerCreditCard(customerId);
+//			if (creditCard == null) {
+//				return;
+//			}
+//		}
 
 		do {
 
@@ -405,7 +405,7 @@ public class Application {
 
 			switch (option) {
 			case EDIT_DEBIT_CARDS:
-				editBankDebitCards(debitCard);
+				editBankDebitCards(customerId);
 				// Add Debit card
 				break;
 			case EDIT_CREDIT_CARDS:
@@ -424,9 +424,25 @@ public class Application {
 		} while (option != 0);
 	}
 
-	private static void editBankDebitCards(DebitCard debitCard) {
+	private static void editBankDebitCards(Integer customerId) {
 		Integer option;
 		String cardNumber, cardPin;
+		DebitCard debitCard = null;
+		
+
+		debitCard = debitCardService.findCustomerDebitCard(customerId);
+		if (debitCard == null) {
+			System.out.println("Do you wish to create a Debit Card? y/n");
+			if(scanner.next().toLowerCase().equals("y")) {
+				debitCard = new DebitCard();
+			}
+			else {
+				//ARRANJAR ALGO MELHOR - POSSIVELMENTE OUTRO METHOD
+				System.out.println("Returning to previous menu");
+				return;
+			}
+
+		}
 
 		do {
 
@@ -440,7 +456,7 @@ public class Application {
 				cardNumber = scanner.next();
 				System.out.println("Please indicate the Card Pin");
 				cardPin = scanner.next();
-				debitCardService.createDebitCard(debitCard, cardNumber, cardPin);
+				debitCardService.createDebitCard(debitCard, cardNumber, cardPin, customerId);
 				// Add Debit card
 				break;
 			case DELETE_DEBIT_CARD:
