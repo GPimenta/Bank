@@ -44,6 +44,7 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 		for (DebitCard debitCard : debitCards) {
 			if (debitCard.getId().equals(id)) {
 				debitCards.remove(debitCard);
+				return;
 			}
 		}
 	}
@@ -53,6 +54,7 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 		for(DebitCard debitCard : debitCards) {
 			if(debitCard.getCustomerId().equals(customerId)) {
 				debitCards.remove(debitCard);
+				return;
 			}
 		}
 	}

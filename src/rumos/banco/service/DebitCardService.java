@@ -63,8 +63,9 @@ public class DebitCardService {
 	 * 
 	 ******************************************************************************/
 	public void createDebitCard(DebitCard debitCard, String cardNumber, String pinCard, Integer customerId) {
-
-		if (debitCard.getDebitCardNumber() == null) {
+		
+		if (debitCard == null) {
+			debitCard = new DebitCard();
 			createDebitCardDetails(debitCard, cardNumber, pinCard, customerId);
 			return;
 		} else {
@@ -76,7 +77,7 @@ public class DebitCardService {
 	public void deleteDebitCard(DebitCard debitCard) {
 
 		if (debitCard.getDebitCardNumber() != null) {
-			repository.deleteById(debitCard.getCustomerId());
+			repository.deleteByCustomerId(debitCard.getCustomerId());
 			System.out.println("Debit card removed");
 			return;
 		} else {

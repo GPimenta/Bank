@@ -391,8 +391,8 @@ public class Application {
 		DebitCard debitCard = null;
 		CreditCard creditCard = null;
 
-		System.out.println("Please indicate what card do you wish to use the services: debit/credit");
-		String cardOption = scanner.next().toLowerCase();
+//		System.out.println("Please indicate what card do you wish to use the services: debit/credit");
+//		String cardOption = scanner.next().toLowerCase();
 
 //		if (cardOption.equals("debit")) {
 //			debitCard = debitCardService.findCustomerDebitCard(customerId);
@@ -440,22 +440,8 @@ public class Application {
 		DebitCard debitCard = null;
 		
 
-		debitCard = debitCardService.findCustomerDebitCard(customerId);
-		if (debitCard == null) {
-			System.out.println("Do you wish to create a Debit Card? y/n");
-			if(scanner.next().toLowerCase().equals("y")) {
-				debitCard = new DebitCard();
-			}
-			else {
-				//ARRANJAR ALGO MELHOR - POSSIVELMENTE OUTRO METHOD
-				System.out.println("Returning to previous menu");
-				return;
-			}
-
-		}
-
 		do {
-
+			debitCard = debitCardService.findCustomerDebitCard(customerId);
 			displayBankDebitCards();
 
 			option = scanner.nextInt();
@@ -576,7 +562,11 @@ public class Application {
 	private static void createFullCustomer() {
 		createNewCustomer();
 		createNewAccount();
-		CreateNewCard();
+//		CreateNewCard(); TODO Changed here
+		CreateNewDebitCard();
+		CreateNewCreditCard();
+		
+		
 	}
 
 	/******************************************************************************
@@ -624,12 +614,14 @@ public class Application {
 		CreditCard creditCard = new CreditCard();
 
 		debitCard = populateDebitCard();
-		if(debitCard.getDebitCardNumber().equals(null)) {
+		if(debitCard == null) {
+			//TODO Changed here
 			System.out.println(DEBIT_CARD_NOT_CREATED);
+			return;
 		}
-		if(creditCard.getCreditCardNumber().equals(null)) {
-			System.out.println(CREDIT_CARD_NOT_CREATED);
-		}
+//		if(creditCard.getCreditCardNumber().equals(null)) {
+//			System.out.println(CREDIT_CARD_NOT_CREATED);
+//		}
 		creditCard = populateCreditCard();
 		System.out.println(CUSTOMER_CREATED);
 		debitCardService.create(debitCard);
@@ -641,6 +633,43 @@ public class Application {
 		creditCardService.showCreditCardsDetails();
 	}
 
+	
+	private static void CreateNewDebitCard() {
+		DebitCard debitCard = new DebitCard();
+
+		debitCard = populateDebitCard();
+		if(debitCard == null) {
+			//TODO Changed here
+			System.out.println(DEBIT_CARD_NOT_CREATED);
+			return;
+		}
+		debitCardService.create(debitCard);
+		System.out.println(DEBIT_CARD_CREATED);
+
+		debitCardService.showDebitCardsDetails();
+	}
+	
+	private static void CreateNewCreditCard() {
+		CreditCard creditCard = new CreditCard();
+
+		creditCard = populateCreditCard();
+		if(creditCard == null) {
+			//TODO Changed here
+			System.out.println(CREDIT_CARD_NOT_CREATED);
+			return;
+		}
+//		if(creditCard.getCreditCardNumber().equals(null)) {
+//			System.out.println(CREDIT_CARD_NOT_CREATED);
+//		}
+
+		creditCardService.create(creditCard);
+		System.out.println(CREDIT_CARD_CREATED);
+
+		creditCardService.showCreditCardsDetails();
+	}
+	
+	
+	
 	/******************************************************************************
 	 * Show all customer
 	 * 
@@ -702,7 +731,7 @@ public class Application {
 		String cardNumber;
 		String pinCard;
 
-		System.out.println("Do you which to have a Debit Card? y/n");
+		System.out.println("Do you wish to have a Debit Card? y/n");
 		if (scanner.next().equals("y")) {
 			System.out.println("Please indicate the debit card number");
 			cardNumber = scanner.next();
@@ -710,9 +739,13 @@ public class Application {
 			System.out.println("Please indicate the pin of the debit card number");
 			pinCard = scanner.next();
 			newDebitCard.setDebitCardPin(pinCard);
+			return newDebitCard;
 		}
-
-		return newDebitCard;
+		else {
+			//TODO Changed here
+			return null;
+		}
+		
 	}
 
 	public static CreditCard populateCreditCard() {
@@ -720,7 +753,7 @@ public class Application {
 		String cardNumber;
 		String pinCard;
 
-		System.out.println("Do you which to have a Credit Card? y/n");
+		System.out.println("Do you wish to have a Credit Card? y/n");
 		if (scanner.next().equals("y")) {
 			System.out.println("Please indicate the credit card number");
 			cardNumber = scanner.next();
