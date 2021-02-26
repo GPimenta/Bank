@@ -51,7 +51,7 @@ public class CreditCardService {
 		for (CreditCard card : repository.getAll()) {
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Cards deleted");
-				repository.getAll().remove(card);
+				repository.deleteByCustomerId(customerId);
 				return;
 			}
 		}
