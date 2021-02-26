@@ -54,7 +54,7 @@ public class Application {
 
 	private static final int CREATE_DEBIT_CARD = 1;
 	private static final int DELETE_DEBIT_CARD = 2;
-	
+
 	private static final int CREATE_CREDIT_CARD = 1;
 	private static final int DELETE_CREDIT_CARD = 2;
 
@@ -68,31 +68,30 @@ public class Application {
 	private static final String MOTD = "Welcome to Rumos Digital Bank";
 	private static final String TITLE = "Rumos Digital Bank";
 	private static final String GOODBYE = "Thanks for using Rumos Digital Bank";
-	
+
 	private static final String CUSTOMER_CREATED = "Customer created!";
 	private static final String ACCOUNT_CREATED = "Account created!";
 	private static final String DEBIT_CARD_CREATED = "Debit created!";
 	private static final String CREDIT_CARD_CREATED = "Customer created!";
-	
+
 	private static final String CUSTOMER_NOT_CREATED = "Customer not created!";
 	private static final String ACCOUNT_NOT_CREATED = "Account not created!";
 	private static final String DEBIT_CARD_NOT_CREATED = "Debit Card not created!";
 	private static final String CREDIT_CARD_NOT_CREATED = "Credit Card not created!";
-	
+
 	private static final String INVALID_OPTION = "Invalid Option!";
 	private static final String PREVIOUS_MENU = "Returning to previous Menu";
 
 	private static Scanner scanner = new Scanner(System.in);
-	
+
 	private static ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
 	private static IDebitCardRepository debitRepository = new InMemDebitCardRepositoryImpl();
 	private static ICreditCardRepository creditRepository = new InMemCreditCardRepositoryImpl();
-	
+
 	private static CustomerService customerService = new CustomerService(customerRepository);
 	private static DebitCardService debitCardService = new DebitCardService(debitRepository);
 	private static CreditCardService creditCardService = new CreditCardService(creditRepository);
 	private static AccountService accountService = new AccountService();
-
 
 	public static void main(String[] args) {
 		initiation();
@@ -122,7 +121,7 @@ public class Application {
 				String name = scanner.next();
 				System.out.println("Please indicate the taxId");
 				String taxId = scanner.next();
-				Integer customerId = customerService.deleteCustomerDetails(name,taxId);
+				Integer customerId = customerService.deleteCustomerDetails(name, taxId);
 				accountService.deleteAccount(customerId);
 				debitCardService.deleteDebitCardTesting(customerId);
 				creditCardService.deleteCreditCard(customerId);
@@ -180,7 +179,7 @@ public class Application {
 		cardNumber = scanner.next();
 		System.out.println("Please indicate your Card Pin");
 		cardPin = scanner.next();
-		
+
 		debitCard = debitCardService.checkCardNumberAndPassword(cardNumber, cardPin);
 
 		if (debitCard == null)
@@ -212,6 +211,7 @@ public class Application {
 		} while (option != 0);
 
 	}
+
 	private static void chooseATM_CreditCard() {
 		Integer option;
 		CreditCard creditCard;
@@ -221,9 +221,7 @@ public class Application {
 		cardNumber = scanner.next();
 		System.out.println("Please indicate your Card Pin");
 		cardPin = scanner.next();
-		
-		
-		
+
 		creditCard = creditCardService.checkCardNumberAndPassword(cardNumber, cardPin);
 
 		if (creditCard == null)
@@ -385,27 +383,13 @@ public class Application {
 
 	/******************************************************************************
 	 * Bank Cards
+	 * 
+	 * 
 	 ******************************************************************************/
 	private static void editBankCards(Integer customerId) {
 		Integer option;
 		DebitCard debitCard = null;
 		CreditCard creditCard = null;
-
-//		System.out.println("Please indicate what card do you wish to use the services: debit/credit");
-//		String cardOption = scanner.next().toLowerCase();
-
-//		if (cardOption.equals("debit")) {
-//			debitCard = debitCardService.findCustomerDebitCard(customerId);
-//			if (debitCard == null) {
-//				return;
-//			}
-//		}
-//		if (cardOption.equals("credit")) {
-//			creditCard = creditCardService.findCustomerCreditCard(customerId);
-//			if (creditCard == null) {
-//				return;
-//			}
-//		}
 
 		do {
 
@@ -438,7 +422,6 @@ public class Application {
 		Integer option;
 		String cardNumber, cardPin;
 		DebitCard debitCard = null;
-		
 
 		do {
 			debitCard = debitCardService.findCustomerDebitCard(customerId);
@@ -473,7 +456,7 @@ public class Application {
 	private static void editBankCreditCards(Integer customerId) {
 		Integer option;
 		String cardNumber, cardPin;
-		CreditCard creditCard= null;
+		CreditCard creditCard = null;
 
 		do {
 			creditCard = creditCardService.findCustomerCreditCard(customerId);
@@ -566,8 +549,7 @@ public class Application {
 //		CreateNewCard(); TODO Changed here
 		CreateNewDebitCard();
 		CreateNewCreditCard();
-		
-		
+
 	}
 
 	/******************************************************************************
@@ -615,8 +597,8 @@ public class Application {
 		CreditCard creditCard = new CreditCard();
 
 		debitCard = populateDebitCard();
-		if(debitCard == null) {
-			//TODO Changed here
+		if (debitCard == null) {
+			// TODO Changed here
 			System.out.println(DEBIT_CARD_NOT_CREATED);
 			return;
 		}
@@ -634,13 +616,12 @@ public class Application {
 		creditCardService.showCreditCardsDetails();
 	}
 
-	
 	private static void CreateNewDebitCard() {
 		DebitCard debitCard = new DebitCard();
 
 		debitCard = populateDebitCard();
-		if(debitCard == null) {
-			//TODO Changed here
+		if (debitCard == null) {
+			// TODO Changed here
 			System.out.println(DEBIT_CARD_NOT_CREATED);
 			return;
 		}
@@ -649,13 +630,13 @@ public class Application {
 
 		debitCardService.showDebitCardsDetails();
 	}
-	
+
 	private static void CreateNewCreditCard() {
 		CreditCard creditCard = new CreditCard();
 
 		creditCard = populateCreditCard();
-		if(creditCard == null) {
-			//TODO Changed here
+		if (creditCard == null) {
+			// TODO Changed here
 			System.out.println(CREDIT_CARD_NOT_CREATED);
 			return;
 		}
@@ -668,9 +649,7 @@ public class Application {
 
 		creditCardService.showCreditCardsDetails();
 	}
-	
-	
-	
+
 	/******************************************************************************
 	 * Show all customer
 	 * 
@@ -741,12 +720,11 @@ public class Application {
 			pinCard = scanner.next();
 			newDebitCard.setDebitCardPin(pinCard);
 			return newDebitCard;
-		}
-		else {
-			//TODO Changed here
+		} else {
+			// TODO Changed here
 			return null;
 		}
-		
+
 	}
 
 	public static CreditCard populateCreditCard() {

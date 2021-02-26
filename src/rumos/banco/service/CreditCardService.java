@@ -60,7 +60,7 @@ public class CreditCardService {
 	}
 
 	/******************************************************************************
-	 * Delete and create the Cards
+	 * Create the Cards
 	 * 
 	 * 
 	 ******************************************************************************/
@@ -76,9 +76,22 @@ public class CreditCardService {
 		}
 	}
 
+	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard, Integer customerId) {
+		creditCard.setCreditCardNumber(cardNumber);
+		creditCard.setCreditCardPin(pinCard);
+		creditCard.setCustomerId(customerId);
+		repository.update(creditCard);
+	}
+
+	/******************************************************************************
+	 * Delete the Cards
+	 * 
+	 * 
+	 ******************************************************************************/
+
 	public void deleteCreditCard(CreditCard creditCard) {
 
-		if (creditCard.getCreditCardNumber() != null) {
+		if (creditCard != null) {
 			repository.deleteByCustomerId(creditCard.getCustomerId());
 			System.out.println("Credit card removed");
 			return;
@@ -86,13 +99,6 @@ public class CreditCardService {
 			System.err.println(NO_TAKE_CREDIT_CARD);
 			return;
 		}
-	}
-
-	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard, Integer customerId) {
-		creditCard.setCreditCardNumber(cardNumber);
-		creditCard.setCreditCardPin(pinCard);
-		creditCard.setCustomerId(customerId);
-		repository.update(creditCard);
 	}
 
 	public void deleteCreditCardDetails(CreditCard creditCard) {
