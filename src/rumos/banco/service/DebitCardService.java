@@ -49,7 +49,7 @@ public class DebitCardService {
 		for (DebitCard card : repository.getAll()) {
 			if (card.getCustomerId().equals(customerId)) {
 				System.out.println("Cards deleted");
-				repository.deleteById(customerId);
+				repository.deleteByCustomerId(customerId);
 				return;
 			}
 		}
