@@ -16,5 +16,7 @@ public interface IAccountRepository {
 	
 	void deleteById(Integer id);
 	
+	public void deleteByCustomerId(Integer customerId);
+	
 	void update(Account account);
 }

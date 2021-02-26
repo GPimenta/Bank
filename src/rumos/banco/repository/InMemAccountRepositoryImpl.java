@@ -6,15 +6,15 @@ import java.util.Optional;
 
 import rumos.banco.model.Account;
 
-public class InMemAccountRepositoryImpl implements IAccountRepository{
+public class InMemAccountRepositoryImpl implements IAccountRepository {
 
 	private static ArrayList<Account> accounts = new ArrayList<>();
 	private static Integer id = 0;
-	
+
 	@Override
 	public Optional<Account> getById(Integer id) {
-		for(Account account: accounts) {
-			if(account.getId().equals(id)) {
+		for (Account account : accounts) {
+			if (account.getId().equals(id)) {
 				return Optional.of(account);
 			}
 		}
@@ -24,7 +24,7 @@ public class InMemAccountRepositoryImpl implements IAccountRepository{
 	@Override
 	public Collection<Account> getAll() {
 		ArrayList<Account> result = new ArrayList<Account>();
-		for(Account account : accounts) {
+		for (Account account : accounts) {
 			result.add(account);
 		}
 		return result;
@@ -33,24 +33,36 @@ public class InMemAccountRepositoryImpl implements IAccountRepository{
 	@Override
 	public void create(Account account) {
 		account.setId(++id);
+		account.setCustomerId(id);
 		accounts.add(account);
-		
+
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		for(Account account :accounts) {
-			if(account.getId().equals(id)) {
+		for (Account account : accounts) {
+			if (account.getId().equals(id)) {
 				accounts.remove(account);
 			}
 		}
-		
+
+	}
+	
+	@Override
+	public void deleteByCustomerId(Integer customerId) {
+		for (Account account : accounts) {
+			if (account.getCustomerId().equals(customerId)) {
+				accounts.remove(account);
+				return;
+			}
+		}
+
 	}
 
 	@Override
 	public void update(Account account) {
 		accounts.add(account);
-		
+
 	}
 
 }

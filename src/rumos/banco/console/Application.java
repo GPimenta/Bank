@@ -771,6 +771,15 @@ public class Application {
 				System.err.println("In order to create an account its necessary to deposit >=50€\n");
 			}
 		} while (newAccount.getAccountHolderBalance() == null);
+		
+		System.out.println("Do you wish to have a secondary account: y/n");
+		String choice = scanner.next();
+		if(choice.equals("y")) {
+			
+		}
+		
+		//TODO
+		
 
 		System.out.println("Please indicate how many secondary accounts do you want to have");
 		Integer count = scanner.nextInt();
