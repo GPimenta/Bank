@@ -58,12 +58,12 @@ public class DebitCardService {
 	}
 
 	/******************************************************************************
-	 * Delete an existing card or create an unexisting Cards
+	 * Create DebitCard
 	 * 
 	 * 
 	 ******************************************************************************/
 	public void createDebitCard(DebitCard debitCard, String cardNumber, String pinCard, Integer customerId) {
-		
+
 		if (debitCard == null) {
 			debitCard = new DebitCard();
 			createDebitCardDetails(debitCard, cardNumber, pinCard, customerId);
@@ -73,7 +73,20 @@ public class DebitCardService {
 			return;
 		}
 	}
+	
+	public void createDebitCardDetails(DebitCard debitCard, String cardNumber, String pinCard, Integer customerId) {
 
+		debitCard.setDebitCardNumber(cardNumber);
+		debitCard.setDebitCardPin(pinCard);
+		debitCard.setCustomerId(customerId);
+		repository.update(debitCard);
+	}
+
+	/******************************************************************************
+	 * Delete DebitCard
+	 * 
+	 * 
+	 ******************************************************************************/
 	public void deleteDebitCard(DebitCard debitCard) {
 
 		if (debitCard.getDebitCardNumber() != null) {
@@ -84,14 +97,6 @@ public class DebitCardService {
 			System.err.println(NO_TAKE_DEBIT_CARD);
 			return;
 		}
-	}
-
-	public void createDebitCardDetails(DebitCard debitCard, String cardNumber, String pinCard, Integer customerId) {
-
-		debitCard.setDebitCardNumber(cardNumber);
-		debitCard.setDebitCardPin(pinCard);
-		debitCard.setCustomerId(customerId);
-		repository.update(debitCard);
 	}
 
 	public void deleteDebitCardDetails(DebitCard debitCard) {
@@ -164,7 +169,7 @@ public class DebitCardService {
 
 		for (DebitCard card : repository.getAll()) {
 			if (card.getCustomerId().equals(customerId)) {
-				if(card.getDebitCardNumber() == null) {
+				if (card.getDebitCardNumber() == null) {
 					System.out.println("Customer do not have a card");
 					return null;
 				}

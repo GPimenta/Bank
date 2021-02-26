@@ -43,6 +43,7 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 		for (CreditCard creditCard : creditCards) {
 			if (creditCard.getId().equals(id)) {
 				creditCards.remove(creditCard);
+				return;
 			}
 		}
 	}
@@ -52,6 +53,7 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 		for(CreditCard creditCard : creditCards) {
 			if(creditCard.getCustomerId().equals(customerId)) {
 				creditCards.remove(creditCard);
+				return;
 			}
 		}
 	}

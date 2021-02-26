@@ -75,13 +75,11 @@ public class CreditCardService {
 			return;
 		}
 	}
-	
+
 	public void deleteCreditCard(CreditCard creditCard) {
-//		System.out.println("Do you whish to delete a Debit Card? y/n");
-//		if (scanner.next().equals("y")) {
+
 		if (creditCard.getCreditCardNumber() != null) {
-			repository.deleteById(creditCard.getCustomerId());
-			deleteCreditCardDetails(creditCard);
+			repository.deleteByCustomerId(creditCard.getCustomerId());
 			System.out.println("Credit card removed");
 			return;
 		} else {
@@ -89,8 +87,6 @@ public class CreditCardService {
 			return;
 		}
 	}
-
-
 
 	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard, Integer customerId) {
 		creditCard.setCreditCardNumber(cardNumber);
