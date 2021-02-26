@@ -419,7 +419,7 @@ public class Application {
 				// Add Debit card
 				break;
 			case EDIT_CREDIT_CARDS:
-				editBankCreditCards(creditCard);
+				editBankCreditCards(customerId);
 				// Remove Debit card
 				break;
 
@@ -470,12 +470,13 @@ public class Application {
 		} while (option != 0);
 	}
 
-	private static void editBankCreditCards(CreditCard creditCard) {
+	private static void editBankCreditCards(Integer customerId) {
 		Integer option;
 		String cardNumber, cardPin;
+		CreditCard creditCard= null;
 
 		do {
-
+			creditCard = creditCardService.findCustomerCreditCard(customerId);
 			displayBankCreditCards();
 
 			option = scanner.nextInt();
@@ -486,7 +487,7 @@ public class Application {
 				cardNumber = scanner.next();
 				System.out.println("Please indicate the Card Pin");
 				cardPin = scanner.next();
-				creditCardService.createCreditCard(creditCard, cardNumber, cardPin);
+				creditCardService.createCreditCard(creditCard, cardNumber, cardPin, customerId);
 				// Add Debit card
 				break;
 			case DELETE_CREDIT_CARD:

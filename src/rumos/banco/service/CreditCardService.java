@@ -64,11 +64,11 @@ public class CreditCardService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void createCreditCard(CreditCard creditCard, String cardNumber, String pinCard) {
-//		System.out.println("Do you whish to create a Credit Card? y/n");
-//		if (scanner.next().equals("y")) {
-		if (creditCard.getCreditCardNumber() == null) {
-			createCreditCardDetails(creditCard, cardNumber, pinCard);
+	public void createCreditCard(CreditCard creditCard, String cardNumber, String pinCard, Integer customerId) {
+
+		if (creditCard == null) {
+			creditCard = new CreditCard();
+			createCreditCardDetails(creditCard, cardNumber, pinCard, customerId);
 			return;
 		} else {
 			System.err.println(NO_ADD_CREDIT_CARD);
@@ -92,9 +92,10 @@ public class CreditCardService {
 
 
 
-	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard) {
+	public void createCreditCardDetails(CreditCard creditCard, String cardNumber, String pinCard, Integer customerId) {
 		creditCard.setCreditCardNumber(cardNumber);
 		creditCard.setCreditCardPin(pinCard);
+		creditCard.setCustomerId(customerId);
 		repository.update(creditCard);
 	}
 
