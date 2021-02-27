@@ -754,6 +754,7 @@ public class Application {
 	public static Account populateAccount() {
 		System.out.println("Creating new account");
 		Account newAccount = new Account();
+		Integer secondaryAccounts;
 
 		System.out.println("Please set the number of the account (5 digits)");
 		newAccount.setAccountHolderNumber(scanner.next());
@@ -771,27 +772,53 @@ public class Application {
 				System.err.println("In order to create an account its necessary to deposit >=50€\n");
 			}
 		} while (newAccount.getAccountHolderBalance() == null);
-		
+
 		System.out.println("Do you wish to have a secondary account: y/n");
 		String choice = scanner.next();
-		if(choice.equals("y")) {
-			
-		}
-		
-		//TODO
-		
+		if (choice.equals("y")) {
+			secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
+			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
+			if (secondaryAccounts == 0) {
+				return newAccount;
+			} else {
+				for (int i = 0; i < secondaryAccounts; i++) {
+					accountService.addSecondaryAccount(newAccount);
+					System.out.println("Do you want add more accounts: y/n");
+					if (scanner.next().equals("n")) {
+						System.out.println("No more secondary accounts being added");
+						return newAccount;
+					}
+				}
+				return newAccount;
+			}
 
-		System.out.println("Please indicate how many secondary accounts do you want to have");
-		Integer count = scanner.nextInt();
-		String secondaryAccount;
-		for (int i = 0; i < count; i++) {
-			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
-					i + 1);
-			secondaryAccount = scanner.next();
-			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
 		}
-
 		return newAccount;
+
+//		secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
+//		System.out.printf("\nYou can have this %d amount of accounts\n", secondaryAccounts);
+//
+//		if (choice.equals("y")) {
+//			accountService.addSecondaryAccount(newAccount);
+//			secondaryAccounts = accountService.countSecondaryAccounts(newAccount);
+//			System.out.printf("\nYou can have this %d amount of accounts", secondaryAccounts);
+//			return newAccount;
+//		} else {
+//			System.out.println("No secondary account was added");
+//			return newAccount;
+//		}
+
+//		System.out.println("Please indicate how many secondary accounts do you want to have");
+//		Integer count = scanner.nextInt();
+//		String secondaryAccount;
+//		for (int i = 0; i < count; i++) {
+//			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
+//					i + 1);
+//			secondaryAccount = scanner.next();
+//			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
+//		}
+//
+//		return newAccount;
 	}
 
 	/******************************************************************************

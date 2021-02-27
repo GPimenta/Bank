@@ -18,7 +18,7 @@ public class Account {
 	private Double cashAdvanceQuantity = 250.0;
 	
 
-
+	//TODO criar AccountId e customer Id e lista de secondary
 
 
 

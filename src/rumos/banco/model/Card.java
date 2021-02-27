@@ -5,6 +5,8 @@ public class Card {
 	private Integer id;
 	private Integer customerId;
 	
+	//TODO criar costumerId AccountId
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

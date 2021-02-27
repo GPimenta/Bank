@@ -97,7 +97,7 @@ public class AccountService {
 		Integer index = 4;
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
 			if (account.getSecondaryAccountNumber()[i].isBlank()) {
-				System.out.println("There is possability to add an secondary account");
+				System.out.println("You are elegible to add secondary accounts");
 				index = i;
 				return index;
 			}
@@ -138,6 +138,28 @@ public class AccountService {
 		}
 		System.err.println("You do not have Secondary accounts to delete.");
 		return false;
+	}
+
+	public int countSecondaryAccounts(Account account) {
+		int count = 0;
+		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
+			if (account.getSecondaryAccountNumber()[i].isBlank()) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int countAllHolderAccounts() {
+		return accounts.size();
+	}
+
+	public int howManySecondaryAccountArePossibleToAdd(Account account) {
+		int count = countAllHolderAccounts() - countSecondaryAccounts(account);
+		if (count <= 0) {
+			return count = 0;
+		}
+		return count;
 	}
 
 	/******************************************************************************
