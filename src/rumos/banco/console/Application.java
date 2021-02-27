@@ -776,24 +776,42 @@ public class Application {
 		System.out.println("Do you wish to have a secondary account: y/n");
 		String choice = scanner.next();
 		if (choice.equals("y")) {
-			secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
-			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
-			if (secondaryAccounts == 0) {
-				return newAccount;
-			} else {
-				for (int i = 0; i < secondaryAccounts; i++) {
-					accountService.addSecondaryAccount(newAccount);
-					System.out.println("Do you want add more accounts: y/n");
-					if (scanner.next().equals("n")) {
-						System.out.println("No more secondary accounts being added");
-						return newAccount;
-					}
-				}
-				return newAccount;
-			}
 
+			do {
+				secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
+				System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
+				if (secondaryAccounts == 0) {
+					return newAccount;
+				}
+				accountService.addSecondaryAccount(newAccount);
+				System.out.println("Do you want add more accounts: y/n");
+				if (scanner.next().equals("n")) {
+					System.out.println("No more secondary accounts being added");
+					return newAccount;
+				}
+
+			} while (secondaryAccounts != 0);
+			return newAccount;
 		}
-		return newAccount;
+
+//			secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
+//			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
+//			if (secondaryAccounts == 0) {
+//				return newAccount;
+//			} else {
+//				for (int i = 0; i < secondaryAccounts; i++) {
+//					accountService.addSecondaryAccount(newAccount);
+//					System.out.println("Do you want add more accounts: y/n");
+//					if (scanner.next().equals("n")) {
+//						System.out.println("No more secondary accounts being added");
+//						return newAccount;
+//					}
+//				}
+//				return newAccount;
+//			}
+//
+//		}
+//		return newAccount;
 
 //		secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
 //		System.out.printf("\nYou can have this %d amount of accounts\n", secondaryAccounts);
@@ -818,7 +836,7 @@ public class Application {
 //			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
 //		}
 //
-//		return newAccount;
+		return newAccount;
 	}
 
 	/******************************************************************************

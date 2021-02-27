@@ -155,11 +155,20 @@ public class AccountService {
 	}
 
 	public int howManySecondaryAccountArePossibleToAdd(Account account) {
-		int count = countAllHolderAccounts() - countSecondaryAccounts(account);
-		if (count <= 0) {
-			return count = 0;
+
+		int totalSecondaryAccounts = countAllHolderAccounts() - countSecondaryAccounts(account);
+
+		if (totalSecondaryAccounts >= 0) {
+			System.out.println("Its possible do add secondary accounts");
+			return countSecondaryAccounts(account);
 		}
-		return count;
+		if(countAllHolderAccounts() == 0) {
+			System.out.println("Your are the first account, impossible to add secondary Accounts");
+			return countAllHolderAccounts();
+		}
+		System.out.printf("\nIts possible to add %d secondary accounts\n", countAllHolderAccounts());
+		return countAllHolderAccounts();
+
 	}
 
 	/******************************************************************************
