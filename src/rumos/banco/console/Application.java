@@ -748,6 +748,11 @@ public class Application {
 	/******************************************************************************
 	 * Populate the Accounts
 	 * 
+	 * The variable countSecondaryLeft was created since we were unable to exit the loop
+	 * this will decrement until 0(exiting the loop). Its given the number of secondaryAccounts
+	 * possible to add, and every time its added it will be decrement. If not added it will not 
+	 * be decremented.
+	 * 
 	 * @return
 	 ******************************************************************************/
 
@@ -755,6 +760,10 @@ public class Application {
 		System.out.println("Creating new account");
 		Account newAccount = new Account();
 		Integer secondaryAccounts;
+		Integer countSecondaryAccountsLeft;
+		Integer before;
+		Integer after;
+		Integer countSecondaryLeft = 1; // Created in order to exit the loop of the while
 
 		System.out.println("Please set the number of the account (5 digits)");
 		newAccount.setAccountHolderNumber(scanner.next());
@@ -776,15 +785,25 @@ public class Application {
 		System.out.println("Do you wish to have a secondary account: y/n");
 		String choice = scanner.next();
 		if (choice.equals("y")) {
-
+			secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
+			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
+			countSecondaryLeft = secondaryAccounts;
 			do {
-				secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
-				System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
+
 				if (secondaryAccounts == 0) {
 					return newAccount;
 				}
+				if (countSecondaryLeft == 0) {
+					return newAccount;
+				}
+
+				before = accountService.countSecondaryAccounts(newAccount);
 				accountService.addSecondaryAccount(newAccount);
-				//TODO IF I PUT INCORRECT SECONDARYACCOUNT IT ENTERS IN A LOOP
+				after = accountService.countSecondaryAccounts(newAccount);
+				if (before != after) {
+					countSecondaryLeft--;
+				}
+
 				System.out.println("Do you want add more accounts: y/n");
 				if (scanner.next().equals("n")) {
 					System.out.println("No more secondary accounts being added");
