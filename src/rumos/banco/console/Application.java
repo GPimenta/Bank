@@ -784,6 +784,7 @@ public class Application {
 					return newAccount;
 				}
 				accountService.addSecondaryAccount(newAccount);
+				//TODO IF I PUT INCORRECT SECONDARYACCOUNT IT ENTERS IN A LOOP
 				System.out.println("Do you want add more accounts: y/n");
 				if (scanner.next().equals("n")) {
 					System.out.println("No more secondary accounts being added");
