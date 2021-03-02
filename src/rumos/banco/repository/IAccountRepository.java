@@ -18,8 +18,5 @@ public interface IAccountRepository {
 	
 	public void deleteByCustomerId(Integer customerId);
 	
-	//TODO criar Collection com todas as contas
-
-	
 	void update(Account account);
 }

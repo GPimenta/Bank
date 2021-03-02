@@ -8,9 +8,11 @@ import rumos.banco.model.Account;
 import rumos.banco.model.CreditCard;
 import rumos.banco.model.Customer;
 import rumos.banco.model.DebitCard;
+import rumos.banco.repository.IAccountRepository;
 import rumos.banco.repository.ICreditCardRepository;
 import rumos.banco.repository.ICustomerRepository;
 import rumos.banco.repository.IDebitCardRepository;
+import rumos.banco.repository.InMemAccountRepositoryImpl;
 import rumos.banco.repository.InMemCreditCardRepositoryImpl;
 import rumos.banco.repository.InMemCustomerRepositoryImpl;
 import rumos.banco.repository.InMemDebitCardRepositoryImpl;
@@ -87,11 +89,12 @@ public class Application {
 	private static ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
 	private static IDebitCardRepository debitRepository = new InMemDebitCardRepositoryImpl();
 	private static ICreditCardRepository creditRepository = new InMemCreditCardRepositoryImpl();
+	private static IAccountRepository accountRepository = new InMemAccountRepositoryImpl();
 
 	private static CustomerService customerService = new CustomerService(customerRepository);
 	private static DebitCardService debitCardService = new DebitCardService(debitRepository);
 	private static CreditCardService creditCardService = new CreditCardService(creditRepository);
-	private static AccountService accountService = new AccountService();
+	private static AccountService accountService = new AccountService(accountRepository);
 
 	public static void main(String[] args) {
 		initiation();
@@ -580,7 +583,7 @@ public class Application {
 
 		account = populateAccount();
 		System.out.println(ACCOUNT_CREATED);
-		accountService.save(account);
+		accountService.create(account);
 
 		accountService.showAccountsDetails();
 
@@ -760,7 +763,6 @@ public class Application {
 		System.out.println("Creating new account");
 		Account newAccount = new Account();
 		Integer secondaryAccounts;
-		Integer countSecondaryAccountsLeft;
 		Integer before;
 		Integer after;
 		Integer countSecondaryLeft = 1; // Created in order to exit the loop of the while
@@ -814,48 +816,6 @@ public class Application {
 			return newAccount;
 		}
 
-//			secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
-//			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
-//			if (secondaryAccounts == 0) {
-//				return newAccount;
-//			} else {
-//				for (int i = 0; i < secondaryAccounts; i++) {
-//					accountService.addSecondaryAccount(newAccount);
-//					System.out.println("Do you want add more accounts: y/n");
-//					if (scanner.next().equals("n")) {
-//						System.out.println("No more secondary accounts being added");
-//						return newAccount;
-//					}
-//				}
-//				return newAccount;
-//			}
-//
-//		}
-//		return newAccount;
-
-//		secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
-//		System.out.printf("\nYou can have this %d amount of accounts\n", secondaryAccounts);
-//
-//		if (choice.equals("y")) {
-//			accountService.addSecondaryAccount(newAccount);
-//			secondaryAccounts = accountService.countSecondaryAccounts(newAccount);
-//			System.out.printf("\nYou can have this %d amount of accounts", secondaryAccounts);
-//			return newAccount;
-//		} else {
-//			System.out.println("No secondary account was added");
-//			return newAccount;
-//		}
-
-//		System.out.println("Please indicate how many secondary accounts do you want to have");
-//		Integer count = scanner.nextInt();
-//		String secondaryAccount;
-//		for (int i = 0; i < count; i++) {
-//			System.out.printf("\nPlease indicate the %dº Account Number of the Secondary accounts to be associated ",
-//					i + 1);
-//			secondaryAccount = scanner.next();
-//			newAccount.getSecondaryAccountNumber()[i] = secondaryAccount;
-//		}
-//
 		return newAccount;
 	}
 

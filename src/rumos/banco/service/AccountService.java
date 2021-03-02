@@ -6,15 +6,30 @@ import java.util.Scanner;
 
 import rumos.banco.model.Account;
 import rumos.banco.model.Customer;
+import rumos.banco.repository.IAccountRepository;
 
 public class AccountService {
 
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
 
-	private static ArrayList<Account> accounts = new ArrayList<>();
-	private static Scanner scanner = new Scanner(System.in);
-	private static Integer id = 0;
+//	private static ArrayList<Account> accounts = new ArrayList<>();
+//	private static Scanner scanner = new Scanner(System.in);
+//	private static Integer id = 0;
+	
+	private IAccountRepository repository;
+		
+	/******************************************************************************
+	 * Constructor
+	 * 
+	 * 
+	 ******************************************************************************/		
+		public AccountService(IAccountRepository repository) {
+			this.repository = repository;
+		}
+		
+		
+		
 
 	/******************************************************************************
 	 * Add Account
@@ -22,12 +37,11 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 
-	public Account save(Account account) {
-		id++;
-		account.setCustomerId(id);
-		accounts.add(account);
-
-		return account;
+	public void create(Account account) {
+		if(account == null) {
+			throw new IllegalArgumentException("Failed to create account - Invalid account object");
+		}
+		repository.create(account);
 	}
 
 	/******************************************************************************
@@ -36,10 +50,10 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 	public void deleteAccount(Integer customerId) {
-		for (Account account : accounts) {
+		for (Account account : repository.getAll()) {
 			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Removing account");
-				accounts.remove(account);
+				repository.deleteByCustomerId(customerId);
 				return;
 			}
 		}
@@ -395,7 +409,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 	public Account findCustomerAccount(Integer customerId) {
-		for (Account account : accounts) {
+		for (Account account : repository.getAll()) {
 			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Account found");
 				return account;
