@@ -2,6 +2,7 @@ package rumos.banco.console;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import rumos.banco.model.Account;
@@ -260,7 +261,15 @@ public class Application {
 	private static void chooseOnline() {
 		Integer option;
 		Account account;
-		account = accountService.checkAccountNameAndPassword();
+		String accountHolderNumber;
+		String password;
+		
+		System.out.println("Please write your account holder number");
+		accountHolderNumber = scanner.next();
+		System.out.println("Please write your Password account");
+		password = scanner.next();
+		
+		account = accountService.checkAccountNameAndPassword(accountHolderNumber, password);
 		if (account == null)
 			return;
 
@@ -278,7 +287,10 @@ public class Application {
 //				// Show costumer details
 				break;
 			case EDIT_ACCOUNT_PASSWORD:
-				accountService.editAccountPassword(account.getCustomerId());
+				System.out.println("Please write the new password for account");
+				password = scanner.next();
+				account.setPasswordAccount(password);
+				accountService.editAccountPassword(account.getCustomerId(), password);
 				// Edit Account
 				break;
 			case SHOW_ACCOUNT_DETAILS:
@@ -286,7 +298,11 @@ public class Application {
 				// Show Account details
 				break;
 			case ACCOUNT_TRANSFER_MONEY:
-				accountService.transferMoney(account.getCustomerId());
+				System.out.println("Please indicate the amount of money you wish to transfer");
+				Double amount = scanner.nextDouble();
+				System.out.println("Please indicate to which account do you want to transfer?");
+				String accountToTransfer = scanner.next();
+				accountService.transferMoney(account.getCustomerId(), amount, accountToTransfer);
 				break;
 			case CHECK_ACCOUNT_HISTORY_THROUGH_ONLINE:
 				accountService.showAccountHistoryMovement(account.getCustomerId());
@@ -354,6 +370,7 @@ public class Application {
 
 	private static void editSecondaryAccounts(Integer customerId) {
 		Account account = accountService.findCustomerAccount(customerId);
+		String secondaryAccount;
 		Integer choose;
 
 		if (account == null) {
@@ -367,17 +384,21 @@ public class Application {
 
 			switch (choose) {
 			case ADD_SECONDARY_ACCOUNT:
-				accountService.addSecondaryAccount(account);
+				System.out.println("Please indicate what account do you wish to have as Second account?");
+				secondaryAccount = scanner.next();
+				accountService.addSecondaryAccount(account, secondaryAccount);
 				break;
 			case DELETE_SECONDARY_ACCOUNT:
-				accountService.deleteSecondaryAccount(account);
+				System.out.println("Please indicate which secondary account you wish to delete");
+				secondaryAccount = scanner.next();
+				accountService.deleteSecondaryAccount(account, secondaryAccount);
 				break;
 			case EXIT:
 				System.out.println(PREVIOUS_MENU);
 				break;
 
 			default:
-				System.err.println(INVALID_OPTION + " in EditSecundaryAccounts");
+				System.err.println(INVALID_OPTION + " in EditSecondaryAccounts");
 				break;
 			}
 
@@ -500,6 +521,10 @@ public class Application {
 	private static void moneyManagement(Integer customerId) {
 		Integer option;
 		Account account;
+		Double amount;
+		String decision;
+		String secondaryAccount;
+		String accountToTransfer;
 
 		account = accountService.findCustomerAccount(customerId);
 
@@ -512,19 +537,43 @@ public class Application {
 			option = scanner.nextInt();
 			switch (option) {
 			case DEPOSIT_MONEY_ON_HOLDER_ACCOUNT:
-				accountService.depositMoneyOnHolderAccount(account.getCustomerId());
+				System.out.println("Please insert the amount to deposit in your account");
+				amount = scanner.nextDouble();
+				accountService.depositMoneyOnHolderAccount(account.getCustomerId(), amount);
 				break;
 			case DEPOSIT_MONEY_ON_SECONDARY_ACCOUNT:
-				accountService.depositMoneyOnSecondaryAccount(account.getCustomerId());
+				System.out.println("Please insert the amount to deposit in your secondary account");
+				amount = scanner.nextDouble();
+				System.out.println("From which of your secondary account do want to perform action? ");
+				System.out.printf("\nThe accounts that you have associated are: %s",
+						Arrays.toString(account.getSecondaryAccountNumber()));
+				secondaryAccount = scanner.next();
+				accountService.depositMoneyOnSecondaryAccount(account.getCustomerId(), amount, secondaryAccount);
 				break;
 			case WITHDRAW_MONEY_ON_HOLDER_ACCOUNT:
-				accountService.withdrawMoneyOnHolderAccount(account.getCustomerId());
+				System.out.println("Please indicate the amount of money you wish to take");
+				amount = scanner.nextDouble();
+				System.out.println("In case of not having the amount necessary to withdraw, do u wish to use cash advance?: y/n");
+				decision = scanner.next();
+				//TODO NAO FAZ SENTIDO A MAQUINA PERGUNTAR SE EU CASO NAO TENHA DINHEIRO QUERO USAR O CASH ADVANCE
+				//ANTIGAMENTE A DECISAO ERA TOMADA NO ACCOUNT SERVICE MAS NAO PODEMOS TER INTERECAO COM O CLIENTE NA SERVICE
+				accountService.withdrawMoneyOnHolderAccount(account.getCustomerId(), amount, decision);
 				break;
 			case WITHDRAW_MONEY_ON_SECONDARY_ACCOUNT:
-				accountService.withdrawMoneyOnSecondaryAccount(account.getCustomerId());
+				System.out.println("Please indicate the amount of money you wish to take");
+				amount = scanner.nextDouble();
+				System.out.println("In case of not having the amount necessary to withdraw, do u wish to use cash advance?: y/n");
+				decision = scanner.next();
+				System.out.println("Please indicate from what secondary account do u wish to withdraw money");
+				secondaryAccount = scanner.next();
+				accountService.withdrawMoneyOnSecondaryAccount(account.getCustomerId(), amount, decision, secondaryAccount);
 				break;
 			case TRANSFER_MONEY:
-				accountService.transferMoney(account.getCustomerId());
+				System.out.println("Please indicate the amount of money you wish to transfer");
+				amount = scanner.nextDouble();
+				System.out.println("Please indicate to which account do you want to transfer?");
+				accountToTransfer = scanner.next();
+				accountService.transferMoney(account.getCustomerId(), amount, accountToTransfer);
 				break;
 			case CHECK_ACCOUNT_HISTORY:
 				accountService.showAccountHistoryMovement(account.getCustomerId());
@@ -762,10 +811,11 @@ public class Application {
 	public static Account populateAccount() {
 		System.out.println("Creating new account");
 		Account newAccount = new Account();
-		Integer secondaryAccounts;
+		Integer secondaryAccountsQuantities;
 		Integer before;
 		Integer after;
 		Integer countSecondaryLeft = 1; // Created in order to exit the loop of the while
+		String secondaryAccount;
 
 		System.out.println("Please set the number of the account (5 digits)");
 		newAccount.setAccountHolderNumber(scanner.next());
@@ -787,12 +837,12 @@ public class Application {
 		System.out.println("Do you wish to have a secondary account: y/n");
 		String choice = scanner.next();
 		if (choice.equals("y")) {
-			secondaryAccounts = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
-			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccounts);
-			countSecondaryLeft = secondaryAccounts;
+			secondaryAccountsQuantities = accountService.howManySecondaryAccountArePossibleToAdd(newAccount);
+			System.out.printf("\nYou can have this %d amount of secondary accounts\n", secondaryAccountsQuantities);
+			countSecondaryLeft = secondaryAccountsQuantities;
 			do {
 
-				if (secondaryAccounts == 0) {
+				if (secondaryAccountsQuantities == 0) {
 					return newAccount;
 				}
 				if (countSecondaryLeft == 0) {
@@ -800,7 +850,9 @@ public class Application {
 				}
 
 				before = accountService.countSecondaryAccounts(newAccount);
-				accountService.addSecondaryAccount(newAccount);
+				System.out.println("Please indicate what secondaryAccount do you wish to have");
+				secondaryAccount = scanner.next();
+				accountService.addSecondaryAccount(newAccount, secondaryAccount);
 				after = accountService.countSecondaryAccounts(newAccount);
 				if (before != after) {
 					countSecondaryLeft--;
@@ -812,7 +864,7 @@ public class Application {
 					return newAccount;
 				}
 
-			} while (secondaryAccounts != 0);
+			} while (secondaryAccountsQuantities != 0);
 			return newAccount;
 		}
 

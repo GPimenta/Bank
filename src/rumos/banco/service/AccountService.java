@@ -66,13 +66,10 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public void addSecondaryAccount(Account account) {
-		Integer index = checkSecondaryAccounts(account);
-		String secondAccount;
+	public void addSecondaryAccount(Account account, String secondAccount) {
+		Integer index = checkIfPossibleToAddSecondaryAccounts(account);
 
 		if (index < 4) {
-			System.out.println("Please indicate what account do you wish to have as Second account?");
-			secondAccount = scanner.next();
 			for (String checkIfTheSameAccount : account.getSecondaryAccountNumber()) {
 				if (checkIfTheSameAccount.equals(secondAccount)) {
 					System.err.println(
@@ -93,7 +90,7 @@ public class AccountService {
 	}
 
 	public boolean checkIfAccountHolderExists(String secondaryAccount) {
-		for (Account account : accounts) {
+		for (Account account : repository.getAll()) {
 			if (account == null)
 				break;
 			if (account.getAccountHolderNumber().equals(secondaryAccount)) {
@@ -107,7 +104,7 @@ public class AccountService {
 		return false;
 	}
 
-	public int checkSecondaryAccounts(Account account) {
+	public int checkIfPossibleToAddSecondaryAccounts(Account account) {
 		Integer index = 4;
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
 			if (account.getSecondaryAccountNumber()[i].isBlank()) {
@@ -122,14 +119,10 @@ public class AccountService {
 		return index;
 	}
 
-	public void deleteSecondaryAccount(Account account) {
-		String secondaryAccount;
+	public void deleteSecondaryAccount(Account account, String secondaryAccount) {
 
 		if (!checkIfItHasSecondaryAccounts(account))
 			return;
-
-		System.out.println("Please indicate which secondary account you wish to delete");
-		secondaryAccount = scanner.next();
 
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
 			if (account.getSecondaryAccountNumber()[i].equals(secondaryAccount)) {
@@ -165,7 +158,7 @@ public class AccountService {
 	}
 
 	public int countAllHolderAccounts() {
-		return accounts.size();
+		return repository.getAll().size();
 	}
 
 	public int howManySecondaryAccountArePossibleToAdd(Account account) {
@@ -191,28 +184,27 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 
-	public void depositMoneyOnHolderAccount(Integer customerId) {
+	public void depositMoneyOnHolderAccount(Integer customerId, Double amount) {
 		Account account = findCustomerAccount(customerId);
 
-		System.out.println("Please insert the amount to deposit in your account");
-		Double amount = scanner.nextDouble();
 		account.setAccountHolderBalance(account.getAccountHolderBalance() + Math.abs(amount));
 		addTAccountHistoryMovement(account, amount.toString());
 		return;
 	}
 
-	public void depositMoneyOnSecondaryAccount(Integer customerId) {
+	public void depositMoneyOnSecondaryAccount(Integer customerId, Double amount, String secondaryAccount) {
 		Account account = findCustomerAccount(customerId);
 
-		String secondaryAccount = checkSecondaryAccount(account);
+		String secondaryAccountDeposit = checkSecondaryAccount(account, secondaryAccount);
 		String decision;
 
-		if (secondaryAccount == null)
-			return; // NECESSARIO FAZER LOOP PARA POR O SECUNDARY NUMBER CORRECTO OU QUERER SAIR
+		if (secondaryAccountDeposit == null)
+			return; // NECESSARIO FAZER LOOP PARA POR O SECONDARY NUMBER CORRECTO OU QUERER SAIR
 
-		for (Account getAccount : accounts) {
-			if (getAccount.getAccountHolderNumber().equals(secondaryAccount)) {
-				depositMoneyOnHolderAccount(getAccount.getCustomerId());
+		for (Account getAccount : repository.getAll()) {
+			//TODO isto nao deve funcionar sendo q estou a buscar uma copia do objeto e nao o objeto para mudar
+			if (getAccount.getAccountHolderNumber().equals(secondaryAccountDeposit)) {
+				depositMoneyOnHolderAccount(getAccount.getCustomerId(), amount);
 				return;
 			}
 		}
@@ -226,17 +218,11 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public void withdrawMoneyOnHolderAccount(Integer customerId) {
+	public void withdrawMoneyOnHolderAccount(Integer customerId, Double amount, String decision) {
 		Account account = findCustomerAccount(customerId);
-
-		System.out.println("Please indicate the amount of money you wish to take");
-		Double amount = scanner.nextDouble();
-		String decision;
 
 		if ((account.getAccountHolderBalance() - Math.abs(amount)) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);
-			System.out.println("Do you wish to use the cash advance? y/n");
-			decision = scanner.next();
 			if (decision.equals("y")) {
 				withdrawMoneyFromCashAdvance(customerId, Math.abs(amount) - account.getAccountHolderBalance());
 				account.setAccountHolderBalance(0.0);
@@ -250,18 +236,17 @@ public class AccountService {
 		return;
 	}
 
-	public void withdrawMoneyOnSecondaryAccount(Integer customerId) {
+	public void withdrawMoneyOnSecondaryAccount(Integer customerId, Double amount, String decision, String secondaryAccount) {
 		Account account = findCustomerAccount(customerId);
 
-		String secondaryAccount = checkSecondaryAccount(account);
-		String decision;
+		String secondaryAccountToWithdraw = checkSecondaryAccount(account, secondaryAccount);
 
-		if (secondaryAccount == null)
+		if (secondaryAccountToWithdraw == null)
 			return; // NECESSARIO FAZER LOOP PARA POR O SECONDARY NUMBER CORRECTO OU QUERER SAIR
 
-		for (Account getAccount : accounts) {
-			if (getAccount.getAccountHolderNumber().equals(secondaryAccount)) {
-				withdrawMoneyOnHolderAccount(getAccount.getCustomerId());
+		for (Account getAccount : repository.getAll()) {
+			if (getAccount.getAccountHolderNumber().equals(secondaryAccountToWithdraw)) {
+				withdrawMoneyOnHolderAccount(getAccount.getCustomerId(), amount, decision);
 				return;
 			}
 		}
@@ -269,13 +254,8 @@ public class AccountService {
 		return;
 	}
 
-	public String checkSecondaryAccount(Account account) {
-		System.out.println("From which of your secondary account do want to perform action? ");
-		System.out.printf("\nThe accounts that you have associated are: %s",
-				Arrays.toString(account.getSecondaryAccountNumber()));
-		String secondaryAccount;
+	public String checkSecondaryAccount(Account account, String secondaryAccount) {
 
-		secondaryAccount = scanner.next();
 		for (String otherAccounts : account.getSecondaryAccountNumber()) {
 			if (otherAccounts.equals(secondaryAccount)) {
 				System.out.println("The choosen account is: " + otherAccounts);
@@ -292,27 +272,20 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 
-	public void transferMoney(Integer customerId) {
+	public void transferMoney(Integer customerId, Double amount, String accountToTransfer) {
 
-		Double amount;
-		String accountToTransfer;
 		Account account;
 
 		account = findCustomerAccount(customerId);
 		if (account == null)
 			return;
 
-		System.out.println("Please indicate the amount of money you wish to transfer");
-		amount = scanner.nextDouble();
-
 		if (account.getAccountHolderBalance() - Math.abs(amount) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
 			return;
 		}
-
-		System.out.println("Please indicate to which account do you want to transfer?");
-		accountToTransfer = scanner.next();
-		for (Account customerToTransfer : accounts) {
+		
+		for (Account customerToTransfer : repository.getAll()) {
 			if (customerToTransfer == null)
 				break;
 			if (customerToTransfer.getAccountHolderNumber().equals(accountToTransfer)) {
@@ -338,13 +311,10 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public Account checkAccountNameAndPassword() {
-		System.out.println("Please write your account holder number");
-		String accountHolderNumber = scanner.next();
-		System.out.println("Please write your Password account");
-		String password = scanner.next();
+	public Account checkAccountNameAndPassword(String accountHolderNumber, String password) {
 
-		for (Account account : accounts) {
+
+		for (Account account : repository.getAll()) {
 			if (account == null)
 				continue;
 			if (account.getAccountHolderNumber().equals(accountHolderNumber)
@@ -362,7 +332,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 	public void showAccountsDetails() {
-		for (Account account : accounts) {
+		for (Account account : repository.getAll()) {
 			System.out.println("The account: ");
 			System.out.println(account.toString());
 		}
@@ -424,11 +394,10 @@ public class AccountService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void editAccountPassword(Integer customerId) {
+	public void editAccountPassword(Integer customerId, String password) {
 		Account account = findCustomerAccount(customerId);
 
-		System.out.println("Please write the new password for account");
-		account.setPasswordAccount(scanner.next());
+		account.setPasswordAccount(password);
 		return;
 
 	}
