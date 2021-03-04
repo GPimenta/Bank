@@ -16,20 +16,17 @@ public class AccountService {
 //	private static ArrayList<Account> accounts = new ArrayList<>();
 //	private static Scanner scanner = new Scanner(System.in);
 //	private static Integer id = 0;
-	
+
 	private IAccountRepository repository;
-		
+
 	/******************************************************************************
 	 * Constructor
 	 * 
 	 * 
-	 ******************************************************************************/		
-		public AccountService(IAccountRepository repository) {
-			this.repository = repository;
-		}
-		
-		
-		
+	 ******************************************************************************/
+	public AccountService(IAccountRepository repository) {
+		this.repository = repository;
+	}
 
 	/******************************************************************************
 	 * Add Account
@@ -38,7 +35,7 @@ public class AccountService {
 	 ******************************************************************************/
 
 	public void create(Account account) {
-		if(account == null) {
+		if (account == null) {
 			throw new IllegalArgumentException("Failed to create account - Invalid account object");
 		}
 		repository.create(account);
@@ -169,7 +166,7 @@ public class AccountService {
 			System.out.println("Its possible do add secondary accounts");
 			return countSecondaryAccounts(account);
 		}
-		if(countAllHolderAccounts() == 0) {
+		if (countAllHolderAccounts() == 0) {
 			System.out.println("Your are the first account, impossible to add secondary Accounts");
 			return countAllHolderAccounts();
 		}
@@ -196,13 +193,13 @@ public class AccountService {
 		Account account = findCustomerAccount(customerId);
 
 		String secondaryAccountDeposit = checkSecondaryAccount(account, secondaryAccount);
-		String decision;
 
 		if (secondaryAccountDeposit == null)
 			return; // NECESSARIO FAZER LOOP PARA POR O SECONDARY NUMBER CORRECTO OU QUERER SAIR
 
 		for (Account getAccount : repository.getAll()) {
-			//TODO isto nao deve funcionar sendo q estou a buscar uma copia do objeto e nao o objeto para mudar
+			// TODO isto nao deve funcionar sendo q estou a buscar uma copia do objeto e nao
+			// o objeto para mudar
 			if (getAccount.getAccountHolderNumber().equals(secondaryAccountDeposit)) {
 				depositMoneyOnHolderAccount(getAccount.getCustomerId(), amount);
 				return;
@@ -236,7 +233,8 @@ public class AccountService {
 		return;
 	}
 
-	public void withdrawMoneyOnSecondaryAccount(Integer customerId, Double amount, String decision, String secondaryAccount) {
+	public void withdrawMoneyOnSecondaryAccount(Integer customerId, Double amount, String decision,
+			String secondaryAccount) {
 		Account account = findCustomerAccount(customerId);
 
 		String secondaryAccountToWithdraw = checkSecondaryAccount(account, secondaryAccount);
@@ -284,7 +282,7 @@ public class AccountService {
 			System.out.println(NO_MONEY_TO_REMOVE);/* NECESSARIO INCLUIR PLAFOND DO CARTAO DE CREDITO */
 			return;
 		}
-		
+
 		for (Account customerToTransfer : repository.getAll()) {
 			if (customerToTransfer == null)
 				break;
@@ -312,7 +310,6 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 	public Account checkAccountNameAndPassword(String accountHolderNumber, String password) {
-
 
 		for (Account account : repository.getAll()) {
 			if (account == null)
