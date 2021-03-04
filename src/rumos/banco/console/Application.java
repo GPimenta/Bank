@@ -792,9 +792,10 @@ public class Application {
 			System.out.println("Please indicate the pin of the credit card number");
 			pinCard = scanner.next();
 			newCreditCard.setCreditCardPin(pinCard);
+			return newCreditCard;
 		}
 
-		return newCreditCard;
+		return null;
 	}
 
 	/******************************************************************************
