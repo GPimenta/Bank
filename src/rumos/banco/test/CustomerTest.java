@@ -2,11 +2,11 @@ package rumos.banco.test;
 
 import java.time.LocalDate;
 
-import rumos.banco.model.Customer;
-import rumos.banco.repository.InMemCustomerRepositoryImpl;
-import rumos.banco.repository.DBCustomerRepositoryImpl;
-import rumos.banco.repository.ICustomerRepository;
-import rumos.banco.service.CustomerService;
+import rumos.banco.customers.model.Customer;
+import rumos.banco.customers.repository.DBCustomerRepositoryImpl;
+import rumos.banco.customers.repository.ICustomerRepository;
+import rumos.banco.customers.repository.InMemCustomerRepositoryImpl;
+import rumos.banco.customers.service.CustomerService;
 
 public class CustomerTest {
 	

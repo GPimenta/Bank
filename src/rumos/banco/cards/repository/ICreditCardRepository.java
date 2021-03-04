@@ -1,9 +1,9 @@
-package rumos.banco.repository;
+package rumos.banco.cards.repository;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.CreditCard;
+import rumos.banco.cards.model.CreditCard;
 
 public interface ICreditCardRepository {
 	Optional<CreditCard> getById(Integer id);

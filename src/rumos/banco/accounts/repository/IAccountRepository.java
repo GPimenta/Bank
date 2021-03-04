@@ -1,10 +1,10 @@
-package rumos.banco.repository;
+package rumos.banco.accounts.repository;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.Account;
-import rumos.banco.model.Card;
+import rumos.banco.accounts.model.Account;
+import rumos.banco.cards.model.Card;
 
 public interface IAccountRepository {
 

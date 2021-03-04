@@ -5,22 +5,22 @@ import java.time.Year;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import rumos.banco.model.Account;
-import rumos.banco.model.CreditCard;
-import rumos.banco.model.Customer;
-import rumos.banco.model.DebitCard;
-import rumos.banco.repository.IAccountRepository;
-import rumos.banco.repository.ICreditCardRepository;
-import rumos.banco.repository.ICustomerRepository;
-import rumos.banco.repository.IDebitCardRepository;
-import rumos.banco.repository.InMemAccountRepositoryImpl;
-import rumos.banco.repository.InMemCreditCardRepositoryImpl;
-import rumos.banco.repository.InMemCustomerRepositoryImpl;
-import rumos.banco.repository.InMemDebitCardRepositoryImpl;
-import rumos.banco.service.AccountService;
-import rumos.banco.service.CreditCardService;
-import rumos.banco.service.CustomerService;
-import rumos.banco.service.DebitCardService;
+import rumos.banco.accounts.model.Account;
+import rumos.banco.accounts.repository.IAccountRepository;
+import rumos.banco.accounts.repository.InMemAccountRepositoryImpl;
+import rumos.banco.accounts.service.AccountService;
+import rumos.banco.cards.model.CreditCard;
+import rumos.banco.cards.model.DebitCard;
+import rumos.banco.cards.repository.ICreditCardRepository;
+import rumos.banco.cards.repository.IDebitCardRepository;
+import rumos.banco.cards.repository.InMemCreditCardRepositoryImpl;
+import rumos.banco.cards.repository.InMemDebitCardRepositoryImpl;
+import rumos.banco.cards.service.CreditCardService;
+import rumos.banco.cards.service.DebitCardService;
+import rumos.banco.customers.model.Customer;
+import rumos.banco.customers.repository.ICustomerRepository;
+import rumos.banco.customers.repository.InMemCustomerRepositoryImpl;
+import rumos.banco.customers.service.CustomerService;
 
 public class Application {
 	private static final int EXIT = 0;

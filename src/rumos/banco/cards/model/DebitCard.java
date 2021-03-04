@@ -1,4 +1,4 @@
-package rumos.banco.model;
+package rumos.banco.cards.model;
 
 public class DebitCard extends Card {
 

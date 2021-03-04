@@ -1,9 +1,9 @@
-package rumos.banco.repository;
+package rumos.banco.customers.repository;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.Customer;
+import rumos.banco.customers.model.Customer;
 
 public interface ICustomerRepository {
 

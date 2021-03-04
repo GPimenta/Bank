@@ -1,9 +1,9 @@
-package rumos.banco.service;
+package rumos.banco.cards.service;
 
 import java.util.Random;
 
-import rumos.banco.model.DebitCard;
-import rumos.banco.repository.IDebitCardRepository;
+import rumos.banco.cards.model.DebitCard;
+import rumos.banco.cards.repository.IDebitCardRepository;
 
 public class DebitCardService {
 

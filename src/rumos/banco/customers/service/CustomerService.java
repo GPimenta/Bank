@@ -1,10 +1,10 @@
-package rumos.banco.service;
+package rumos.banco.customers.service;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.Customer;
-import rumos.banco.repository.ICustomerRepository;
+import rumos.banco.customers.model.Customer;
+import rumos.banco.customers.repository.ICustomerRepository;
 
 public class CustomerService {
 

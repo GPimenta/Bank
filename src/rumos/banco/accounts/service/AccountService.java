@@ -1,12 +1,12 @@
-package rumos.banco.service;
+package rumos.banco.accounts.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import rumos.banco.model.Account;
-import rumos.banco.model.Customer;
-import rumos.banco.repository.IAccountRepository;
+import rumos.banco.accounts.model.Account;
+import rumos.banco.accounts.repository.IAccountRepository;
+import rumos.banco.customers.model.Customer;
 
 public class AccountService {
 

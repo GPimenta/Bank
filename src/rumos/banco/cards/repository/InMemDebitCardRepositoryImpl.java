@@ -1,11 +1,10 @@
-package rumos.banco.repository;
+package rumos.banco.cards.repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.model.Card;
-import rumos.banco.model.DebitCard;
+import rumos.banco.cards.model.DebitCard;
 
 public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 

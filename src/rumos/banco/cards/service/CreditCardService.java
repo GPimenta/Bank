@@ -1,13 +1,11 @@
-package rumos.banco.service;
+package rumos.banco.cards.service;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import rumos.banco.model.Card;
-import rumos.banco.model.CreditCard;
-import rumos.banco.model.DebitCard;
-import rumos.banco.repository.ICreditCardRepository;
+import rumos.banco.cards.model.CreditCard;
+import rumos.banco.cards.repository.ICreditCardRepository;
 
 public class CreditCardService {
 
