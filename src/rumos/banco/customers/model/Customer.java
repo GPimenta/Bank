@@ -7,12 +7,15 @@ import java.util.Arrays;
 
 public class Customer {
 	// client parameters
-	private final Integer id;
+	private Integer id;
 	private String name;
-	private final  String taxId;
+	private String taxId;
 	private String email;
-	private final LocalDate birthday;
-
+	private LocalDate birthday;
+	
+	public Customer() {
+		
+	}
 
 	public Customer(Integer id, String name, String taxId, String email, LocalDate birthday) {
 		this.id = id;
