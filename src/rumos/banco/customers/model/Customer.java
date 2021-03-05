@@ -7,11 +7,21 @@ import java.util.Arrays;
 
 public class Customer {
 	// client parameters
-	private Integer id;
+	private final Integer id;
 	private String name;
-	private String taxId;
+	private final  String taxId;
 	private String email;
-	private LocalDate birthday;
+	private final LocalDate birthday;
+
+
+	public Customer(Integer id, String name, String taxId, String email, LocalDate birthday) {
+		this.id = id;
+		this.name = name;
+		this.taxId = taxId;
+		this.email = email;
+		this.birthday = birthday;
+	}
+
 
 	@Override
 	public int hashCode() {
