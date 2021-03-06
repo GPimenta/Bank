@@ -2,7 +2,15 @@ package rumos.banco.customers.model;
 
 import java.time.LocalDate;
 
+import rumos.banco.utils.IPreconditions;
+import rumos.banco.utils.Preconditions;
+
+
+
 public class Customer {
+	
+    public static final int CUSTOMER_NAME_MIN_LENGTH = 3;
+    public static final int CUSTOMER_TAXID_LENGTH = 9;
 
 	private final Integer id;
 	private String name;
@@ -14,10 +22,10 @@ public class Customer {
 	
 	public Customer(Integer id, String name, String taxId, String email, LocalDate birthday) {
 		this.id = id;
-		this.name = name;
-		this.taxId = taxId;
-		this.email = email;
-		this.birthday = birthday;
+		this.name = IPreconditions.checkLength(name, CUSTOMER_NAME_MIN_LENGTH, "Customer name must be greater than 3 characters");
+		this.taxId = IPreconditions.checkLength(taxId, CUSTOMER_TAXID_LENGTH, "Customer taxId must be 9 digits");
+		this.email = IPreconditions.checkNotNull(email, "Customer email can not be null");
+		this.birthday = IPreconditions.checkNotNull(birthday, "Customer birthday can not be null");
 	}
 	
 	public String getName() {
@@ -143,7 +151,8 @@ public class Customer {
 		}
 		
 		public Customer build() {
-			return new Customer(id,name,taxId,email,birthday);
+			Customer customer = new Customer(id,name,taxId,email,birthday);
+			return customer;
 		}
 	}
 }
