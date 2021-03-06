@@ -5,7 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Customer {
+public class OldCustomer {
 	// client parameters
 	private Integer id;
 	private String name;
@@ -13,11 +13,11 @@ public class Customer {
 	private String email;
 	private LocalDate birthday;
 	
-	public Customer() {
+	public OldCustomer() {
 		
 	}
 
-	public Customer(Integer id, String name, String taxId, String email, LocalDate birthday) {
+	public OldCustomer(Integer id, String name, String taxId, String email, LocalDate birthday) {
 		this.id = id;
 		this.name = name;
 		this.taxId = taxId;
@@ -46,7 +46,7 @@ public class Customer {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Customer other = (Customer) obj;
+		OldCustomer other = (OldCustomer) obj;
 		if (birthday == null) {
 			if (other.birthday != null)
 				return false;

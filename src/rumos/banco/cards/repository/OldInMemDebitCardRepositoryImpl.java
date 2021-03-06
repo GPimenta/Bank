@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.cards.model.DebitCard;
+import rumos.banco.cards.model.OldDebitCard;
 
-public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
+public class OldInMemDebitCardRepositoryImpl implements OldIDebitCardRepository {
 
-	private static ArrayList<DebitCard> debitCards = new ArrayList<>();
+	private static ArrayList<OldDebitCard> debitCards = new ArrayList<>();
 	private static Integer id = 0;
 
 	@Override
-	public Optional<DebitCard> getById(Integer id) {
-		for (DebitCard debitCard : debitCards) {
+	public Optional<OldDebitCard> getById(Integer id) {
+		for (OldDebitCard debitCard : debitCards) {
 			if (debitCard.getId().equals(id)) {
 				return Optional.of(debitCard);
 			}
@@ -22,16 +22,16 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 	}
 
 	@Override
-	public Collection<DebitCard> getAll() {
-		ArrayList<DebitCard> result = new ArrayList<DebitCard>();
-		for (DebitCard debitCard : debitCards) {
+	public Collection<OldDebitCard> getAll() {
+		ArrayList<OldDebitCard> result = new ArrayList<OldDebitCard>();
+		for (OldDebitCard debitCard : debitCards) {
 			result.add(debitCard);
 		}
 		return result;
 	}
 
 	@Override
-	public void create(DebitCard card) {
+	public void create(OldDebitCard card) {
 		card.setId(++id);
 		card.setCustomerId(id);
 		debitCards.add(card);
@@ -40,7 +40,7 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 
 	@Override
 	public void deleteById(Integer id) {
-		for (DebitCard debitCard : debitCards) {
+		for (OldDebitCard debitCard : debitCards) {
 			if (debitCard.getId().equals(id)) {
 				debitCards.remove(debitCard);
 				return;
@@ -50,7 +50,7 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 	
 	@Override
 	public void deleteByCustomerId(Integer customerId) {
-		for(DebitCard debitCard : debitCards) {
+		for(OldDebitCard debitCard : debitCards) {
 			if(debitCard.getCustomerId().equals(customerId)) {
 				debitCards.remove(debitCard);
 				return;
@@ -59,7 +59,7 @@ public class InMemDebitCardRepositoryImpl implements IDebitCardRepository {
 	}
 
 	@Override
-	public void update(DebitCard card) {
+	public void update(OldDebitCard card) {
 		card.setId(++id);
 		debitCards.add(card);
 

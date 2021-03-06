@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import rumos.banco.accounts.model.Account;
-import rumos.banco.accounts.repository.IAccountRepository;
-import rumos.banco.customers.model.Customer;
+import rumos.banco.accounts.model.OldAccount;
+import rumos.banco.accounts.repository.OldIAccountRepository;
+import rumos.banco.customers.model.OldCustomer;
 
-public class AccountService {
+public class OldAccountService {
 
 	private static final String INVALID_NAME_OR_PASSWORD = "Incorrect Name or Password";
 	private static final String NO_MONEY_TO_REMOVE = "You are removing an amount bigger than what you own";
@@ -17,14 +17,14 @@ public class AccountService {
 //	private static Scanner scanner = new Scanner(System.in);
 //	private static Integer id = 0;
 
-	private IAccountRepository repository;
+	private OldIAccountRepository repository;
 
 	/******************************************************************************
 	 * Constructor
 	 * 
 	 * 
 	 ******************************************************************************/
-	public AccountService(IAccountRepository repository) {
+	public OldAccountService(OldIAccountRepository repository) {
 		this.repository = repository;
 	}
 
@@ -34,7 +34,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 
-	public void create(Account account) {
+	public void create(OldAccount account) {
 		if (account == null) {
 			throw new IllegalArgumentException("Failed to create account - Invalid account object");
 		}
@@ -47,7 +47,7 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 	public void deleteAccount(Integer customerId) {
-		for (Account account : repository.getAll()) {
+		for (OldAccount account : repository.getAll()) {
 			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Removing account");
 				repository.deleteByCustomerId(customerId);
@@ -63,7 +63,7 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public void addSecondaryAccount(Account account, String secondAccount) {
+	public void addSecondaryAccount(OldAccount account, String secondAccount) {
 		Integer index = checkIfPossibleToAddSecondaryAccounts(account);
 
 		if (index < 4) {
@@ -87,7 +87,7 @@ public class AccountService {
 	}
 
 	public boolean checkIfAccountHolderExists(String secondaryAccount) {
-		for (Account account : repository.getAll()) {
+		for (OldAccount account : repository.getAll()) {
 			if (account == null)
 				break;
 			if (account.getAccountHolderNumber().equals(secondaryAccount)) {
@@ -101,7 +101,7 @@ public class AccountService {
 		return false;
 	}
 
-	public int checkIfPossibleToAddSecondaryAccounts(Account account) {
+	public int checkIfPossibleToAddSecondaryAccounts(OldAccount account) {
 		Integer index = 4;
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
 			if (account.getSecondaryAccountNumber()[i].isBlank()) {
@@ -116,7 +116,7 @@ public class AccountService {
 		return index;
 	}
 
-	public void deleteSecondaryAccount(Account account, String secondaryAccount) {
+	public void deleteSecondaryAccount(OldAccount account, String secondaryAccount) {
 
 		if (!checkIfItHasSecondaryAccounts(account))
 			return;
@@ -134,7 +134,7 @@ public class AccountService {
 
 	}
 
-	public boolean checkIfItHasSecondaryAccounts(Account account) {
+	public boolean checkIfItHasSecondaryAccounts(OldAccount account) {
 
 		for (String secondaryAccounts : account.getSecondaryAccountNumber()) {
 			if (secondaryAccounts.isBlank())
@@ -144,7 +144,7 @@ public class AccountService {
 		return false;
 	}
 
-	public int countSecondaryAccounts(Account account) {
+	public int countSecondaryAccounts(OldAccount account) {
 		int count = 0;
 		for (int i = 0; i < account.getSecondaryAccountNumber().length; i++) {
 			if (account.getSecondaryAccountNumber()[i].isBlank()) {
@@ -158,7 +158,7 @@ public class AccountService {
 		return repository.getAll().size();
 	}
 
-	public int howManySecondaryAccountArePossibleToAdd(Account account) {
+	public int howManySecondaryAccountArePossibleToAdd(OldAccount account) {
 
 		int totalSecondaryAccounts = countAllHolderAccounts() - countSecondaryAccounts(account);
 
@@ -182,7 +182,7 @@ public class AccountService {
 	 ******************************************************************************/
 
 	public void depositMoneyOnHolderAccount(Integer customerId, Double amount) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 
 		account.setAccountHolderBalance(account.getAccountHolderBalance() + Math.abs(amount));
 		addTAccountHistoryMovement(account, amount.toString());
@@ -190,14 +190,14 @@ public class AccountService {
 	}
 
 	public void depositMoneyOnSecondaryAccount(Integer customerId, Double amount, String secondaryAccount) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 
 		String secondaryAccountDeposit = checkSecondaryAccount(account, secondaryAccount);
 
 		if (secondaryAccountDeposit == null)
 			return; // NECESSARIO FAZER LOOP PARA POR O SECONDARY NUMBER CORRECTO OU QUERER SAIR
 
-		for (Account getAccount : repository.getAll()) {
+		for (OldAccount getAccount : repository.getAll()) {
 			// TODO isto nao deve funcionar sendo q estou a buscar uma copia do objeto e nao
 			// o objeto para mudar
 			if (getAccount.getAccountHolderNumber().equals(secondaryAccountDeposit)) {
@@ -216,7 +216,7 @@ public class AccountService {
 	 * @return
 	 ******************************************************************************/
 	public void withdrawMoneyOnHolderAccount(Integer customerId, Double amount, String decision) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 
 		if ((account.getAccountHolderBalance() - Math.abs(amount)) < 0D) {
 			System.out.println(NO_MONEY_TO_REMOVE);
@@ -235,14 +235,14 @@ public class AccountService {
 
 	public void withdrawMoneyOnSecondaryAccount(Integer customerId, Double amount, String decision,
 			String secondaryAccount) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 
 		String secondaryAccountToWithdraw = checkSecondaryAccount(account, secondaryAccount);
 
 		if (secondaryAccountToWithdraw == null)
 			return; // NECESSARIO FAZER LOOP PARA POR O SECONDARY NUMBER CORRECTO OU QUERER SAIR
 
-		for (Account getAccount : repository.getAll()) {
+		for (OldAccount getAccount : repository.getAll()) {
 			if (getAccount.getAccountHolderNumber().equals(secondaryAccountToWithdraw)) {
 				withdrawMoneyOnHolderAccount(getAccount.getCustomerId(), amount, decision);
 				return;
@@ -252,7 +252,7 @@ public class AccountService {
 		return;
 	}
 
-	public String checkSecondaryAccount(Account account, String secondaryAccount) {
+	public String checkSecondaryAccount(OldAccount account, String secondaryAccount) {
 
 		for (String otherAccounts : account.getSecondaryAccountNumber()) {
 			if (otherAccounts.equals(secondaryAccount)) {
@@ -272,7 +272,7 @@ public class AccountService {
 
 	public void transferMoney(Integer customerId, Double amount, String accountToTransfer) {
 
-		Account account;
+		OldAccount account;
 
 		account = findCustomerAccount(customerId);
 		if (account == null)
@@ -283,7 +283,7 @@ public class AccountService {
 			return;
 		}
 
-		for (Account customerToTransfer : repository.getAll()) {
+		for (OldAccount customerToTransfer : repository.getAll()) {
 			if (customerToTransfer == null)
 				break;
 			if (customerToTransfer.getAccountHolderNumber().equals(accountToTransfer)) {
@@ -309,9 +309,9 @@ public class AccountService {
 	 * 
 	 * @return
 	 ******************************************************************************/
-	public Account checkAccountNameAndPassword(String accountHolderNumber, String password) {
+	public OldAccount checkAccountNameAndPassword(String accountHolderNumber, String password) {
 
-		for (Account account : repository.getAll()) {
+		for (OldAccount account : repository.getAll()) {
 			if (account == null)
 				continue;
 			if (account.getAccountHolderNumber().equals(accountHolderNumber)
@@ -329,7 +329,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 	public void showAccountsDetails() {
-		for (Account account : repository.getAll()) {
+		for (OldAccount account : repository.getAll()) {
 			System.out.println("The account: ");
 			System.out.println(account.toString());
 		}
@@ -353,7 +353,7 @@ public class AccountService {
 	 ******************************************************************************/
 
 	public void showAccountHistoryMovement(Integer customerId) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 		for (String transactionHistory : account.getTransactionHistory()) {
 			System.out.println("The transaction history: " + transactionHistory);
 		}
@@ -366,7 +366,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 
-	public void addTAccountHistoryMovement(Account account, String amount) {
+	public void addTAccountHistoryMovement(OldAccount account, String amount) {
 		account.getTransactionHistory().add(amount);
 	}
 
@@ -375,8 +375,8 @@ public class AccountService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public Account findCustomerAccount(Integer customerId) {
-		for (Account account : repository.getAll()) {
+	public OldAccount findCustomerAccount(Integer customerId) {
+		for (OldAccount account : repository.getAll()) {
 			if (account.getCustomerId().equals(customerId)) {
 				System.out.println("Account found");
 				return account;
@@ -392,7 +392,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 	public void editAccountPassword(Integer customerId, String password) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 
 		account.setPasswordAccount(password);
 		return;
@@ -405,7 +405,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 	public void displayAccount(Integer customerId) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 		System.out.println(account.toString());
 	}
 
@@ -415,7 +415,7 @@ public class AccountService {
 	 * 
 	 ******************************************************************************/
 	public void withdrawMoneyFromCashAdvance(Integer customerId, Double amount) {
-		Account account = findCustomerAccount(customerId);
+		OldAccount account = findCustomerAccount(customerId);
 
 		if (account.getCheckEligability()) {
 			checkCashAdvance(account, amount);
@@ -430,7 +430,7 @@ public class AccountService {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public void checkCashAdvance(Account account, Double amount) {
+	public void checkCashAdvance(OldAccount account, Double amount) {
 		if (account.getCashAdvanceQuantity() - amount > 0) {
 			account.setCashAdvanceQuantity(account.getCashAdvanceQuantity() - amount);
 			System.out.println(

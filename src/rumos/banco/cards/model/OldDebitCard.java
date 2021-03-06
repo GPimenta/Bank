@@ -1,6 +1,6 @@
 package rumos.banco.cards.model;
 
-public class DebitCard extends Card {
+public class OldDebitCard extends OldCard {
 
 	private String debitCardNumber;
 	private String debitCardPin;
@@ -24,7 +24,7 @@ public class DebitCard extends Card {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DebitCard other = (DebitCard) obj;
+		OldDebitCard other = (OldDebitCard) obj;
 		if (debitCardNumber == null) {
 			if (other.debitCardNumber != null)
 				return false;

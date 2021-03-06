@@ -5,24 +5,24 @@ import java.time.Year;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import rumos.banco.accounts.model.Account;
-import rumos.banco.accounts.repository.IAccountRepository;
-import rumos.banco.accounts.repository.InMemAccountRepositoryImpl;
-import rumos.banco.accounts.service.AccountService;
-import rumos.banco.cards.model.CreditCard;
-import rumos.banco.cards.model.DebitCard;
-import rumos.banco.cards.repository.ICreditCardRepository;
-import rumos.banco.cards.repository.IDebitCardRepository;
-import rumos.banco.cards.repository.InMemCreditCardRepositoryImpl;
-import rumos.banco.cards.repository.InMemDebitCardRepositoryImpl;
-import rumos.banco.cards.service.CreditCardService;
-import rumos.banco.cards.service.DebitCardService;
-import rumos.banco.customers.model.Customer;
-import rumos.banco.customers.repository.ICustomerRepository;
-import rumos.banco.customers.repository.InMemCustomerRepositoryImpl;
-import rumos.banco.customers.service.CustomerService;
+import rumos.banco.accounts.model.OldAccount;
+import rumos.banco.accounts.repository.OldIAccountRepository;
+import rumos.banco.accounts.repository.OldInMemAccountRepositoryImpl;
+import rumos.banco.accounts.service.OldAccountService;
+import rumos.banco.cards.model.OldCreditCard;
+import rumos.banco.cards.model.OldDebitCard;
+import rumos.banco.cards.repository.OldICreditCardRepository;
+import rumos.banco.cards.repository.OldIDebitCardRepository;
+import rumos.banco.cards.repository.OldInMemCreditCardRepositoryImpl;
+import rumos.banco.cards.repository.OldInMemDebitCardRepositoryImpl;
+import rumos.banco.cards.service.OldCreditCardService;
+import rumos.banco.cards.service.OldDebitCardService;
+import rumos.banco.customers.model.OldCustomer;
+import rumos.banco.customers.repository.OldICustomerRepository;
+import rumos.banco.customers.repository.OldInMemCustomerRepositoryImpl;
+import rumos.banco.customers.service.OldCustomerService;
 
-public class Application {
+public class OldApplication {
 	private static final int EXIT = 0;
 
 	private static final int CREATE_NEW_CUSTOMER = 1;
@@ -87,15 +87,15 @@ public class Application {
 
 	private static Scanner scanner = new Scanner(System.in);
 
-	private static ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
-	private static IDebitCardRepository debitRepository = new InMemDebitCardRepositoryImpl();
-	private static ICreditCardRepository creditRepository = new InMemCreditCardRepositoryImpl();
-	private static IAccountRepository accountRepository = new InMemAccountRepositoryImpl();
+	private static OldICustomerRepository customerRepository = new OldInMemCustomerRepositoryImpl();
+	private static OldIDebitCardRepository debitRepository = new OldInMemDebitCardRepositoryImpl();
+	private static OldICreditCardRepository creditRepository = new OldInMemCreditCardRepositoryImpl();
+	private static OldIAccountRepository accountRepository = new OldInMemAccountRepositoryImpl();
 
-	private static CustomerService customerService = new CustomerService(customerRepository);
-	private static DebitCardService debitCardService = new DebitCardService(debitRepository);
-	private static CreditCardService creditCardService = new CreditCardService(creditRepository);
-	private static AccountService accountService = new AccountService(accountRepository);
+	private static OldCustomerService customerService = new OldCustomerService(customerRepository);
+	private static OldDebitCardService debitCardService = new OldDebitCardService(debitRepository);
+	private static OldCreditCardService creditCardService = new OldCreditCardService(creditRepository);
+	private static OldAccountService accountService = new OldAccountService(accountRepository);
 
 	public static void main(String[] args) {
 		initiation();
@@ -176,7 +176,7 @@ public class Application {
 
 	private static void chooseATM_DebitCard() {
 		Integer option;
-		DebitCard debitCard;
+		OldDebitCard debitCard;
 		String cardNumber, cardPin;
 
 		System.out.println("Please indicate your Card Number");
@@ -218,7 +218,7 @@ public class Application {
 
 	private static void chooseATM_CreditCard() {
 		Integer option;
-		CreditCard creditCard;
+		OldCreditCard creditCard;
 		String cardNumber, cardPin;
 
 		System.out.println("Please indicate your Card Number");
@@ -260,7 +260,7 @@ public class Application {
 
 	private static void chooseOnline() {
 		Integer option;
-		Account account;
+		OldAccount account;
 		String accountHolderNumber;
 		String password;
 		
@@ -329,7 +329,7 @@ public class Application {
 
 	public static void editCustomerDetails(Integer customerId) {
 		Integer change;
-		Customer customer;
+		OldCustomer customer;
 
 		customer = customerService.getCustomerById(customerId);
 
@@ -369,7 +369,7 @@ public class Application {
 	 ******************************************************************************/
 
 	private static void editSecondaryAccounts(Integer customerId) {
-		Account account = accountService.findCustomerAccount(customerId);
+		OldAccount account = accountService.findCustomerAccount(customerId);
 		String secondaryAccount;
 		Integer choose;
 
@@ -412,8 +412,8 @@ public class Application {
 	 ******************************************************************************/
 	private static void editBankCards(Integer customerId) {
 		Integer option;
-		DebitCard debitCard = null;
-		CreditCard creditCard = null;
+		OldDebitCard debitCard = null;
+		OldCreditCard creditCard = null;
 
 		do {
 
@@ -445,7 +445,7 @@ public class Application {
 	private static void editBankDebitCards(Integer customerId) {
 		Integer option;
 		String cardNumber, cardPin;
-		DebitCard debitCard = null;
+		OldDebitCard debitCard = null;
 
 		do {
 			debitCard = debitCardService.findCustomerDebitCard(customerId);
@@ -480,7 +480,7 @@ public class Application {
 	private static void editBankCreditCards(Integer customerId) {
 		Integer option;
 		String cardNumber, cardPin;
-		CreditCard creditCard = null;
+		OldCreditCard creditCard = null;
 
 		do {
 			creditCard = creditCardService.findCustomerCreditCard(customerId);
@@ -520,7 +520,7 @@ public class Application {
 
 	private static void moneyManagement(Integer customerId) {
 		Integer option;
-		Account account;
+		OldAccount account;
 		Double amount;
 		String decision;
 		String secondaryAccount;
@@ -611,7 +611,7 @@ public class Application {
 	 ******************************************************************************/
 
 	private static void createNewCustomer() {
-		Customer customer = new Customer();
+		OldCustomer customer = new OldCustomer();
 
 		customer = populateCustomer();
 		System.out.println(CUSTOMER_CREATED);
@@ -628,7 +628,7 @@ public class Application {
 	 ******************************************************************************/
 
 	private static void createNewAccount() {
-		Account account = new Account();
+		OldAccount account = new OldAccount();
 
 		account = populateAccount();
 		System.out.println(ACCOUNT_CREATED);
@@ -645,8 +645,8 @@ public class Application {
 	 ******************************************************************************/
 
 	private static void CreateNewCard() {
-		DebitCard debitCard = new DebitCard();
-		CreditCard creditCard = new CreditCard();
+		OldDebitCard debitCard = new OldDebitCard();
+		OldCreditCard creditCard = new OldCreditCard();
 
 		debitCard = populateDebitCard();
 		if (debitCard == null) {
@@ -669,7 +669,7 @@ public class Application {
 	}
 
 	private static void CreateNewDebitCard() {
-		DebitCard debitCard = new DebitCard();
+		OldDebitCard debitCard = new OldDebitCard();
 
 		debitCard = populateDebitCard();
 		if (debitCard == null) {
@@ -684,7 +684,7 @@ public class Application {
 	}
 
 	private static void CreateNewCreditCard() {
-		CreditCard creditCard = new CreditCard();
+		OldCreditCard creditCard = new OldCreditCard();
 
 		creditCard = populateCreditCard();
 		if (creditCard == null) {
@@ -719,9 +719,9 @@ public class Application {
 	 * 
 	 * @return TODO Por na camada console!!!!!!!!!!!!!!!!!!!!!!!
 	 ******************************************************************************/
-	public static Customer populateCustomer() {
+	public static OldCustomer populateCustomer() {
 		System.out.println("Creating new client");
-		Customer newCustomer = new Customer();
+		OldCustomer newCustomer = new OldCustomer();
 
 		System.out.println("Please set Name");
 		newCustomer.setName(scanner.next());
@@ -758,8 +758,8 @@ public class Application {
 	 * 
 	 * 
 	 ******************************************************************************/
-	public static DebitCard populateDebitCard() {
-		DebitCard newDebitCard = new DebitCard();
+	public static OldDebitCard populateDebitCard() {
+		OldDebitCard newDebitCard = new OldDebitCard();
 		String cardNumber;
 		String pinCard;
 
@@ -779,8 +779,8 @@ public class Application {
 
 	}
 
-	public static CreditCard populateCreditCard() {
-		CreditCard newCreditCard = new CreditCard();
+	public static OldCreditCard populateCreditCard() {
+		OldCreditCard newCreditCard = new OldCreditCard();
 		String cardNumber;
 		String pinCard;
 
@@ -809,9 +809,9 @@ public class Application {
 	 * @return
 	 ******************************************************************************/
 
-	public static Account populateAccount() {
+	public static OldAccount populateAccount() {
 		System.out.println("Creating new account");
-		Account newAccount = new Account();
+		OldAccount newAccount = new OldAccount();
 		Integer secondaryAccountsQuantities;
 		Integer before;
 		Integer after;

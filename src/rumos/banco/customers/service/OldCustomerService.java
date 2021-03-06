@@ -3,12 +3,12 @@ package rumos.banco.customers.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.customers.model.Customer;
-import rumos.banco.customers.repository.ICustomerRepository;
+import rumos.banco.customers.model.OldCustomer;
+import rumos.banco.customers.repository.OldICustomerRepository;
 
-public class CustomerService {
+public class OldCustomerService {
 
-	private ICustomerRepository repository;
+	private OldICustomerRepository repository;
 	
 	/******************************************************************************
 	 * Constructor
@@ -16,7 +16,7 @@ public class CustomerService {
 	 * @return
 	 ******************************************************************************/
 	
-	public CustomerService(ICustomerRepository repository) {
+	public OldCustomerService(OldICustomerRepository repository) {
 		this.repository = repository;
 				
 	}
@@ -28,7 +28,7 @@ public class CustomerService {
 	 * @return
 	 ******************************************************************************/
 
-	public void create(Customer customer) {
+	public void create(OldCustomer customer) {
 		if(customer == null) {
 			throw new IllegalArgumentException("Failed to create customer - Invalid customer object");
 		}
@@ -43,9 +43,9 @@ public class CustomerService {
 	 ******************************************************************************/
 	public Integer deleteCustomerDetails(String name, String taxId) {
 
-		Collection<Customer> customers = repository.getAll();
+		Collection<OldCustomer> customers = repository.getAll();
 		
-		for (Customer customer : customers) {
+		for (OldCustomer customer : customers) {
 			if(customer.getName().equalsIgnoreCase(name) && customer.getTaxId().equals(taxId)) {
 				customers.remove(customer);
 				return customer.getId();
@@ -66,9 +66,9 @@ public class CustomerService {
 	 * @return
 	 ******************************************************************************/
 	public Boolean taxIDalreadyExists(String taxId) {
-		Collection<Customer> customers = repository.getAll();
+		Collection<OldCustomer> customers = repository.getAll();
 
-		for (Customer customer : customers) {
+		for (OldCustomer customer : customers) {
 			if (customer != null) {
 				if (taxId.equals(customer.getTaxId()))
 					return true;
@@ -84,9 +84,9 @@ public class CustomerService {
 	 *
 	 ******************************************************************************/
 	public void showCustomersDetails() {
-		Collection<Customer> customers = repository.getAll();
+		Collection<OldCustomer> customers = repository.getAll();
 		
-		for (Customer customer : customers) {
+		for (OldCustomer customer : customers) {
 			System.out.println("The customer: ");
 			System.out.println(customer.toString());
 		}
@@ -98,7 +98,7 @@ public class CustomerService {
 	 ******************************************************************************/
 	public void showCustomer(Integer customerId) {
 		
-		Optional<Customer> customer = repository.getById(customerId);
+		Optional<OldCustomer> customer = repository.getById(customerId);
 		System.out.println(customer.toString());
 		return;
 	}
@@ -111,9 +111,9 @@ public class CustomerService {
 	 ******************************************************************************/
 	public Integer findCustomerByNameAndTaxId(String name, String taxId) {
 
-		Collection<Customer> customers = repository.getAll();
+		Collection<OldCustomer> customers = repository.getAll();
 		
-		for (Customer customer : customers) {
+		for (OldCustomer customer : customers) {
 			if (customer.getName().equals(name) && customer.getTaxId().equals(taxId)) {
 				System.out.println(customer.toString());
 				return customer.getId();
@@ -128,9 +128,9 @@ public class CustomerService {
 	 * 
 	 *TODO ISTO INVIABILIZA o OPTIONAL, NAO SEI COMO FAZER
 	 ******************************************************************************/
-	public Customer getCustomerById(Integer customerId) {
+	public OldCustomer getCustomerById(Integer customerId) {
 		
-		Optional<Customer> customerOpt = repository.getById(customerId);
+		Optional<OldCustomer> customerOpt = repository.getById(customerId);
 		if(customerOpt != null && customerOpt.isPresent()) {
 			return customerOpt.get();
 		}

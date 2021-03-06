@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.customers.model.Customer;
+import rumos.banco.customers.model.OldCustomer;
 
-public class DBCustomerRepositoryImpl implements ICustomerRepository {
+public class OldDBCustomerRepositoryImpl implements OldICustomerRepository {
 
 	private final String username;
 	private final String password;
 	private final String url;
 
-	public DBCustomerRepositoryImpl(String url, String username, String password) {
+	public OldDBCustomerRepositoryImpl(String url, String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.url = url;
@@ -31,8 +31,8 @@ public class DBCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public Collection<Customer> getAll() {
-		ArrayList<Customer> result = new ArrayList<>();
+	public Collection<OldCustomer> getAll() {
+		ArrayList<OldCustomer> result = new ArrayList<>();
 		
 		String sql = "SELECT * FROM customer";
 		
@@ -46,7 +46,7 @@ public class DBCustomerRepositoryImpl implements ICustomerRepository {
 			if (isQueary) {
 				try (ResultSet rs = stmt.getResultSet()) {
 					while (rs.next()) {
-						Customer customer = new Customer();
+						OldCustomer customer = new OldCustomer();
 						customer.setId(rs.getInt(1));
 						customer.setTaxId(rs.getString("taxId"));
 						customer.setName(rs.getString("name"));	
@@ -71,7 +71,7 @@ public class DBCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public void create(Customer customer) {
+	public void create(OldCustomer customer) {
 
 		String preQuery = "INSERT INTO customer(name, taxId, email, birthday)\r\n" + "VALUES (?, ?, ?, ?);";
 
@@ -95,7 +95,7 @@ public class DBCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public Optional<Customer> getById(Integer id) {
+	public Optional<OldCustomer> getById(Integer id) {
 
 		String sql = "SELECT * FROM customer WHERE id = ?";
 
@@ -109,7 +109,7 @@ public class DBCustomerRepositoryImpl implements ICustomerRepository {
 			if (isQueary) {
 				try (ResultSet rs = stmt.getResultSet()) {
 					while (rs.next()) {
-						Customer customer = new Customer();
+						OldCustomer customer = new OldCustomer();
 						customer.setId(rs.getInt(1));
 						customer.setTaxId(rs.getString("taxId"));
 						customer.setName(rs.getString("name"));	
@@ -134,7 +134,7 @@ public class DBCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public void update(Customer customer) {
+	public void update(OldCustomer customer) {
 		// TODO Auto-generated method stub
 
 	}

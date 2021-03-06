@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.cards.model.CreditCard;
+import rumos.banco.cards.model.OldCreditCard;
 
-public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
+public class OldInMemCreditCardRepositoryImpl implements OldICreditCardRepository {
 
-	private static ArrayList<CreditCard> creditCards = new ArrayList<>();
+	private static ArrayList<OldCreditCard> creditCards = new ArrayList<>();
 	private static Integer id = 0;
 
 	@Override
-	public Optional<CreditCard> getById(Integer id) {
-		for (CreditCard creditCards : creditCards) {
+	public Optional<OldCreditCard> getById(Integer id) {
+		for (OldCreditCard creditCards : creditCards) {
 			if (creditCards.getId().equals(id)) {
 				return Optional.of(creditCards);
 			}
@@ -22,16 +22,16 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 	}
 
 	@Override
-	public Collection<CreditCard> getAll() {
-		ArrayList<CreditCard> result = new ArrayList<CreditCard>();
-		for (CreditCard creditCard : creditCards) {
+	public Collection<OldCreditCard> getAll() {
+		ArrayList<OldCreditCard> result = new ArrayList<OldCreditCard>();
+		for (OldCreditCard creditCard : creditCards) {
 			result.add(creditCard);
 		}
 		return result;
 	}
 
 	@Override
-	public void create(CreditCard creditCard) {
+	public void create(OldCreditCard creditCard) {
 		creditCard.setId(++id);
 		creditCard.setCustomerId(id);
 		creditCards.add(creditCard);
@@ -40,7 +40,7 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 
 	@Override
 	public void deleteById(Integer id) {
-		for (CreditCard creditCard : creditCards) {
+		for (OldCreditCard creditCard : creditCards) {
 			if (creditCard.getId().equals(id)) {
 				creditCards.remove(creditCard);
 				return;
@@ -50,7 +50,7 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 	
 	@Override
 	public void deleteByCustomerId(Integer customerId) {
-		for(CreditCard creditCard : creditCards) {
+		for(OldCreditCard creditCard : creditCards) {
 			if(creditCard.getCustomerId().equals(customerId)) {
 				creditCards.remove(creditCard);
 				return;
@@ -59,7 +59,7 @@ public class InMemCreditCardRepositoryImpl implements ICreditCardRepository {
 	}
 
 	@Override
-	public void update(CreditCard creditCard) {
+	public void update(OldCreditCard creditCard) {
 		creditCard.setId(++id);
 		creditCards.add(creditCard);
 

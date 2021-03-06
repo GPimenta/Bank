@@ -3,7 +3,7 @@ package rumos.banco.accounts.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Account {
+public class OldAccount {
 
 	private Integer id;
 	private Integer customerId;
@@ -48,7 +48,7 @@ public class Account {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Account other = (Account) obj;
+		OldAccount other = (OldAccount) obj;
 		if (accountHolderBalance == null) {
 			if (other.accountHolderBalance != null)
 				return false;

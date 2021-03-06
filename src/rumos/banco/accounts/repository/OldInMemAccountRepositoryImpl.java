@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.accounts.model.Account;
+import rumos.banco.accounts.model.OldAccount;
 
-public class InMemAccountRepositoryImpl implements IAccountRepository {
+public class OldInMemAccountRepositoryImpl implements OldIAccountRepository {
 
-	private static ArrayList<Account> accounts = new ArrayList<>();
+	private static ArrayList<OldAccount> accounts = new ArrayList<>();
 	private static Integer id = 0;
 
 	@Override
-	public Optional<Account> getById(Integer id) {
-		for (Account account : accounts) {
+	public Optional<OldAccount> getById(Integer id) {
+		for (OldAccount account : accounts) {
 			if (account.getId().equals(id)) {
 				return Optional.of(account);
 			}
@@ -22,16 +22,16 @@ public class InMemAccountRepositoryImpl implements IAccountRepository {
 	}
 
 	@Override
-	public Collection<Account> getAll() {
-		ArrayList<Account> result = new ArrayList<Account>();
-		for (Account account : accounts) {
+	public Collection<OldAccount> getAll() {
+		ArrayList<OldAccount> result = new ArrayList<OldAccount>();
+		for (OldAccount account : accounts) {
 			result.add(account);
 		}
 		return result;
 	}
 
 	@Override
-	public void create(Account account) {
+	public void create(OldAccount account) {
 		account.setId(++id);
 		account.setCustomerId(id);
 		accounts.add(account);
@@ -40,7 +40,7 @@ public class InMemAccountRepositoryImpl implements IAccountRepository {
 
 	@Override
 	public void deleteById(Integer id) {
-		for (Account account : accounts) {
+		for (OldAccount account : accounts) {
 			if (account.getId().equals(id)) {
 				accounts.remove(account);
 			}
@@ -50,7 +50,7 @@ public class InMemAccountRepositoryImpl implements IAccountRepository {
 	
 	@Override
 	public void deleteByCustomerId(Integer customerId) {
-		for (Account account : accounts) {
+		for (OldAccount account : accounts) {
 			if (account.getCustomerId().equals(customerId)) {
 				accounts.remove(account);
 				return;
@@ -60,7 +60,7 @@ public class InMemAccountRepositoryImpl implements IAccountRepository {
 	}
 
 	@Override
-	public void update(Account account) {
+	public void update(OldAccount account) {
 		accounts.add(account);
 
 	}

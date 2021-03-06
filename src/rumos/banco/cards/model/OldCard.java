@@ -1,6 +1,6 @@
 package rumos.banco.cards.model;
 
-public class Card {
+public class OldCard {
 
 	private Integer id;
 	private Integer customerId;
@@ -23,7 +23,7 @@ public class Card {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Card other = (Card) obj;
+		OldCard other = (OldCard) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;

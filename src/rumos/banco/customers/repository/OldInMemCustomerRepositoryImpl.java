@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.customers.model.Customer;
+import rumos.banco.customers.model.OldCustomer;
 
-public class InMemCustomerRepositoryImpl implements ICustomerRepository {
+public class OldInMemCustomerRepositoryImpl implements OldICustomerRepository {
 
-	private static ArrayList<Customer> customers = new ArrayList<>();
+	private static ArrayList<OldCustomer> customers = new ArrayList<>();
 	private static Integer id = 0;
 
 	@Override
 	public void deleteById(Integer id) {
-		for (Customer customer : customers) {
+		for (OldCustomer customer : customers) {
 			if (customer.getId().equals(id)) {
 				customers.remove(customer);
 			}
@@ -22,10 +22,10 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public Collection<Customer> getAll() {
-		ArrayList<Customer> result = new ArrayList<Customer>();
-		for (Customer customer : customers) {
-			Customer newCustomer = new Customer();
+	public Collection<OldCustomer> getAll() {
+		ArrayList<OldCustomer> result = new ArrayList<OldCustomer>();
+		for (OldCustomer customer : customers) {
+			OldCustomer newCustomer = new OldCustomer();
 			newCustomer.setDateOfBirth(customer.getDateOfBirth());
 			newCustomer.setEmail(customer.getEmail());
 			newCustomer.setId(customer.getId());
@@ -40,15 +40,15 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public void create(Customer customer) {
+	public void create(OldCustomer customer) {
 		customer.setId(++id);
 		customers.add(customer);
 
 	}
 
 	@Override
-	public Optional<Customer> getById(Integer id) {
-		for (Customer customer : customers) {
+	public Optional<OldCustomer> getById(Integer id) {
+		for (OldCustomer customer : customers) {
 			if(customer.getId().equals(id)) {
 				return Optional.of(customer);
 			}
@@ -57,7 +57,7 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public void update(Customer customer) {
+	public void update(OldCustomer customer) {
 		customers.add(customer); 
 		// TODO Auto-generated method stub
 
