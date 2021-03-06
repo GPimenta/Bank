@@ -10,6 +10,13 @@ public interface IPreconditions {
 	
 	public static String checkLength(String value, int length, String errorMessage) {
 		String valueClean = value.strip();
+		if(value == null | valueClean.length() != length) {
+			throw new IllegalArgumentException(errorMessage);
+		}
+		return valueClean;
+	}
+	public static String checkLengthIsGreaterThan(String value, int length, String errorMessage) {
+		String valueClean = value.strip();
 		if(value == null | valueClean.length() <= length) {
 			throw new IllegalArgumentException(errorMessage);
 		}
@@ -21,5 +28,9 @@ public interface IPreconditions {
 			throw new IllegalArgumentException(errorMessage);
 		}
 		return value;
+	}
+	
+	public static <T> T requireNonNullElse(T value, T orElse) {
+		return value != null ? value : orElse;
 	}
 }

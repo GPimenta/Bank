@@ -22,7 +22,7 @@ public class Customer {
 	
 	public Customer(Integer id, String name, String taxId, String email, LocalDate birthday) {
 		this.id = id;
-		this.name = IPreconditions.checkLength(name, CUSTOMER_NAME_MIN_LENGTH, "Customer name must be greater than 3 characters");
+		this.name = IPreconditions.checkLengthIsGreaterThan(name, CUSTOMER_NAME_MIN_LENGTH, "Customer name must be greater than 3 characters");
 		this.taxId = IPreconditions.checkLength(taxId, CUSTOMER_TAXID_LENGTH, "Customer taxId must be 9 digits");
 		this.email = IPreconditions.checkNotNull(email, "Customer email can not be null");
 		this.birthday = IPreconditions.checkNotNull(birthday, "Customer birthday can not be null");
