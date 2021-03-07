@@ -15,7 +15,7 @@ public class CreditCard extends Card {
 			Integer cashAdvance, Boolean used) {
 		super(id, customerId, accountId, cardNumber, pin, used);
 		
-		IPreconditions.checkArgument(cashAdvance < ALLOWED_LIMIT_CASH_ADVANCE, "The limit amount is: " + ALLOWED_LIMIT_CASH_ADVANCE);
+		IPreconditions.checkArgument(cashAdvance <= ALLOWED_LIMIT_CASH_ADVANCE, "The limit amount is: " + ALLOWED_LIMIT_CASH_ADVANCE);
 		
 		this.cashAdvance = IPreconditions.requireNonNullElse(cashAdvance, ALLOWED_LIMIT_CASH_ADVANCE);
 	}
@@ -52,6 +52,8 @@ public class CreditCard extends Card {
 	public void setCashAdvance(Integer cashAdvance) {
 		this.cashAdvance = cashAdvance;
 	}
+	
+	
 
 	public static class Builder {
 		private Integer id;
@@ -62,7 +64,7 @@ public class CreditCard extends Card {
 		private Integer cashAdvance;
 		private Boolean used;
 
-		private Builder() {
+		public Builder() {
 
 		}
 

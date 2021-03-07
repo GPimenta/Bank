@@ -14,7 +14,7 @@ public class DebitCard extends Card{
 		private String pin;
 		private Boolean used;
 		
-		private Builder() {
+		public Builder() {
 			
 		}
 		

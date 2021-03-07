@@ -1,10 +1,11 @@
 package rumos.banco.test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import rumos.banco.accounts.model.Account;
+import rumos.banco.cards.model.CreditCard;
+import rumos.banco.cards.model.DebitCard;
 import rumos.banco.customers.model.Customer;
 
 public class MainTest {
@@ -33,6 +34,29 @@ public class MainTest {
 		
 		
 		System.out.println(account.toString());
+		
+		DebitCard debitCard = new DebitCard.Builder()
+										   .withId(1)
+										   .withCustomerId(1)
+										   .withAccountId(1)
+										   .withCardNumber("12345")
+										   .withPin("1234")
+										   .isUsed(false)
+										   .build();
+		
+		System.out.println(debitCard.toString());
+		
+		CreditCard creditCard = new CreditCard.Builder()
+											   .withId(1)
+											   .withCustomerId(1)
+											   .withAccountId(1)
+											   .withCardNumber("12345")
+											   .withPin("1234")
+											   .withCashAdvance(249)
+											   .isUsed(false)
+											   .build();
+		
+		System.out.println(creditCard.toString());
 		
 	}
 
