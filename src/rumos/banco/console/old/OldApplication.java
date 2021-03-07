@@ -1,23 +1,23 @@
-package rumos.banco.console;
+package rumos.banco.console.old;
 
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import rumos.banco.accounts.model.OldAccount;
+import rumos.banco.accounts.model.old.OldAccount;
 import rumos.banco.accounts.repository.OldIAccountRepository;
 import rumos.banco.accounts.repository.OldInMemAccountRepositoryImpl;
 import rumos.banco.accounts.service.OldAccountService;
-import rumos.banco.cards.model.OldCreditCard;
-import rumos.banco.cards.model.OldDebitCard;
-import rumos.banco.cards.repository.OldICreditCardRepository;
-import rumos.banco.cards.repository.OldIDebitCardRepository;
-import rumos.banco.cards.repository.OldInMemCreditCardRepositoryImpl;
-import rumos.banco.cards.repository.OldInMemDebitCardRepositoryImpl;
+import rumos.banco.cards.model.old.OldCreditCard;
+import rumos.banco.cards.model.old.OldDebitCard;
+import rumos.banco.cards.repository.old.OldICreditCardRepository;
+import rumos.banco.cards.repository.old.OldIDebitCardRepository;
+import rumos.banco.cards.repository.old.OldInMemCreditCardRepositoryImpl;
+import rumos.banco.cards.repository.old.OldInMemDebitCardRepositoryImpl;
 import rumos.banco.cards.service.OldCreditCardService;
 import rumos.banco.cards.service.OldDebitCardService;
-import rumos.banco.customers.model.OldCustomer;
+import rumos.banco.customers.model.old.OldCustomer;
 import rumos.banco.customers.repository.OldICustomerRepository;
 import rumos.banco.customers.repository.OldInMemCustomerRepositoryImpl;
 import rumos.banco.customers.service.OldCustomerService;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.customers.model.OldCustomer;
+import rumos.banco.customers.model.old.OldCustomer;
 
 public class OldInMemCustomerRepositoryImpl implements OldICustomerRepository {
 

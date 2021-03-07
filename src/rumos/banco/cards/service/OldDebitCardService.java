@@ -2,8 +2,8 @@ package rumos.banco.cards.service;
 
 import java.util.Random;
 
-import rumos.banco.cards.model.OldDebitCard;
-import rumos.banco.cards.repository.OldIDebitCardRepository;
+import rumos.banco.cards.model.old.OldDebitCard;
+import rumos.banco.cards.repository.old.OldIDebitCardRepository;
 
 public class OldDebitCardService {
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import rumos.banco.cards.model.OldCreditCard;
-import rumos.banco.cards.repository.OldICreditCardRepository;
+import rumos.banco.cards.model.old.OldCreditCard;
+import rumos.banco.cards.repository.old.OldICreditCardRepository;
 
 public class OldCreditCardService {
 

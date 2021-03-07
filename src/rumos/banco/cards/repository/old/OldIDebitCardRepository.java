@@ -1,9 +1,9 @@
-package rumos.banco.cards.repository;
+package rumos.banco.cards.repository.old;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.cards.model.OldDebitCard;
+import rumos.banco.cards.model.old.OldDebitCard;
 
 public interface OldIDebitCardRepository {
 	Optional<OldDebitCard> getById(Integer id);

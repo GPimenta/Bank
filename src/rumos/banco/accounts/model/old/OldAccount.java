@@ -1,4 +1,4 @@
-package rumos.banco.accounts.model;
+package rumos.banco.accounts.model.old;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import rumos.banco.accounts.model.OldAccount;
+import rumos.banco.accounts.model.old.OldAccount;
 import rumos.banco.accounts.repository.OldIAccountRepository;
-import rumos.banco.customers.model.OldCustomer;
+import rumos.banco.customers.model.old.OldCustomer;
 
 public class OldAccountService {
 

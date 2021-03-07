@@ -1,4 +1,4 @@
-package rumos.banco.customers.model;
+package rumos.banco.customers.model.old;
 
 import java.time.LocalDate;
 import java.time.Period;

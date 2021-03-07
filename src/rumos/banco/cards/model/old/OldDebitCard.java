@@ -1,4 +1,4 @@
-package rumos.banco.cards.model;
+package rumos.banco.cards.model.old;
 
 public class OldDebitCard extends OldCard {
 

@@ -1,10 +1,10 @@
-package rumos.banco.cards.repository;
+package rumos.banco.cards.repository.old;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.cards.model.OldCreditCard;
+import rumos.banco.cards.model.old.OldCreditCard;
 
 public class OldInMemCreditCardRepositoryImpl implements OldICreditCardRepository {
 

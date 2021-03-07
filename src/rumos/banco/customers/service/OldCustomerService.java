@@ -3,7 +3,7 @@ package rumos.banco.customers.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.customers.model.OldCustomer;
+import rumos.banco.customers.model.old.OldCustomer;
 import rumos.banco.customers.repository.OldICustomerRepository;
 
 public class OldCustomerService {

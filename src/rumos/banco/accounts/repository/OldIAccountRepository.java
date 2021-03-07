@@ -3,8 +3,8 @@ package rumos.banco.accounts.repository;
 import java.util.Collection;
 import java.util.Optional;
 
-import rumos.banco.accounts.model.OldAccount;
-import rumos.banco.cards.model.OldCard;
+import rumos.banco.accounts.model.old.OldAccount;
+import rumos.banco.cards.model.old.OldCard;
 
 public interface OldIAccountRepository {
 
