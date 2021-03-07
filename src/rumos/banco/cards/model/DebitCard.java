@@ -2,8 +2,8 @@ package rumos.banco.cards.model;
 
 public class DebitCard extends Card{
 
-	public DebitCard(Integer id, Integer customerId, Integer accountId, String cardNumber, String pin) {
-		super(id, customerId, accountId, cardNumber, pin);
+	public DebitCard(Integer id, Integer customerId, Integer accountId, String cardNumber, String pin, Boolean used) {
+		super(id, customerId, accountId, cardNumber, pin, used);
 	}
 	
 	public static class Builder{
@@ -12,6 +12,7 @@ public class DebitCard extends Card{
 		private Integer accountId;
 		private String cardNumber;
 		private String pin;
+		private Boolean used;
 		
 		private Builder() {
 			
@@ -41,10 +42,14 @@ public class DebitCard extends Card{
 			this.pin = pin;
 			return this;
 		}
+		public Builder isUsed(Boolean used) {
+			this.used = used;
+			return this;
+		}
 		
 		
 		public DebitCard build() {
-			return new DebitCard(id, customerId, accountId, cardNumber, pin);
+			return new DebitCard(id, customerId, accountId, cardNumber, pin, used);
 		}
 		
 	}
