@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import rumos.banco.accounts.model.old.OldAccount;
-import rumos.banco.accounts.repository.OldIAccountRepository;
-import rumos.banco.accounts.repository.OldInMemAccountRepositoryImpl;
+import rumos.banco.accounts.repository.old.OldIAccountRepository;
+import rumos.banco.accounts.repository.old.OldInMemAccountRepositoryImpl;
 import rumos.banco.accounts.service.OldAccountService;
 import rumos.banco.cards.model.old.OldCreditCard;
 import rumos.banco.cards.model.old.OldDebitCard;
