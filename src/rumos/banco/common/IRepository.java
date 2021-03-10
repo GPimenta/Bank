@@ -7,7 +7,7 @@ public interface IRepository<T> {
 
 	Optional<T> create(T newItem);
 	
-	boolean deleteById(T id);
+	boolean deleteById(Integer id);
 	
 	Optional<T> update(T newItem);
 	

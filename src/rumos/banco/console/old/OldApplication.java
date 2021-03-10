@@ -18,8 +18,8 @@ import rumos.banco.cards.repository.old.OldInMemDebitCardRepositoryImpl;
 import rumos.banco.cards.service.OldCreditCardService;
 import rumos.banco.cards.service.OldDebitCardService;
 import rumos.banco.customers.model.old.OldCustomer;
-import rumos.banco.customers.repository.OldICustomerRepository;
-import rumos.banco.customers.repository.OldInMemCustomerRepositoryImpl;
+import rumos.banco.customers.repository.old.OldICustomerRepository;
+import rumos.banco.customers.repository.old.OldInMemCustomerRepositoryImpl;
 import rumos.banco.customers.service.OldCustomerService;
 
 public class OldApplication {

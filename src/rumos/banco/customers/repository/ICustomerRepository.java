@@ -1,4 +1,4 @@
-package rumos.banco.accounts.repository;
+package rumos.banco.customers.repository;
 
 import java.util.Optional;
 

@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import rumos.banco.customers.model.old.OldCustomer;
-import rumos.banco.customers.repository.OldICustomerRepository;
+import rumos.banco.customers.repository.old.OldICustomerRepository;
 
 public class OldCustomerService {
 

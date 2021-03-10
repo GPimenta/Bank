@@ -1,4 +1,4 @@
-package rumos.banco.customers.repository;
+package rumos.banco.customers.repository.old;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

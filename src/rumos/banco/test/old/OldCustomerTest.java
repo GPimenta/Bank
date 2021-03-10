@@ -3,9 +3,9 @@ package rumos.banco.test.old;
 import java.time.LocalDate;
 
 import rumos.banco.customers.model.old.OldCustomer;
-import rumos.banco.customers.repository.OldDBCustomerRepositoryImpl;
-import rumos.banco.customers.repository.OldICustomerRepository;
-import rumos.banco.customers.repository.OldInMemCustomerRepositoryImpl;
+import rumos.banco.customers.repository.old.OldDBCustomerRepositoryImpl;
+import rumos.banco.customers.repository.old.OldICustomerRepository;
+import rumos.banco.customers.repository.old.OldInMemCustomerRepositoryImpl;
 import rumos.banco.customers.service.OldCustomerService;
 
 public class OldCustomerTest {
