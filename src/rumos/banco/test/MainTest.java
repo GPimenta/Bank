@@ -7,11 +7,17 @@ import rumos.banco.accounts.model.Account;
 import rumos.banco.cards.model.CreditCard;
 import rumos.banco.cards.model.DebitCard;
 import rumos.banco.customers.model.Customer;
+import rumos.banco.customers.repository.ICustomerRepository;
+import rumos.banco.customers.repository.InMemCustomerRepositoryImpl;
 
 public class MainTest {
 
 	public static void main(String[] args) {
 		List<Integer> secondaryOwnersId = List.of(1,2,3);
+		ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
+		
+		customerRepository.
+		
 		// TODO Auto-generated method stub
 		Customer customer = new Customer.Builder()
 										.withId(1)
