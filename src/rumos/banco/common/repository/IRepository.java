@@ -1,9 +1,11 @@
-package rumos.banco.common;
+package rumos.banco.common.repository;
 
 import java.util.Collection;
 import java.util.Optional;
 
-public interface IRepository<T> {
+import rumos.banco.common.model.IdentificationItem;
+
+public interface IRepository<T extends IdentificationItem> {
 
 	Optional<T> create(T newItem);
 	

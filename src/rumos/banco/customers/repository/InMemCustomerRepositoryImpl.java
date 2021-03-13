@@ -28,11 +28,12 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 
 	@Override
 	public Optional<Customer> update(Customer newItem) {
-		if(!deleteById(newItem.getId())){
-			return Optional.empty();
+		if(deleteById(newItem.getId())){
+			repository.add(newItem);
+			return Optional.of(newItem);
 		}
-		repository.add(newItem);
-		return Optional.of(newItem);
+		
+		return Optional.empty();
 	}
 
 	@Override
