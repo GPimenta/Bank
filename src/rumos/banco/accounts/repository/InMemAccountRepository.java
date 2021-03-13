@@ -10,15 +10,19 @@ public class InMemAccountRepository extends InMemRepository<Account> implements 
 
 	private static Integer accountIdCounter = 0;
 
-	private static int generateAccountID() {
+	private static int generateAccountId() {
 		return ++accountIdCounter;
 	}
 
 	@Override
 	public Optional<Account> create(Account newItem) {
+
+		if (getAll().stream().anyMatch(account -> account.getAccountNumber().equals(newItem.getAccountNumber()))) {
+			return Optional.empty();
+		}
 		Account account = newItem;
-		account.set
-		return null;
+		account.setId(generateAccountId());
+		return super.create(account);
 	}
 
 	@Override

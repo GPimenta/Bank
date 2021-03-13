@@ -14,7 +14,7 @@ public class Account implements IdentificationItem{
 	public static final int MAX_NUMBER_SECONDARY_OWNERS = 4;
 	public static final int ACCOUNT_PASSWORD_LENGTH = 4;
 
-	private final Integer id;
+	private Integer id;
 	private final Integer customerId;
 	private String password;
 	private final String accountNumber; // 5 digits
@@ -132,6 +132,11 @@ public class Account implements IdentificationItem{
 
 	public String getAccountNumber() {
 		return accountNumber;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
