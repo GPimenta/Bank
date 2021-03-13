@@ -68,6 +68,14 @@ public class MainTest {
 				.withBirthday(LocalDate.of(1900, 03, 02))
 				.build();
 		
+		Customer customer7 = new Customer.Builder()
+				.withId(1)
+				.withName("name7")
+				.withEmail("email7")
+				.withTaxId("0123456_6")
+				.withBirthday(LocalDate.of(1900, 03, 02))
+				.build();
+		
 //		System.out.println(customer1.toString());
 //		System.out.println(customer2.toString());
 //		System.out.println(customer3.toString());
@@ -77,6 +85,7 @@ public class MainTest {
 		customerRepository.create(customer3);
 		customerRepository.create(customer4);
 		customerRepository.create(customer5);
+		customerRepository.create(customer7);
 		
 //		customerRepository.deleteById(1);
 //		customerRepository.deleteById(3);

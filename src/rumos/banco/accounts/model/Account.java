@@ -5,9 +5,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import rumos.banco.common.model.IdentificationItem;
 import rumos.banco.utils.IPreconditions;
 
-public class Account {
+public class Account implements IdentificationItem{
 
 	public static final int ACCOUNT_NUMBER_LENGTH = 5;
 	public static final int MAX_NUMBER_SECONDARY_OWNERS = 4;
@@ -95,6 +96,44 @@ public class Account {
 		return "Account [id=" + id + ", customerId=" + customerId + ", password=" + password + ", accountNumber="
 				+ accountNumber + ", balance=" + balance + ", secondaryOwnersId=" + secondaryOwnersId + "]";
 	}
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+	public List<Integer> getSecondaryOwnersId() {
+		return secondaryOwnersId;
+	}
+
+	public void setSecondaryOwnersId(List<Integer> secondaryOwnersId) {
+		this.secondaryOwnersId = secondaryOwnersId;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
 
 	public static class Builder {
 

@@ -1,14 +1,15 @@
 package rumos.banco.customers.repository;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import rumos.banco.customers.model.Customer;
 
 public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 
-	private final ArrayList<Customer> repository = new ArrayList<>();//see if it is better to use SET instead of ArrayList
+	private final Set<Customer> repository = new TreeSet<>();//see if it is better to use SET instead of ArrayList
 	
 	
 	@Override
@@ -22,7 +23,6 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 
 	@Override
 	public boolean deleteById(Integer id) {
-//		Optional<Customer> customer = getById(id);
 		return repository.removeIf(item->item.getId().equals(id));
 	}
 

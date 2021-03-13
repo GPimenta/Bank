@@ -2,12 +2,12 @@ package rumos.banco.customers.model;
 
 import java.time.LocalDate;
 
+import rumos.banco.common.model.IdentificationItem;
 import rumos.banco.utils.IPreconditions;
-import rumos.banco.utils.Preconditions;
 
 
 
-public class Customer {
+public class Customer implements IdentificationItem, Comparable<Customer>{
 	
     public static final int CUSTOMER_NAME_MIN_LENGTH = 3;
     public static final int CUSTOMER_TAXID_LENGTH = 9;
@@ -106,7 +106,12 @@ public class Customer {
 			return false;
 		return true;
 	}
-
+	
+	@Override
+	public int compareTo(Customer customer) {
+		
+		return this.getTaxId().compareTo(customer.getTaxId());
+	}
 
 
 	@Override
@@ -155,4 +160,6 @@ public class Customer {
 			return customer;
 		}
 	}
+
+
 }
