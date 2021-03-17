@@ -31,7 +31,7 @@ public class Account implements IdentificationItem{
 		this.password = IPreconditions.checkLength(passwordAccount, ACCOUNT_PASSWORD_LENGTH,
 				"The account password can not be less than 4 digits");
 		this.accountNumber = IPreconditions.checkLength(accountNumber, ACCOUNT_NUMBER_LENGTH,
-				"The account number can not be less than 5 digits");
+				"The account number can only be 5 digits");
 		this.balance = balance;
 		this.secondaryOwnersId = IPreconditions.requireNonNullElse(secondaryOwnersId, Collections.emptyList());
 	}

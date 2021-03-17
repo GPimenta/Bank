@@ -2,6 +2,7 @@ package rumos.banco.accounts.repository;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import rumos.banco.accounts.model.Account;
 import rumos.banco.common.repository.InMemRepository;
@@ -26,21 +27,21 @@ public class InMemAccountRepository extends InMemRepository<Account> implements 
 	}
 
 	@Override
-	public Account findByHolderCustomerId(String customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Account> findByHolderCustomerId(Integer customerId) {
+		
+		return getAll().stream().filter(account -> account.getCustomerId() == customerId).findAny();
 	}
 
 	@Override
-	public Collection<Account> findBySecundaryCustomerId(String customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Account> findBySecondaryCustomerId(Integer customerId) {
+		return getAll().stream().filter(account -> account.getSecondaryOwnersId().contains(customerId)).collect(Collectors.toList());
 	}
 
 	@Override
-	public Collection<Account> findByAllCustomerId(String customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Account> findByAllCustomerId(Integer customerId) {
+		Collection<Account> fullList = findBySecondaryCustomerId(customerId);
+		fullList.add(findByHolderCustomerId(customerId).get());
+		return fullList;
 	}
 
 }

@@ -48,10 +48,7 @@ public abstract class InMemRepository<T extends IdentificationItem> implements I
 
 	@Override
 	public Collection<T> getAll() {
-		if(repository.isEmpty()) {
-			throw new IllegalArgumentException("Customer repository is empty");
-		}
-		return repository;
+		return new ArrayList<T>(repository);
 	}
 
 }
