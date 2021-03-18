@@ -186,7 +186,7 @@ public class MainTest {
 //		accountRepository.deleteById(3);
 //		accountRepository.deleteById(7);
 //		
-		//TODO NAO SEI PQ AO FAZER UPDATE AO ACCOUNT8 ELE DEVOLVE EMPTY NO FINDHOLDER
+		
 		Account account8 = new Account.Builder()
 				 .withId(2)
 				 .withCustomerId(2)
