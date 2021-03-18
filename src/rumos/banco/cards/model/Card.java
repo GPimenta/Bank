@@ -5,7 +5,7 @@ import rumos.banco.utils.IPreconditions;
 
 public class Card implements IdentificationItem{
 	
-	private final Integer id;
+	private Integer id;
 	private final Integer customerId;
 	private final Integer accountId;
 	private final String cardNumber;
@@ -33,6 +33,10 @@ public class Card implements IdentificationItem{
 
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getCustomerId() {

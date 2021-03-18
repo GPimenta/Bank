@@ -9,7 +9,19 @@ import rumos.banco.cards.model.DebitCard;
 import rumos.banco.common.repository.InMemRepository;
 
 public class InMemCardRepositoryImpl extends InMemRepository<Card> implements ICardRepository{
-
+	
+	private static Integer cardIdCount = 0;
+	
+	private static int generateCardId() {
+		return ++cardIdCount;
+	}
+	
+	@Override
+	public Optional<Card> create(Card newItem){
+		return null;
+		
+	}
+	
 	@Override
 	public Collection<Card> findByAccountIdAndCustomerId(int accountId, int customerId) {
 		// TODO Auto-generated method stub
