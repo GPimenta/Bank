@@ -1,8 +1,9 @@
 package rumos.banco.cards.model;
 
+import rumos.banco.common.model.IdentificationItem;
 import rumos.banco.utils.IPreconditions;
 
-public class Card {
+public class Card implements IdentificationItem{
 	
 	private final Integer id;
 	private final Integer customerId;
