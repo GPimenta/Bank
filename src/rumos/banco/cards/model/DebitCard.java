@@ -3,7 +3,7 @@ package rumos.banco.cards.model;
 public class DebitCard extends Card{
 
 	public DebitCard(Integer id, Integer customerId, Integer accountId, String cardNumber, String pin, Boolean used) {
-		super(id, customerId, accountId, cardNumber, pin, used);
+		super(id, customerId, accountId, cardNumber, pin, used, false);
 	}
 	
 	public static class Builder{

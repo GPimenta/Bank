@@ -13,7 +13,7 @@ public class CreditCard extends Card {
 
 	public CreditCard(Integer id, Integer customerId, Integer accountId, String cardNumber, String pin,
 			Integer cashAdvance, Boolean used) {
-		super(id, customerId, accountId, cardNumber, pin, used);
+		super(id, customerId, accountId, cardNumber, pin, used, true);
 		
 		IPreconditions.checkArgument(cashAdvance <= ALLOWED_LIMIT_CASH_ADVANCE, "The limit amount is: " + ALLOWED_LIMIT_CASH_ADVANCE);
 		

@@ -10,14 +10,16 @@ public class Card {
 	private final String cardNumber;
 	private String pin;
 	private Boolean used;
+	private final boolean isCreditCard;
 	
-	public Card(Integer id, Integer customerId, Integer accountId, String cardNumber, String pin, Boolean used) {
+	public Card(Integer id, Integer customerId, Integer accountId, String cardNumber, String pin, Boolean used, Boolean isCreditCard) {
 		this.id = id;
 		this.customerId = customerId;
 		this.accountId = accountId;
 		this.cardNumber = IPreconditions.checkLength(cardNumber, 5, "Card number must have 5 digits");
 		this.pin = IPreconditions.checkLength(pin, 4, "Card Pin must have 4 digits");
 		this.used = used;
+		this.isCreditCard = isCreditCard;
 	}
 
 	public String getPin() {
@@ -51,6 +53,10 @@ public class Card {
 	public void setUsed(Boolean used) {
 		this.used = used;
 	}
+	
+	public boolean isCreditCard() {
+		return isCreditCard;
+	}
 
 	@Override
 	public int hashCode() {
@@ -60,6 +66,7 @@ public class Card {
 		result = prime * result + ((cardNumber == null) ? 0 : cardNumber.hashCode());
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (isCreditCard ? 1231 : 1237);
 		result = prime * result + ((pin == null) ? 0 : pin.hashCode());
 		result = prime * result + ((used == null) ? 0 : used.hashCode());
 		return result;
@@ -94,6 +101,8 @@ public class Card {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (isCreditCard != other.isCreditCard)
+			return false;
 		if (pin == null) {
 			if (other.pin != null)
 				return false;
@@ -110,8 +119,10 @@ public class Card {
 	@Override
 	public String toString() {
 		return "Card [id=" + id + ", customerId=" + customerId + ", accountId=" + accountId + ", cardNumber="
-				+ cardNumber + ", pin=" + pin + ", used=" + used + "]";
+				+ cardNumber + ", pin=" + pin + ", used=" + used + ", isCreditCard=" + isCreditCard + "]";
 	}
+
+
 
 
 	

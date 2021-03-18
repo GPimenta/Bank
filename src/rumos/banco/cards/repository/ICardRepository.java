@@ -1,5 +1,5 @@
 package rumos.banco.cards.repository;
 
-public class InMemAccountRepository {
+public interface ICardRepository {
 
 }
