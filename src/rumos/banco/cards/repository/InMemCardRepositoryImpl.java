@@ -2,6 +2,7 @@ package rumos.banco.cards.repository;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import rumos.banco.cards.model.Card;
 import rumos.banco.cards.model.CreditCard;
@@ -18,19 +19,35 @@ public class InMemCardRepositoryImpl extends InMemRepository<Card> implements IC
 	
 	@Override
 	public Optional<Card> create(Card newItem){
-		return null;
+		final Card item;
+		if(newItem instanceof DebitCard) {
+			DebitCard debitCard = (DebitCard) newItem;
+			debitCard.setId(generateCardId());
+			item = debitCard;
+			
+		}else {
+			CreditCard creditCard = (CreditCard) newItem;
+			creditCard.setId(generateCardId());
+			item = creditCard;
+		}
+		if(getAll().stream().anyMatch(card -> card.getId().equals(card.getId()) || card.getCardNumber().equals(card.getCardNumber()))) {
+			return Optional.empty();
+		}
+		
+		return super.create(item);
 		
 	}
 	
 	@Override
 	public Collection<Card> findByAccountIdAndCustomerId(int accountId, int customerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAll().stream()
+				.filter(card -> card.getAccountId() == accountId)
+				.filter(card -> card.getCustomerId() == customerId)
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Optional<Card> findByCardNumber(String cardNumber) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -51,5 +68,6 @@ public class InMemCardRepositoryImpl extends InMemRepository<Card> implements IC
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 }
