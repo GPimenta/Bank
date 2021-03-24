@@ -33,7 +33,6 @@ public class InMemCardRepositoryImpl extends InMemRepository<Card> implements IC
 		if(getAll().stream().anyMatch(card -> card.getId().equals(card.getId()) || card.getCardNumber().equals(card.getCardNumber()))) {
 			return Optional.empty();
 		}
-		
 		return super.create(item);
 		
 	}
@@ -48,25 +47,37 @@ public class InMemCardRepositoryImpl extends InMemRepository<Card> implements IC
 
 	@Override
 	public Optional<Card> findByCardNumber(String cardNumber) {
-		return null;
+		return getAll().stream()
+				.filter(card ->card.getCardNumber().equals(cardNumber))
+				.findFirst();
 	}
 
 	@Override
 	public Collection<Card> findByCustomerId(int customerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAll().stream()
+				.filter(card -> card.getCustomerId() == customerId)
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Optional<CreditCard> getCreditCardByCustomerId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getAll().stream()
+				.filter(card -> card.getId() == id)
+				.filter(card -> card instanceof CreditCard)
+				.map(card -> (CreditCard) card)
+				.findFirst();
+				
+				
 	}
 
 	@Override
 	public Optional<DebitCard> getDebitCardByCustomerId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAll().stream()
+				.filter(card -> card.getId() == id)
+				.filter(card -> card instanceof DebitCard)
+				.map(card -> (DebitCard) card)
+				.findFirst();
 	}
 	
 
