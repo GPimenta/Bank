@@ -30,7 +30,7 @@ public class InMemCardRepositoryImpl extends InMemRepository<Card> implements IC
 			creditCard.setId(generateCardId());
 			item = creditCard;
 		}
-		if(getAll().stream().anyMatch(card -> card.getId().equals(card.getId()) || card.getCardNumber().equals(card.getCardNumber()))) {
+		if(getAll().stream().anyMatch(card -> card.getId().equals(newItem.getId()) || card.getCardNumber().equals(newItem.getCardNumber()))) {
 			return Optional.empty();
 		}
 		return super.create(item);

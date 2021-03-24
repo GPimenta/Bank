@@ -9,6 +9,8 @@ import rumos.banco.accounts.repository.IAccountRepository;
 import rumos.banco.accounts.repository.InMemAccountRepository;
 import rumos.banco.cards.model.CreditCard;
 import rumos.banco.cards.model.DebitCard;
+import rumos.banco.cards.repository.ICardRepository;
+import rumos.banco.cards.repository.InMemCardRepositoryImpl;
 import rumos.banco.common.repository.IRepository;
 import rumos.banco.customers.model.Customer;
 import rumos.banco.customers.repository.ICustomerRepository;
@@ -18,10 +20,9 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		List<Integer> secondaryOwnersId = List.of(1,2,3);
-//		ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
-		
+		ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
 		IAccountRepository accountRepository = new InMemAccountRepository();
-		
+		ICardRepository cardRepository = new InMemCardRepositoryImpl();
 		
 		
 
@@ -108,41 +109,41 @@ public class MainTest {
 //		}
 		
 		
-		Account account1 = new Account.Builder()
-									 .withId(1)
-									 .withCustomerId(1)
-									 .withAccountNumber("123_1")
-									 .withBalance(2.0)
-									 .withPasswordAccount("1234")
-									 .withSecondaryOwnersId(secondaryOwnersId)
-									 .build();
-		
-		Account account2 = new Account.Builder()
-				 .withId(1)
-				 .withCustomerId(2)
-				 .withAccountNumber("123_2")
-				 .withBalance(2.0)
-				 .withPasswordAccount("1234")
-				 .withSecondaryOwnersId(secondaryOwnersId)
-				 .build();
-		
-		Account account3 = new Account.Builder()
-				 .withId(1)
-				 .withCustomerId(3)
-				 .withAccountNumber("123_3")
-				 .withBalance(2.0)
-				 .withPasswordAccount("1234")
-				 .withSecondaryOwnersId(List.of(4))
-				 .build();
-		
-		Account account4 = new Account.Builder()
-				 .withId(1)
-				 .withCustomerId(4)
-				 .withAccountNumber("123_4")
-				 .withBalance(2.0)
-				 .withPasswordAccount("1234")
-				 .withSecondaryOwnersId(secondaryOwnersId)
-				 .build();
+//		Account account1 = new Account.Builder()
+//									 .withId(1)
+//									 .withCustomerId(1)
+//									 .withAccountNumber("123_1")
+//									 .withBalance(2.0)
+//									 .withPasswordAccount("1234")
+//									 .withSecondaryOwnersId(secondaryOwnersId)
+//									 .build();
+//		
+//		Account account2 = new Account.Builder()
+//				 .withId(1)
+//				 .withCustomerId(2)
+//				 .withAccountNumber("123_2")
+//				 .withBalance(2.0)
+//				 .withPasswordAccount("1234")
+//				 .withSecondaryOwnersId(secondaryOwnersId)
+//				 .build();
+//		
+//		Account account3 = new Account.Builder()
+//				 .withId(1)
+//				 .withCustomerId(3)
+//				 .withAccountNumber("123_3")
+//				 .withBalance(2.0)
+//				 .withPasswordAccount("1234")
+//				 .withSecondaryOwnersId(List.of(4))
+//				 .build();
+//		
+//		Account account4 = new Account.Builder()
+//				 .withId(1)
+//				 .withCustomerId(4)
+//				 .withAccountNumber("123_4")
+//				 .withBalance(2.0)
+//				 .withPasswordAccount("1234")
+//				 .withSecondaryOwnersId(secondaryOwnersId)
+//				 .build();
 		
 //		Account account5 = new Account.Builder()
 //				 .withId(1)
@@ -174,10 +175,10 @@ public class MainTest {
 		
 //		System.out.println(account1.toString());
 		
-		accountRepository.create(account1);
-		accountRepository.create(account2);
-		accountRepository.create(account3);
-		accountRepository.create(account4);
+//		accountRepository.create(account1);
+//		accountRepository.create(account2);
+//		accountRepository.create(account3);
+//		accountRepository.create(account4);
 //		accountRepository.create(account5);
 //		accountRepository.create(account6);
 //		accountRepository.create(account7);
@@ -187,55 +188,58 @@ public class MainTest {
 //		accountRepository.deleteById(7);
 //		
 		
-		Account account8 = new Account.Builder()
-				 .withId(2)
-				 .withCustomerId(2)
-				 .withAccountNumber("123_8")
-				 .withBalance(2.0)
-				 .withPasswordAccount("1234")
-				 .withSecondaryOwnersId(secondaryOwnersId)
-				 .build();
+//		Account account8 = new Account.Builder()
+//				 .withId(2)
+//				 .withCustomerId(2)
+//				 .withAccountNumber("123_8")
+//				 .withBalance(2.0)
+//				 .withPasswordAccount("1234")
+//				 .withSecondaryOwnersId(secondaryOwnersId)
+//				 .build();
 		
 //		accountRepository.update(account1);
-		accountRepository.update(account8);
+//		accountRepository.update(account8);
 //		accountRepository.update(account4);
 		
 //		System.out.println(accountRepository.getById(4).get());
 //		System.out.println(accountRepository.findByHolderCustomerId(2).get());
 //		System.out.println(accountRepository.findBySecondaryCustomerId(3));
-		accountRepository.findByAllCustomerId(3).forEach(System.out::println);
+//		accountRepository.findByAllCustomerId(3).forEach(System.out::println);
 		
 		
 //		accountRepository.getAll().stream().forEach(System.out::println);
 		
 		
 		
+		DebitCard debitCard1 = new DebitCard.Builder()
+										   .withId(1)
+										   .withCustomerId(1)
+										   .withAccountId(1)
+										   .withCardNumber("123_1")
+										   .withPin("1234")
+										   .isUsed(false)
+										   .build();
 		
+		DebitCard debitCard2 = new DebitCard.Builder()
+				   .withId(2)
+				   .withCustomerId(1)
+				   .withAccountId(1)
+				   .withCardNumber("123_2")
+				   .withPin("1234")
+				   .isUsed(false)
+				   .build();
 		
+		DebitCard debitCard3 = new DebitCard.Builder()
+				   .withId(3)
+				   .withCustomerId(1)
+				   .withAccountId(1)
+				   .withCardNumber("123_3")
+				   .withPin("1234")
+				   .isUsed(false)
+				   .build();
+
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		DebitCard debitCard = new DebitCard.Builder()
-//										   .withId(1)
-//										   .withCustomerId(1)
-//										   .withAccountId(1)
-//										   .withCardNumber("12345")
-//										   .withPin("1234")
-//										   .isUsed(false)
-//										   .build();
-//		
-//		System.out.println(debitCard.toString());
-//		
-//		CreditCard creditCard = new CreditCard.Builder()
+//		CreditCard creditCard1 = new CreditCard.Builder()
 //											   .withId(1)
 //											   .withCustomerId(1)
 //											   .withAccountId(1)
@@ -245,7 +249,36 @@ public class MainTest {
 //											   .isUsed(false)
 //											   .build();
 //		
-//		System.out.println(creditCard.toString());
+//		CreditCard creditCard2 = new CreditCard.Builder()
+//				   .withId(1)
+//				   .withCustomerId(1)
+//				   .withAccountId(1)
+//				   .withCardNumber("12345")
+//				   .withPin("1234")
+//				   .withCashAdvance(249)
+//				   .isUsed(false)
+//				   .build();
+//		
+//		CreditCard creditCard3 = new CreditCard.Builder()
+//				   .withId(1)
+//				   .withCustomerId(1)
+//				   .withAccountId(1)
+//				   .withCardNumber("12345")
+//				   .withPin("1234")
+//				   .withCashAdvance(249)
+//				   .isUsed(false)
+//				   .build();
+		
+		cardRepository.create(debitCard1);
+		cardRepository.create(debitCard2);
+		cardRepository.create(debitCard3);
+		
+		cardRepository.getAll().stream().forEach(System.out::println);		
+		
+		
+//		cardRepository.create(creditCard1);
+//		cardRepository.create(creditCard2);
+//		cardRepository.create(creditCard3);
 
 	}
 
