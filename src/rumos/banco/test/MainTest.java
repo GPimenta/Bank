@@ -222,7 +222,7 @@ public class MainTest {
 		
 		DebitCard debitCard2 = new DebitCard.Builder()
 				   .withId(2)
-				   .withCustomerId(1)
+				   .withCustomerId(2)
 				   .withAccountId(1)
 				   .withCardNumber("123_2")
 				   .withPin("1234")
@@ -238,47 +238,87 @@ public class MainTest {
 				   .isUsed(false)
 				   .build();
 
+		DebitCard debitCard4 = new DebitCard.Builder()
+				   .withId(2)
+				   .withCustomerId(1)
+				   .withAccountId(1)
+				   .withCardNumber("123_4")
+				   .withPin("1234")
+				   .isUsed(false)
+				   .build();
 		
-//		CreditCard creditCard1 = new CreditCard.Builder()
-//											   .withId(1)
-//											   .withCustomerId(1)
-//											   .withAccountId(1)
-//											   .withCardNumber("12345")
-//											   .withPin("1234")
-//											   .withCashAdvance(249)
-//											   .isUsed(false)
-//											   .build();
-//		
-//		CreditCard creditCard2 = new CreditCard.Builder()
-//				   .withId(1)
-//				   .withCustomerId(1)
-//				   .withAccountId(1)
-//				   .withCardNumber("12345")
-//				   .withPin("1234")
-//				   .withCashAdvance(249)
-//				   .isUsed(false)
-//				   .build();
-//		
-//		CreditCard creditCard3 = new CreditCard.Builder()
-//				   .withId(1)
-//				   .withCustomerId(1)
-//				   .withAccountId(1)
-//				   .withCardNumber("12345")
-//				   .withPin("1234")
-//				   .withCashAdvance(249)
-//				   .isUsed(false)
-//				   .build();
+		CreditCard creditCard1 = new CreditCard.Builder()
+											   .withId(1)
+											   .withCustomerId(1)
+											   .withAccountId(1)
+											   .withCardNumber("1_345")
+											   .withPin("1234")
+											   .withCashAdvance(249)
+											   .isUsed(false)
+											   .build();
+		
+		CreditCard creditCard2 = new CreditCard.Builder()
+				   .withId(1)
+				   .withCustomerId(2)
+				   .withAccountId(2)
+				   .withCardNumber("2_345")
+				   .withPin("1234")
+				   .withCashAdvance(249)
+				   .isUsed(false)
+				   .build();
+		
+		CreditCard creditCard3 = new CreditCard.Builder()
+				   .withId(1)
+				   .withCustomerId(1)
+				   .withAccountId(1)
+				   .withCardNumber("3_345")
+				   .withPin("1234")
+				   .withCashAdvance(249)
+				   .isUsed(false)
+				   .build();
+		
+		CreditCard creditCard4 = new CreditCard.Builder()
+				   .withId(3)
+				   .withCustomerId(2)
+				   .withAccountId(1)
+				   .withCardNumber("4_345")
+				   .withPin("1234")
+				   .withCashAdvance(249)
+				   .isUsed(false)
+				   .build();
 		
 		cardRepository.create(debitCard1);
 		cardRepository.create(debitCard2);
 		cardRepository.create(debitCard3);
 		
-		cardRepository.getAll().stream().forEach(System.out::println);		
+		cardRepository.create(creditCard1);
+		cardRepository.create(creditCard2);
+		cardRepository.create(creditCard3);
+		
+//		cardRepository.deleteById(2);
+//		cardRepository.deleteById(5);
+//		cardRepository.update(debitCard4);
+//		cardRepository.update(creditCard4);
+		
+//		cardRepository.getAll().stream().forEach(System.out::println);
+		
+//		System.out.println(cardRepository.getById(1));
+//		System.out.println(cardRepository.getById(4));
+		
+//		cardRepository.findByAccountIdAndCustomerId(1, 1).forEach(card -> System.out.println(card));
+		
+//		System.out.println(cardRepository.findByCardNumber("2_345"));
+//		System.out.println(cardRepository.findByCardNumber("123_3"));
+		
+//		cardRepository.findByCustomerId(1).forEach(System.out::println);
+		
+		System.out.println(cardRepository.getDebitCardByCustomerId(1));
+		
+		System.out.println(cardRepository.getCreditCardByCustomerId(5));
 		
 		
-//		cardRepository.create(creditCard1);
-//		cardRepository.create(creditCard2);
-//		cardRepository.create(creditCard3);
+		
+
 
 	}
 
