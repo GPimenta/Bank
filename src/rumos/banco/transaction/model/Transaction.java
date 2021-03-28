@@ -3,6 +3,7 @@ package rumos.banco.transaction.model;
 import java.time.LocalDateTime;
 
 import rumos.banco.common.model.IdentificationItem;
+import rumos.banco.utils.IPreconditions;
 
 public class Transaction implements IdentificationItem{
 	private Integer id;
@@ -11,12 +12,12 @@ public class Transaction implements IdentificationItem{
 	private LocalDateTime timestamp;
 	private String amount;
 
-	public Transaction(Integer id, Integer accountID, Integer cardID, LocalDateTime timestamp, String amount) {
+	public Transaction(Integer id, Integer accountID, Integer cardId, LocalDateTime timestamp, String amount) {
 		this.id = id;
-		this.accountId = accountID;
-		this.cardId = cardID;
-		this.timestamp = timestamp;
-		this.amount = amount;
+		this.accountId = IPreconditions.checkNotNull(accountID, "Account Id cannot be null");
+		this.cardId = IPreconditions.checkNotNull(cardId, "Card Id cannot be null");
+		this.timestamp = IPreconditions.requireNonNullElse(timestamp, LocalDateTime.now());
+		this.amount = IPreconditions.checkNotNull(amount, "Amount cannot be null");
 	}
 
 	@Override
