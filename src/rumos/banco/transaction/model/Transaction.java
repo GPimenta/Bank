@@ -2,7 +2,9 @@ package rumos.banco.transaction.model;
 
 import java.time.LocalDateTime;
 
-public class Transaction {
+import rumos.banco.common.model.IdentificationItem;
+
+public class Transaction implements IdentificationItem{
 	private Integer id;
 	private Integer accountId;
 	private Integer cardId;
