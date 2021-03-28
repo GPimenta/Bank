@@ -12,7 +12,6 @@ public class Transaction implements IdentificationItem{
 	private String amount;
 
 	public Transaction(Integer id, Integer accountID, Integer cardID, LocalDateTime timestamp, String amount) {
-		super();
 		this.id = id;
 		this.accountId = accountID;
 		this.cardId = cardID;
@@ -83,19 +82,19 @@ public class Transaction implements IdentificationItem{
 		this.id = id;
 	}
 
-	public Integer getAccountID() {
+	public Integer getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountID(Integer accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 
-	public Integer getCardID() {
+	public Integer getCardId() {
 		return cardId;
 	}
 
-	public void setCardID(Integer cardId) {
+	public void setCardId(Integer cardId) {
 		this.cardId = cardId;
 	}
 

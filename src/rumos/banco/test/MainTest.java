@@ -1,20 +1,17 @@
 package rumos.banco.test;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import rumos.banco.accounts.model.Account;
 import rumos.banco.accounts.repository.IAccountRepository;
 import rumos.banco.accounts.repository.InMemAccountRepository;
-import rumos.banco.cards.model.CreditCard;
-import rumos.banco.cards.model.DebitCard;
 import rumos.banco.cards.repository.ICardRepository;
 import rumos.banco.cards.repository.InMemCardRepositoryImpl;
-import rumos.banco.common.repository.IRepository;
-import rumos.banco.customers.model.Customer;
 import rumos.banco.customers.repository.ICustomerRepository;
 import rumos.banco.customers.repository.InMemCustomerRepositoryImpl;
+import rumos.banco.transaction.model.Transaction;
+import rumos.banco.transaction.repositoy.ITransactionRepository;
+import rumos.banco.transaction.repositoy.InMemTransactionRepository;
 
 public class MainTest {
 
@@ -23,7 +20,7 @@ public class MainTest {
 		ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
 		IAccountRepository accountRepository = new InMemAccountRepository();
 		ICardRepository cardRepository = new InMemCardRepositoryImpl();
-		
+		ITransactionRepository transactionRepository = new InMemTransactionRepository();
 		
 
 //		Customer customer1 = new Customer.Builder()
@@ -211,89 +208,89 @@ public class MainTest {
 		
 		
 		
-		DebitCard debitCard1 = new DebitCard.Builder()
-										   .withId(1)
-										   .withCustomerId(1)
-										   .withAccountId(1)
-										   .withCardNumber("123_1")
-										   .withPin("1234")
-										   .isUsed(false)
-										   .build();
-		
-		DebitCard debitCard2 = new DebitCard.Builder()
-				   .withId(2)
-				   .withCustomerId(2)
-				   .withAccountId(1)
-				   .withCardNumber("123_2")
-				   .withPin("1234")
-				   .isUsed(false)
-				   .build();
-		
-		DebitCard debitCard3 = new DebitCard.Builder()
-				   .withId(3)
-				   .withCustomerId(1)
-				   .withAccountId(1)
-				   .withCardNumber("123_3")
-				   .withPin("1234")
-				   .isUsed(false)
-				   .build();
-
-		DebitCard debitCard4 = new DebitCard.Builder()
-				   .withId(2)
-				   .withCustomerId(1)
-				   .withAccountId(1)
-				   .withCardNumber("123_4")
-				   .withPin("1234")
-				   .isUsed(false)
-				   .build();
-		
-		CreditCard creditCard1 = new CreditCard.Builder()
-											   .withId(1)
-											   .withCustomerId(1)
-											   .withAccountId(1)
-											   .withCardNumber("1_345")
-											   .withPin("1234")
-											   .withCashAdvance(249)
-											   .isUsed(false)
-											   .build();
-		
-		CreditCard creditCard2 = new CreditCard.Builder()
-				   .withId(1)
-				   .withCustomerId(2)
-				   .withAccountId(2)
-				   .withCardNumber("2_345")
-				   .withPin("1234")
-				   .withCashAdvance(249)
-				   .isUsed(false)
-				   .build();
-		
-		CreditCard creditCard3 = new CreditCard.Builder()
-				   .withId(1)
-				   .withCustomerId(1)
-				   .withAccountId(1)
-				   .withCardNumber("3_345")
-				   .withPin("1234")
-				   .withCashAdvance(249)
-				   .isUsed(false)
-				   .build();
-		
-		CreditCard creditCard4 = new CreditCard.Builder()
-				   .withId(3)
-				   .withCustomerId(2)
-				   .withAccountId(1)
-				   .withCardNumber("4_345")
-				   .withPin("1234")
-				   .withCashAdvance(249)
-				   .isUsed(false)
-				   .build();
-		
-		cardRepository.create(debitCard1);
-		cardRepository.create(debitCard2);
-		cardRepository.create(debitCard3);
-		
-		cardRepository.create(creditCard1);
-		cardRepository.create(creditCard2);
-		cardRepository.create(creditCard3);
+//		DebitCard debitCard1 = new DebitCard.Builder()
+//										   .withId(1)
+//										   .withCustomerId(1)
+//										   .withAccountId(1)
+//										   .withCardNumber("123_1")
+//										   .withPin("1234")
+//										   .isUsed(false)
+//										   .build();
+//		
+//		DebitCard debitCard2 = new DebitCard.Builder()
+//				   .withId(2)
+//				   .withCustomerId(2)
+//				   .withAccountId(1)
+//				   .withCardNumber("123_2")
+//				   .withPin("1234")
+//				   .isUsed(false)
+//				   .build();
+//		
+//		DebitCard debitCard3 = new DebitCard.Builder()
+//				   .withId(3)
+//				   .withCustomerId(1)
+//				   .withAccountId(1)
+//				   .withCardNumber("123_3")
+//				   .withPin("1234")
+//				   .isUsed(false)
+//				   .build();
+//
+//		DebitCard debitCard4 = new DebitCard.Builder()
+//				   .withId(2)
+//				   .withCustomerId(1)
+//				   .withAccountId(1)
+//				   .withCardNumber("123_4")
+//				   .withPin("1234")
+//				   .isUsed(false)
+//				   .build();
+//		
+//		CreditCard creditCard1 = new CreditCard.Builder()
+//											   .withId(1)
+//											   .withCustomerId(1)
+//											   .withAccountId(1)
+//											   .withCardNumber("1_345")
+//											   .withPin("1234")
+//											   .withCashAdvance(249)
+//											   .isUsed(false)
+//											   .build();
+//		
+//		CreditCard creditCard2 = new CreditCard.Builder()
+//				   .withId(1)
+//				   .withCustomerId(2)
+//				   .withAccountId(2)
+//				   .withCardNumber("2_345")
+//				   .withPin("1234")
+//				   .withCashAdvance(249)
+//				   .isUsed(false)
+//				   .build();
+//		
+//		CreditCard creditCard3 = new CreditCard.Builder()
+//				   .withId(1)
+//				   .withCustomerId(1)
+//				   .withAccountId(1)
+//				   .withCardNumber("3_345")
+//				   .withPin("1234")
+//				   .withCashAdvance(249)
+//				   .isUsed(false)
+//				   .build();
+//		
+//		CreditCard creditCard4 = new CreditCard.Builder()
+//				   .withId(3)
+//				   .withCustomerId(2)
+//				   .withAccountId(1)
+//				   .withCardNumber("4_345")
+//				   .withPin("1234")
+//				   .withCashAdvance(249)
+//				   .isUsed(false)
+//				   .build();
+//		
+//		cardRepository.create(debitCard1);
+//		cardRepository.create(debitCard2);
+//		cardRepository.create(debitCard3);
+//		
+//		cardRepository.create(creditCard1);
+//		cardRepository.create(creditCard2);
+//		cardRepository.create(creditCard3);
 		
 //		cardRepository.deleteById(2);
 //		cardRepository.deleteById(5);
@@ -311,15 +308,57 @@ public class MainTest {
 //		System.out.println(cardRepository.findByCardNumber("123_3"));
 		
 //		cardRepository.findByCustomerId(1).forEach(System.out::println);
+//		
+//		System.out.println(cardRepository.getDebitCardByCustomerId(1));
+//		
+//		System.out.println(cardRepository.getCreditCardByCustomerId(5));
 		
-		System.out.println(cardRepository.getDebitCardByCustomerId(1));
+//		Transaction transaction1 = new Transaction.Builder()
+//				.withId(1)
+//				.withAccountId(1)
+//				.withCardId(1)
+//				.withAmount("1")
+//				.withTimeStamp(LocalDateTime.now())
+//				.build();
+//		
+//		Transaction transaction2 = new Transaction.Builder()
+//				.withAccountId(1)
+//				.withCardId(1)
+//				.withAmount("2")
+//				.withTimeStamp(LocalDateTime.now())
+//				.build();
+//		
+//		Transaction transaction3 = new Transaction.Builder()
+//				.withAccountId(3)
+//				.withCardId(3)
+//				.withAmount("1")
+//				.withTimeStamp(LocalDateTime.now())
+//				.build();
+//		
+//		Transaction transaction4 = new Transaction.Builder()
+//				.withId(1)
+//				.withAccountId(4)
+//				.withCardId(4)
+//				.withAmount("4")
+//				.withTimeStamp(LocalDateTime.now())
+//				.build();
+//		
+//		transactionRepository.create(transaction1);
+//		transactionRepository.create(transaction2);
+//		transactionRepository.create(transaction3);
 		
-		System.out.println(cardRepository.getCreditCardByCustomerId(5));
+//		transactionRepository.deleteById(4);
+//		transactionRepository.update(transaction4);
+//		
+//		transactionRepository.getAll().forEach(transaction -> System.out.println(transaction));
 		
-		
-		
+//		System.out.println(transactionRepository.getById(2).get());
 
+		
+//		System.out.println(transactionRepository.findByCardId(2));
+//		System.out.println(transactionRepository.findByAccountId(3));
 
+		
 	}
 
 }

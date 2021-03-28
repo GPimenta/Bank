@@ -7,11 +7,10 @@ import rumos.banco.transaction.model.Transaction;
 
 public interface ITransactionRepository extends IRepository<Transaction>{
 	
-	Collection<Transaction> findByCustomerId(Integer customerId);
+	Collection<Transaction> findByCardId(Integer cardId);
 
 	Collection<Transaction> findByAccountId(Integer accountId);
 	
-	Collection<Transaction> findByCustomerIdAndAccountId(Integer customerId, Integer accountId);
 
 
 }
