@@ -2,9 +2,8 @@ package rumos.banco.accounts.service;
 
 import java.util.Collection;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import rumos.banco.accounts.exceptions.AccountConflictException;
+import rumos.banco.accounts.exceptions.AccountNotFoundException;
 import rumos.banco.accounts.model.Account;
 
 public interface IAccountService {
@@ -15,7 +14,11 @@ public interface IAccountService {
 	
 	Account getAccount(Integer accountId) throws AccountNotFoundException;
 	
-	Collection<Account> findAccountsByCustomerId(Integer customerId) throws AccountNotFoundException;
+	Account findAccountByHolderCustomerId(Integer customerId) throws AccountNotFoundException;
+	
+	Collection<Account> findAccountsBySecondaryCustomerId(Integer customerId);
+	
+	Collection<Account> findAllAccountsByCustomerId(Integer customerId);
 	
 	void debitAccount(Integer accountId, Integer amount) throws AccountConflictException, AccountNotFoundException;
 	
