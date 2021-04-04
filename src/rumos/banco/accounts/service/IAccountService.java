@@ -3,7 +3,10 @@ package rumos.banco.accounts.service;
 import java.util.Collection;
 
 import rumos.banco.accounts.exceptions.AccountConflictException;
+import rumos.banco.accounts.exceptions.AccountNoFundsException;
 import rumos.banco.accounts.exceptions.AccountNotFoundException;
+import rumos.banco.accounts.exceptions.AccountVoidDepositException;
+import rumos.banco.accounts.exceptions.AccountVoidWithdrawException;
 import rumos.banco.accounts.model.Account;
 
 public interface IAccountService {
@@ -20,11 +23,11 @@ public interface IAccountService {
 	
 	Collection<Account> findAllAccountsByCustomerId(Integer customerId);
 	
-	void debitAccount(Integer accountId, Integer amount) throws AccountConflictException, AccountNotFoundException;
+	void depositAccount(Integer accountId, Double amount) throws AccountConflictException, AccountNotFoundException, AccountVoidDepositException;
 	
-	void withdrawAccount(Integer accountId, Integer amount) throws AccountConflictException, AccountNotFoundException;
+	void withdrawAccount(Integer accountId, Double amount) throws AccountConflictException, AccountNotFoundException, AccountVoidWithdrawException, AccountNoFundsException;
 	
-	void transferMoney(Integer fromAccount, Integer toAccount, Integer amount) throws AccountConflictException, AccountNotFoundException;
+	void transferMoney(Integer fromAccount, Integer toAccount, Double amount) throws AccountConflictException, AccountNotFoundException, AccountVoidWithdrawException, AccountNoFundsException, AccountVoidDepositException;
 	
 	void addSecondaryOwner(Integer accountId, Integer customerId) throws AccountConflictException, AccountNotFoundException;
 	
