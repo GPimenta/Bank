@@ -80,7 +80,8 @@ public class AccountService implements IAccountService{
 	@Override
 	public void debitAccount(Integer accountId, Integer amount)
 			throws AccountConflictException, AccountNotFoundException {
-		// TODO Auto-generated method stub
+		Account account = getAccount(accountId);
+		
 		
 	}
 
