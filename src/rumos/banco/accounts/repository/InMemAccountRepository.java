@@ -35,8 +35,7 @@ public class InMemAccountRepository extends InMemRepository<Account> implements 
 	@Override
 	public Collection<Account> findBySecondaryCustomerId(Integer customerId) {
 		Account accountHolder = findByHolderCustomerId(customerId).get();
-		return getAll().stream().filter(account -> account.getSecondaryOwnersId()
-				.equals(accountHolder)).collect(Collectors.toList());
+		return getAll().stream().filter(account -> account.getSecondaryOwnersId() == accountHolder).collect(Collectors.toList());
 	}
 	@Override
 	public Collection<Account> findByAllCustomerId(Integer customerId) {
