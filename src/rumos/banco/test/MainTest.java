@@ -3,7 +3,10 @@ package rumos.banco.test;
 import java.util.List;
 
 import rumos.banco.accounts.exceptions.AccountConflictException;
+import rumos.banco.accounts.exceptions.AccountNoFundsException;
 import rumos.banco.accounts.exceptions.AccountNotFoundException;
+import rumos.banco.accounts.exceptions.AccountVoidDepositException;
+import rumos.banco.accounts.exceptions.AccountVoidWithdrawException;
 import rumos.banco.accounts.model.Account;
 import rumos.banco.accounts.repository.IAccountRepository;
 import rumos.banco.accounts.repository.InMemAccountRepository;
@@ -18,7 +21,7 @@ import rumos.banco.transaction.repositoy.InMemTransactionRepository;
 
 public class MainTest {
 
-	public static void main(String[] args) throws AccountConflictException, AccountNotFoundException {
+	public static void main(String[] args) throws AccountConflictException, AccountNotFoundException, AccountVoidDepositException, AccountVoidWithdrawException, AccountNoFundsException {
 		List<Integer> secondaryOwnersId = List.of(1,2,3);
 		ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
 		IAccountRepository accountRepository = new InMemAccountRepository();
@@ -28,10 +31,10 @@ public class MainTest {
 		IAccountService accountService = new AccountService(accountRepository);
 		
 		
-//		accountService.createAccount(1);
-//		accountService.createAccount(2);
-//		accountService.createAccount(3);
-//		accountService.createAccount(4);
+		accountService.createAccount(1);
+		accountService.createAccount(2);
+		accountService.createAccount(3);
+		accountService.createAccount(4);
 //		accountService.deleteAccount(4);
 //		accountService.deleteAccount(3);
 //		accountService.deleteAccount(2);
@@ -39,57 +42,71 @@ public class MainTest {
 		
 		
 		
-		Account account1 = new Account.Builder()
-		.withId(1)
-		.withCustomerId(1)
-		.withAccountNumber("123_1")
-		.withBalance(2.0)
-		.withPasswordAccount("1234")
-		.withSecondaryOwnersId(secondaryOwnersId)
-		.build();
-		
-		Account account2 = new Account.Builder()
-		.withId(1)
-		.withCustomerId(1)
-		.withAccountNumber("123_2")
-		.withBalance(2.0)
-		.withPasswordAccount("1234")
-		.withSecondaryOwnersId(secondaryOwnersId)
-		.build();
-		
-		Account account3 = new Account.Builder()
-		.withId(1)
-		.withCustomerId(1)
-		.withAccountNumber("123_3")
-		.withBalance(2.0)
-		.withPasswordAccount("1234")
-		.withSecondaryOwnersId(List.of(4))
-		.build();
-		
-		Account account4 = new Account.Builder()
-		.withId(1)
-		.withCustomerId(4)
-		.withAccountNumber("123_4")
-		.withBalance(2.0)
-		.withPasswordAccount("1234")
-		.withSecondaryOwnersId(secondaryOwnersId)
-		.build();
+//		Account account1 = new Account.Builder()
+//		.withId(1)
+//		.withCustomerId(1)
+//		.withAccountNumber("123_1")
+//		.withBalance(2.0)
+//		.withPasswordAccount("1234")
+//		.withSecondaryOwnersId(secondaryOwnersId)
+//		.build();
+//		
+//		Account account2 = new Account.Builder()
+//		.withId(1)
+//		.withCustomerId(1)
+//		.withAccountNumber("123_2")
+//		.withBalance(2.0)
+//		.withPasswordAccount("1234")
+//		.withSecondaryOwnersId(secondaryOwnersId)
+//		.build();
+//		
+//		Account account3 = new Account.Builder()
+//		.withId(1)
+//		.withCustomerId(1)
+//		.withAccountNumber("123_3")
+//		.withBalance(2.0)
+//		.withPasswordAccount("1234")
+//		.withSecondaryOwnersId(List.of(4))
+//		.build();
+//		
+//		Account account4 = new Account.Builder()
+//		.withId(1)
+//		.withCustomerId(4)
+//		.withAccountNumber("123_4")
+//		.withBalance(2.0)
+//		.withPasswordAccount("1234")
+//		.withSecondaryOwnersId(secondaryOwnersId)
+//		.build();
 //		
 //		
-		accountRepository.create(account1);
-		accountRepository.create(account2);
-		accountRepository.create(account3);
-		accountRepository.create(account4);
+//		accountRepository.create(account1);
+//		accountRepository.create(account2);
+//		accountRepository.create(account3);
+//		accountRepository.create(account4);
 		
 
-//		accountRepository.getAll().stream().forEach(account -> System.out.println(account));
+		
 //		System.out.println(accountService.getAccount(5));
 //		accountService.findAllAccountsByCustomerId(1).stream().forEach(System.out::println);
 //		accountRepository.findByAllCustomerId(1).forEach(System.out::println);
 //		System.out.println(accountService.findAccountByHolderCustomerId(5));
 //		accountService.findAccountsBySecondaryCustomerId(4).stream().forEach(System.out::println);
-		accountService.findAllAccountsByCustomerId(4).stream().forEach(account -> System.out.println(account));
-
+//		accountService.findAllAccountsByCustomerId(4).stream().forEach(account -> System.out.println(account));
+		accountService.depositAccount(1, 100D);
+		accountService.depositAccount(2, 200D);
+		accountService.depositAccount(3, 300D);
+		accountService.depositAccount(4, 400D);
+		
+//		accountService.withdrawAccount(1, 50D);
+//		accountService.withdrawAccount(2, 20D);
+//		accountService.withdrawAccount(3, 30D);
+//		accountService.withdrawAccount(4, 401D);
+		
+//		accountService.transferMoney(5, 6, 10D);
+		
+		accountService.addSecondaryOwner(1, 2);
+		
+		accountRepository.getAll().stream().forEach(account -> System.out.println(account));
 
 		
 	}

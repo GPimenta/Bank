@@ -84,7 +84,7 @@ public class AccountService implements IAccountService{
 	public void depositAccount(Integer accountId, Double amount)
 			throws AccountConflictException, AccountNotFoundException, AccountVoidDepositException {
 		if (amount == 0 || amount < 0) {
-			throw new AccountVoidDepositException("Cannot deposit with '%d' ", amount);
+			throw new AccountVoidDepositException("Cannot deposit with '%.2f' ", amount);
 		}
 		Account account = getAccount(accountId);
 		account.setBalance(account.getBalance() + amount);
@@ -96,16 +96,16 @@ public class AccountService implements IAccountService{
 	public void withdrawAccount(Integer accountId, Double amount)
 			throws AccountConflictException, AccountNotFoundException, AccountVoidWithdrawException, AccountNoFundsException {
 		if(amount == 0 || amount < 0) {
-			throw new AccountVoidWithdrawException("Cannot withdraw with '%d' ", amount);
+			throw new AccountVoidWithdrawException("Cannot withdraw with '%.2f' ", amount);
 		}
 		Account account = getAccount(accountId);
 		
 		if (account.getBalance() == 0) {
-			throw new AccountNoFundsException("There is no funds on the account Id:%i , in order to withdraw", accountId);
+			throw new AccountNoFundsException("There is no funds on the account Id: '%.2f' , in order to withdraw", accountId);
 		}
 		
 		if (account.getBalance() - amount < 0) {
-			throw new AccountNoFundsException("Not enough funds to withdraw %d", amount);
+			throw new AccountNoFundsException("Not enough funds to withdraw '%.2f'", amount);
 		}
 		
 		account.setBalance(account.getBalance() - amount);
@@ -119,6 +119,10 @@ public class AccountService implements IAccountService{
 			throws AccountConflictException, AccountNotFoundException, AccountVoidWithdrawException, AccountNoFundsException, AccountVoidDepositException {
 		Account withdrawFrom = getAccount(fromAccount);
 		Account depositoTo = getAccount(toAccount);
+		
+		if(fromAccount.equals(toAccount)) {
+			throw new AccountConflictException("Cannot tranfer money, from AccountId: '%d' to the same AccountId: '%d'", fromAccount, toAccount);
+		}
 		
 		withdrawAccount(fromAccount, amount);
 		repository.update(withdrawFrom);
@@ -140,11 +144,11 @@ public class AccountService implements IAccountService{
 		}
 		
 		if (secondaryOwners.size() >= Account.MAX_NUMBER_SECONDARY_OWNERS) {
-			throw new AccountConflictException("The account with Id '%i' has exceed the number of secondary Owners, which is: '%i'", accountId, Account.MAX_NUMBER_SECONDARY_OWNERS);
+			throw new AccountConflictException("The account with Id '%d' has exceed the number of secondary Owners, which is: '%d'", accountId, Account.MAX_NUMBER_SECONDARY_OWNERS);
 		}
 		
 		if (secondaryOwners.contains(customerId)) {
-			throw new AccountConflictException("The customer with Id 'i' is already on the secondary Owner list of this account Id '%i'", customerId, accountId);
+			throw new AccountConflictException("The customer with Id '%d' is already on the secondary Owner list of this account Id '%d'", customerId, accountId);
 		}
 		account.getSecondaryOwnersId().add(customerId);
 		
@@ -159,14 +163,14 @@ public class AccountService implements IAccountService{
 		Collection<Integer> secondaryOwners = account.getSecondaryOwnersId();
 		
 		if(getAccount(accountId).getCustomerId() == customerId) {
-			throw new AccountConflictException("account with Id '%i' already has customer with Id '%i' as primary owner", accountId, customerId); 
+			throw new AccountConflictException("account with Id '%d' already has customer with Id '%d' as primary owner", accountId, customerId); 
 		}
 		if (secondaryOwners.isEmpty()) {
-			throw new AccountConflictException("The account with Id '%i' is empty", accountId);
+			throw new AccountConflictException("The account with Id '%d' is empty", accountId);
 		}
 		
 		if(!secondaryOwners.remove(customerId)) {
-			throw new AccountNotFoundException("Customer with Id: '%i' not found, on secondaryOwner List", customerId);
+			throw new AccountNotFoundException("Customer with Id: '%d' not found, on secondaryOwner List", customerId);
 		}
 		
 		account.getSecondaryOwnersId().remove(customerId);
