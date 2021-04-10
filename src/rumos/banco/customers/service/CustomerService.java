@@ -28,9 +28,9 @@ public class CustomerService implements ICustomerService{
 				.withEmail(email)
 				.withBirthday(birthday)
 				.build();
-		if (findByTaxId(taxId).isPresent()) {
+		if (repository.getByTaxId(taxId).isPresent()) {
 			throw new CustomerNotFoundException("Customer cannot be created "
-					+ "since there is already a Customer with Id '%d' given", findByTaxId(taxId).get().getTaxId());
+					+ "since there is already a Customer with taxId '%s' given", taxId);
 		}
 
 		return repository.create(customer)
@@ -40,27 +40,27 @@ public class CustomerService implements ICustomerService{
 
 	@Override
 	public Customer findByTaxId(String taxId) throws CustomerNotFoundException {
-		return getAllCustomers().stream()
-				.filter(customer -> customer.getTaxId().equals(taxId)).findAny()
-				.orElseThrow(() -> CustomerNotFoundException("Customer with taxId '%s' not found", taxId));
+		
+		return repository.getByTaxId(taxId)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with taxId '%s' cannot be found", taxId));
 	}
 
 	@Override
 	public Customer getCustomer(Integer customerId) throws CustomerNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with Id '%s' cannot be found", customerId));
 	}
 
 	@Override
 	public void deleteCustomer(Integer customerId) throws CustomerNotFoundException {
-		// TODO Auto-generated method stub
+		if (!repository.deleteById(customerId)) {
+			throw new CustomerNotFoundException("Customer with Id: '%d' cannot be found", customerId);
+		}
 		
 	}
 
 	@Override
 	public Collection<Customer> getAllCustomers() throws CustomerNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getAll();
 	}
 
 }

@@ -55,9 +55,9 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 	}
 
 	@Override
-	public Optional<Customer> getByTaxId(String taxID) {
+	public Optional<Customer> getByTaxId(String taxId) {
 		for(Customer customer : repository) {
-			if(customer.getTaxId().equals(taxID)) {
+			if(customer.getTaxId().equals(taxId)) {
 				return Optional.of(customer);
 			}
 		}
