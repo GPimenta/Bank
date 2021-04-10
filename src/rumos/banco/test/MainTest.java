@@ -104,13 +104,18 @@ public class MainTest {
 		
 //		accountService.transferMoney(5, 6, 10D);
 		
-		accountService.addSecondaryOwner(1, 5);
-		accountService.addSecondaryOwner(1, 2);
-		accountService.addSecondaryOwner(1, 3);
-		accountService.addSecondaryOwner(1, 4);
+//		accountService.addSecondaryOwner(1, 5);
+//		accountService.addSecondaryOwner(1, 2);
+//		accountService.addSecondaryOwner(1, 3);
+//		accountService.addSecondaryOwner(1, 4);
+//		accountService.addSecondaryOwner(1, 6);
 //		accountService.deleteSecondaryOwner(1, 2);
-		
-		accountRepository.getAll().stream().forEach(account -> System.out.println(account));
+//		accountService.deleteSecondaryOwner(1, 2);
+//		accountService.deleteSecondaryOwner(1, 2);
+//		accountService.deleteSecondaryOwner(1, 4);
+//		accountService.deleteSecondaryOwner(1, 5);
+//		
+//		accountRepository.getAll().stream().forEach(account -> System.out.println(account));
 
 		
 	}

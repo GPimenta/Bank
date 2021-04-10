@@ -178,6 +178,7 @@ public class AccountService implements IAccountService{
 		if(!secondaryOwners.remove(customerId)) {
 			throw new AccountNotFoundException("Customer with Id: '%d' not found, on secondaryOwner List", customerId);
 		}
+		//TODO Need to had Validation if customer exists
 		
 		account.getSecondaryOwnersId().remove(customerId);
 		repository.update(account);
