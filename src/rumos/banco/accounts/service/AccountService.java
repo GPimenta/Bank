@@ -2,6 +2,7 @@ package rumos.banco.accounts.service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import rumos.banco.accounts.exceptions.AccountConflictException;
@@ -137,7 +138,7 @@ public class AccountService implements IAccountService{
 			throws AccountConflictException, AccountNotFoundException {
 		
 		Account account = getAccount(accountId);
-		Collection<Integer> secondaryOwners = account.getSecondaryOwnersId();
+		List<Integer> secondaryOwners = account.getSecondaryOwnersId();
 		
 		if(getAccount(accountId).getCustomerId() == customerId) {
 			throw new AccountConflictException("account with ID '%s' already has customer with ID '%s' as primary owner", accountId, customerId); 
@@ -150,8 +151,13 @@ public class AccountService implements IAccountService{
 		if (secondaryOwners.contains(customerId)) {
 			throw new AccountConflictException("The customer with Id '%d' is already on the secondary Owner list of this account Id '%d'", customerId, accountId);
 		}
-		account.getSecondaryOwnersId().add(customerId);
+//		if () {
+//			
+//		}
 		
+		account.getSecondaryOwnersId().add(customerId);
+//		secondaryOwners.add(customerId);
+//		account.setSecondaryOwnersId(secondaryOwners);
 		repository.update(account);
 	}
 

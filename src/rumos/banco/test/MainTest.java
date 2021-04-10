@@ -53,7 +53,7 @@ public class MainTest {
 //		
 //		Account account2 = new Account.Builder()
 //		.withId(1)
-//		.withCustomerId(1)
+//		.withCustomerId(2)
 //		.withAccountNumber("123_2")
 //		.withBalance(2.0)
 //		.withPasswordAccount("1234")
@@ -62,7 +62,7 @@ public class MainTest {
 //		
 //		Account account3 = new Account.Builder()
 //		.withId(1)
-//		.withCustomerId(1)
+//		.withCustomerId(3)
 //		.withAccountNumber("123_3")
 //		.withBalance(2.0)
 //		.withPasswordAccount("1234")
@@ -92,10 +92,10 @@ public class MainTest {
 //		System.out.println(accountService.findAccountByHolderCustomerId(5));
 //		accountService.findAccountsBySecondaryCustomerId(4).stream().forEach(System.out::println);
 //		accountService.findAllAccountsByCustomerId(4).stream().forEach(account -> System.out.println(account));
-		accountService.depositAccount(1, 100D);
-		accountService.depositAccount(2, 200D);
-		accountService.depositAccount(3, 300D);
-		accountService.depositAccount(4, 400D);
+//		accountService.depositAccount(1, 100D);
+//		accountService.depositAccount(2, 200D);
+//		accountService.depositAccount(3, 300D);
+//		accountService.depositAccount(4, 400D);
 		
 //		accountService.withdrawAccount(1, 50D);
 //		accountService.withdrawAccount(2, 20D);
@@ -104,7 +104,11 @@ public class MainTest {
 		
 //		accountService.transferMoney(5, 6, 10D);
 		
+		accountService.addSecondaryOwner(1, 5);
 		accountService.addSecondaryOwner(1, 2);
+		accountService.addSecondaryOwner(1, 3);
+		accountService.addSecondaryOwner(1, 4);
+//		accountService.deleteSecondaryOwner(1, 2);
 		
 		accountRepository.getAll().stream().forEach(account -> System.out.println(account));
 

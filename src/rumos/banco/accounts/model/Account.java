@@ -33,7 +33,8 @@ public class Account implements IdentificationItem{
 		this.accountNumber = IPreconditions.checkLength(accountNumber, ACCOUNT_NUMBER_LENGTH,
 				"The account number can only be 5 digits");
 		this.balance = balance;
-		this.secondaryOwnersId = IPreconditions.requireNonNullElse(secondaryOwnersId, Collections.emptyList());
+//		this.secondaryOwnersId = IPreconditions.requireNonNullElse(secondaryOwnersId, Collections.emptyList());
+		this.secondaryOwnersId = IPreconditions.requireNonNullElse(secondaryOwnersId, new ArrayList<>(0));
 	}
 
 	@Override
