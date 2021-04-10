@@ -87,7 +87,8 @@ public class MainTest {
 //		accountService.findAllAccountsByCustomerId(1).stream().forEach(System.out::println);
 //		accountRepository.findByAllCustomerId(1).forEach(System.out::println);
 //		System.out.println(accountService.findAccountByHolderCustomerId(5));
-		accountService.findAccountsBySecondaryCustomerId(4).stream().forEach(System.out::println);;
+//		accountService.findAccountsBySecondaryCustomerId(4).stream().forEach(System.out::println);
+		accountService.findAllAccountsByCustomerId(4).stream().forEach(account -> System.out.println(account));
 
 
 		
