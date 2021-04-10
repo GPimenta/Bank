@@ -12,7 +12,7 @@ public interface ICustomerService {
 	
 	Customer createCustomer(String name, String taxId, String email, LocalDate birthday) throws CustomerConflictException, CustomerNotFoundException;
 	
-	Optional<Customer> findByTaxId(String taxId) throws CustomerNotFoundException;
+	Customer findByTaxId(String taxId) throws CustomerNotFoundException;
 	
 	Customer getCustomer(Integer customerId) throws CustomerNotFoundException;
 	

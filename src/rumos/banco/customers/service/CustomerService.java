@@ -39,9 +39,10 @@ public class CustomerService implements ICustomerService{
 	}
 
 	@Override
-	public Optional<Customer> findByTaxId(String taxId) throws CustomerNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer findByTaxId(String taxId) throws CustomerNotFoundException {
+		return getAllCustomers().stream()
+				.filter(customer -> customer.getTaxId().equals(taxId)).findAny()
+				.orElseThrow(() -> CustomerNotFoundException("Customer with taxId '%s' not found", taxId));
 	}
 
 	@Override
