@@ -6,7 +6,7 @@ import rumos.banco.customers.model.old.OldCustomer;
 import rumos.banco.customers.repository.old.OldDBCustomerRepositoryImpl;
 import rumos.banco.customers.repository.old.OldICustomerRepository;
 import rumos.banco.customers.repository.old.OldInMemCustomerRepositoryImpl;
-import rumos.banco.customers.service.OldCustomerService;
+import rumos.banco.customers.service.old.OldCustomerService;
 
 public class OldCustomerTest {
 	
