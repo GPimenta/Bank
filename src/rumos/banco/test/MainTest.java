@@ -1,5 +1,7 @@
 package rumos.banco.test;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 import rumos.banco.accounts.exceptions.AccountConflictException;
@@ -7,21 +9,24 @@ import rumos.banco.accounts.exceptions.AccountNoFundsException;
 import rumos.banco.accounts.exceptions.AccountNotFoundException;
 import rumos.banco.accounts.exceptions.AccountVoidDepositException;
 import rumos.banco.accounts.exceptions.AccountVoidWithdrawException;
-import rumos.banco.accounts.model.Account;
 import rumos.banco.accounts.repository.IAccountRepository;
 import rumos.banco.accounts.repository.InMemAccountRepository;
 import rumos.banco.accounts.service.AccountService;
 import rumos.banco.accounts.service.IAccountService;
 import rumos.banco.cards.repository.ICardRepository;
 import rumos.banco.cards.repository.InMemCardRepositoryImpl;
+import rumos.banco.customers.exceptions.CustomerConflictException;
+import rumos.banco.customers.exceptions.CustomerNotFoundException;
 import rumos.banco.customers.repository.ICustomerRepository;
 import rumos.banco.customers.repository.InMemCustomerRepositoryImpl;
+import rumos.banco.customers.service.CustomerService;
+import rumos.banco.customers.service.ICustomerService;
 import rumos.banco.transaction.repositoy.ITransactionRepository;
 import rumos.banco.transaction.repositoy.InMemTransactionRepository;
 
 public class MainTest {
 
-	public static void main(String[] args) throws AccountConflictException, AccountNotFoundException, AccountVoidDepositException, AccountVoidWithdrawException, AccountNoFundsException {
+	public static void main(String[] args) throws AccountConflictException, AccountNotFoundException, AccountVoidDepositException, AccountVoidWithdrawException, AccountNoFundsException, CustomerConflictException, CustomerNotFoundException {
 		List<Integer> secondaryOwnersId = List.of(1,2,3);
 		ICustomerRepository customerRepository = new InMemCustomerRepositoryImpl();
 		IAccountRepository accountRepository = new InMemAccountRepository();
@@ -29,12 +34,21 @@ public class MainTest {
 		ITransactionRepository transactionRepository = new InMemTransactionRepository();
 		
 		IAccountService accountService = new AccountService(accountRepository);
+		ICustomerService customerService = new CustomerService(customerRepository);
 		
 		
-		accountService.createAccount(1);
-		accountService.createAccount(2);
-		accountService.createAccount(3);
-		accountService.createAccount(4);
+		customerService.createCustomer("Goncalo", "259569038", "cenas1@cenas.com", LocalDate.of(1989, Month.AUGUST, 3));
+		customerService.createCustomer("Claudia", "257803598", "cenas2@cenas.com", LocalDate.of(1989, Month.JANUARY, 31));
+		customerService.createCustomer("Dianaaa", "245698742", "cenas3@cenas.com", LocalDate.of(1989, Month.FEBRUARY, 12));
+		customerService.createCustomer("Rosaria", "369852365", "cenas4@cenas.com", LocalDate.of(1989, Month.MARCH, 27));
+		
+		
+		customerService.getAllCustomers().forEach(customer -> System.out.println(customer));
+		
+//		accountService.createAccount(1);
+//		accountService.createAccount(2);
+//		accountService.createAccount(3);
+//		accountService.createAccount(4);
 //		accountService.deleteAccount(4);
 //		accountService.deleteAccount(3);
 //		accountService.deleteAccount(2);

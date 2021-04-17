@@ -11,12 +11,19 @@ public class InMemCustomerRepositoryImpl implements ICustomerRepository {
 
 	private final Set<Customer> repository = new TreeSet<>();//see if it is better to use SET instead of ArrayList
 	
+	private static Integer customerIdCounter = 0;
+	
+	private static int generateCustomerId() {
+		return ++customerIdCounter;
+	}
 	
 	@Override
 	public Optional<Customer> create(Customer newItem) {
 		if(newItem == null) {
 			throw new IllegalArgumentException("Customer can not be null");
 		}
+		Customer customer = newItem;
+		newItem.setId(generateCustomerId());
 		repository.add(newItem);
 		return Optional.of(newItem);
 	}

@@ -12,7 +12,7 @@ public class Customer implements IdentificationItem, Comparable<Customer>{
     public static final int CUSTOMER_NAME_MIN_LENGTH = 3;
     public static final int CUSTOMER_TAXID_LENGTH = 9;
 
-	private final Integer id;
+	private Integer id;
 	private String name;
 	private final String taxId;
 	private String email;
@@ -28,6 +28,10 @@ public class Customer implements IdentificationItem, Comparable<Customer>{
 		this.birthday = IPreconditions.checkNotNull(birthday, "Customer birthday can not be null");
 	}
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -56,6 +60,7 @@ public class Customer implements IdentificationItem, Comparable<Customer>{
 		return birthday;
 	}
 
+	
 	
 	
 	@Override
@@ -106,7 +111,7 @@ public class Customer implements IdentificationItem, Comparable<Customer>{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public int compareTo(Customer customer) {
 		
