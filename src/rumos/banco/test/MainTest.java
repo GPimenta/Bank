@@ -42,8 +42,15 @@ public class MainTest {
 		customerService.createCustomer("Dianaaa", "245698742", "cenas3@cenas.com", LocalDate.of(1989, Month.FEBRUARY, 12));
 		customerService.createCustomer("Rosaria", "369852365", "cenas4@cenas.com", LocalDate.of(1989, Month.MARCH, 27));
 		
+//		customerService.deleteCustomer(1);
+//		customerService.deleteCustomer(2);
+//		customerService.deleteCustomer(3);
+//		customerService.deleteCustomer(5);
 		
-		customerService.getAllCustomers().forEach(customer -> System.out.println(customer));
+//		System.out.println(customerService.findByTaxId("259569036"));
+		System.out.println(customerService.getCustomer(5));
+		
+//		customerService.getAllCustomers().forEach(customer -> System.out.println(customer));
 		
 //		accountService.createAccount(1);
 //		accountService.createAccount(2);
