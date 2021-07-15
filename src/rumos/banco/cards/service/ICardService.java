@@ -26,9 +26,4 @@ public interface ICardService {
 	
 	Card getCardById(Integer cardId);
 	
-	
-	
-	
-	
-
 }
